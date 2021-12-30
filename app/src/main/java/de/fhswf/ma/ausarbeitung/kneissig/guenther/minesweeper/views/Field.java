@@ -113,7 +113,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
     }
 
     private void drawBombExploded(Canvas canvas ){
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.bomb_exploded);
+        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_bombexpl);
         if (drawable != null) {
             drawable.setBounds(0,0,getWidth(),getHeight());
             drawable.draw(canvas);
@@ -121,7 +121,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
     }
 
     private void drawFlag( Canvas canvas ){
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.flag);
+        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_flag);
         if (drawable != null) {
             drawable.setBounds(0,0,getWidth(),getHeight());
             drawable.draw(canvas);
@@ -130,7 +130,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
     }
 
     private void drawButton(Canvas canvas ){
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.button);
+        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_button);
         if (drawable != null) {
             drawable.setBounds(0,0,getWidth(),getHeight());
             drawable.draw(canvas);
@@ -139,7 +139,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
     }
 
     private void drawNormalBomb(Canvas canvas ){
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.bomb_normal);
+        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_bomb);
         if (drawable != null) {
             drawable.setBounds(0,0,getWidth(),getHeight());
             drawable.draw(canvas);
@@ -152,31 +152,31 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
 
         switch (getFieldValue() ){
             case 0:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.number_0);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_empty);
                 break;
             case 1:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.number_1);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_num1);
                 break;
             case 2:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.number_2);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_num2);
                 break;
             case 3:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.number_3);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_num3);
                 break;
             case 4:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.number_4);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_num4);
                 break;
             case 5:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.number_5);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_num5);
                 break;
             case 6:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.number_6);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_num6);
                 break;
             case 7:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.number_7);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_num7);
                 break;
             case 8:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.number_8);
+                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_num8);
                 break;
         }
 
