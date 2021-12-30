@@ -2,17 +2,107 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/gameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.GameBoard
+        android:id="@+id/minesweeperGridView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gameMode" />
+
+    <ImageButton
+        android:id="@+id/resetGame"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="181dp"
+        android:backgroundTint="#3F51B5"
+        android:tooltipText="Spiel neu starten"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_popup_sync"
+        android:contentDescription="Reset Game" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/gameMode"
+        android:layout_width="91dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="170dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="170dp"
+        android:checked="false"
+        android:splitTrack="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resetGame"
+        app:switchMinWidth="90dp" />
+
+    <TextView
+        android:id="@+id/mineCounter"
+        android:layout_width="136dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/resetGame"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="136dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/resetGame"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/mineMode"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="297dp"
+        android:gravity="center_vertical"
+        android:text="Minen - Modus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mineCounter" />
+
+    <TextView
+        android:id="@+id/flagMode"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center_vertical"
+        android:text="Flaggen - Modus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gameMode"
+        app:layout_constraintTop_toBottomOf="@+id/timer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
