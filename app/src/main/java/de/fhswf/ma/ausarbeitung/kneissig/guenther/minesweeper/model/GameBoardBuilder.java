@@ -36,12 +36,13 @@ public class GameBoardBuilder {
 
                 if(x != startX && y != startY ){
                     minePossible = true;
+                    if( board[x][y] != -1 ){
+                        board[x][y] = -1;
+                        numberOfMines--;
+                    }
                 }
             }
-            if( board[x][y] != -1 ){
-                board[x][y] = -1;
-                numberOfMines--;
-            }
+
             minePossible = false;
         }
         calculateMineNeighbourNumbers(board, columnsX, rowsY);

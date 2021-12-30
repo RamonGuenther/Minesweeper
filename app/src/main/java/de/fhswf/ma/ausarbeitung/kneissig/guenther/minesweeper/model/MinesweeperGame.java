@@ -1,8 +1,11 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model;
 
 import android.content.Context;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MainActivity;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperCallback;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.Field;
 
@@ -14,14 +17,18 @@ public class MinesweeperGame {
     private final Field[][] minesweeperBoard = new Field[COLUMNS_X][ROWS_Y];
 
     public static final int numberOfMines = 10;
-    public static final int COLUMNS_X = 16;
-    public static final int ROWS_Y = 16;
+    public static final int COLUMNS_X = 8;
+    public static final int ROWS_Y = 8;
 
     private int startX;
     private int startY;
     private boolean firstClick = false;
 
     private GameMode gameMode = GameMode.MINE_MODE;
+    private MineCounter mineCounter = new MineCounter(numberOfMines);
+    MinesweeperCallback minesweeperCallback;
+    private Timer timer = new Timer();
+
 
     public static MinesweeperGame getInstance() {
         if( instance == null ){
@@ -69,6 +76,7 @@ public class MinesweeperGame {
     }
 
     public void click( int x , int y ){
+
         if( x >= 0 && y >= 0 && x < COLUMNS_X && y < ROWS_Y && !getCellAt(x,y).isTouched()){
             getCellAt(x,y).setTouched();
 
@@ -95,11 +103,14 @@ public class MinesweeperGame {
         int notRevealed = COLUMNS_X * ROWS_Y;
         for (int x = 0; x < COLUMNS_X; x++ ){
             for(int y = 0; y < ROWS_Y; y++ ){
-                if( getCellAt(x,y).isDiscovered() || getCellAt(x,y).isFlagged() ){
+                //2.Zeile für Sieg wenn Bombenfeld unberührt?
+                if( getCellAt(x,y).isDiscovered() || getCellAt(x,y).isFlagged()
+                        || !getCellAt(x,y).isDiscovered() && getCellAt(x,y).isMine()){
                     notRevealed--;
                 }
 
-                if( getCellAt(x,y).isFlagged() && getCellAt(x,y).isMine() ){
+                if( getCellAt(x,y).isFlagged() && getCellAt(x,y).isMine()
+                        || !getCellAt(x,y).isDiscovered() && getCellAt(x,y).isMine()){
                     bombNotFound--;
                 }
             }
@@ -107,6 +118,8 @@ public class MinesweeperGame {
 
         if( bombNotFound == 0 && notRevealed == 0 ){
             Toast.makeText(context,"Game won", Toast.LENGTH_SHORT).show();
+            timer.stopTimer();
+            minesweeperCallback.updateTimer(0);
         }
         return false;
     }
@@ -115,6 +128,14 @@ public class MinesweeperGame {
         boolean isFlagged = getCellAt(x,y).isFlagged();
         getCellAt(x,y).setFlagged(!isFlagged);
         getCellAt(x,y).invalidate();
+
+        if(getCellAt(x,y).isFlagged()){
+            mineCounter.reduceMineCount();
+        }
+        else{
+            mineCounter.increaseMineCount();
+        }
+        minesweeperCallback.updateMineCounter(mineCounter.getMineCount());
     }
 
     public void mark( int x , int y ){
@@ -126,17 +147,35 @@ public class MinesweeperGame {
     private void onGameLost(){
         // handle lost game
         Toast.makeText(context,"Game lost", Toast.LENGTH_SHORT).show();
+        timer.stopTimer();
 
         for (int x = 0; x < COLUMNS_X; x++ ) {
             for (int y = 0; y < ROWS_Y; y++) {
                 getCellAt(x,y).setDiscovered();
+                // das hier ist dafür da, dass auch Felder ohne Mine beim
+                // Verlieren aufgedeckt werden
+                if(!getCellAt(x,y).isMine()){
+                    getCellAt(x,y).setTouched();
+                }
+
             }
         }
+    }
+
+    public void timeIsOver(){
+        onGameLost();
     }
 
     public void resetGame(){
         createEmptyBoard(context);
         setFirstClick(false);
+
+        timer.stopTimer();
+        timer.resetTimer();
+        minesweeperCallback.updateTimer(0);
+
+        minesweeperCallback.updateMineCounter(numberOfMines);
+        mineCounter.setMineCount(numberOfMines);
     }
 
 
@@ -170,5 +209,26 @@ public class MinesweeperGame {
 
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
+    }
+
+    public MineCounter getMineCounter() {
+        return mineCounter;
+    }
+
+    public void setMineCounter(MineCounter mineCounter) {
+        this.mineCounter = mineCounter;
+    }
+
+    public Timer getTimer() {
+        return timer;
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
+    }
+
+
+    public void setMinesweeperCallback(MinesweeperCallback minesweeperCallback) {
+        this.minesweeperCallback = minesweeperCallback;
     }
 }

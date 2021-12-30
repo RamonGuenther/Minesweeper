@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
 
 @SuppressLint("ViewConstructor")
 public class Field extends View implements View.OnClickListener , View.OnLongClickListener{
@@ -44,21 +45,34 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
     @Override
     public void onClick(View view) {
         if(!MinesweeperGame.getInstance().isFirstClick()){
+            // zweite if, damit keine Flagge gesetzt werden kann, wenn first Click noch nicht gemacht
+            if(MinesweeperGame.getInstance().getGameMode().equals(GameMode.FLAG_MODE)){
+                return;
+            }
             MinesweeperGame.getInstance().setFirstClick(true);
             MinesweeperGame.getInstance().setStartX(getXPos());
-            MinesweeperGame.getInstance().setStartX(getYPos());
+            MinesweeperGame.getInstance().setStartY(getYPos());
 
             Log.d("VALUE X", Integer.toString(getXPos()));
             Log.d("VALUE Y", Integer.toString(getYPos()));
 
+            MinesweeperGame.getInstance().getTimer().startTimer();
             MinesweeperGame.getInstance().createBoardWithMines(context);
         }
+
         switch (MinesweeperGame.getInstance().getGameMode()){
-            case MINE_MODE: MinesweeperGame.getInstance().click(getXPos(), getYPos());
+            case MINE_MODE:
+                // if, damit Feld nicht klickbar wenn Flagge gesetzt
+                if(isFlagged()){
+                    break;
+                }
+                else{
+                    MinesweeperGame.getInstance().click(getXPos(), getYPos());
+                }
+
             break;
             case FLAG_MODE: MinesweeperGame.getInstance().flag(getXPos() , getYPos());
             break;
-            default: MinesweeperGame.getInstance().click(getXPos(), getYPos());
         }
 
     }
@@ -188,7 +202,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
     }
 
     private void drawQuestionMark( Canvas canvas ){
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.questionmark);
+        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_question);
         if (drawable != null) {
             drawable.setBounds(0,0,getWidth(),getHeight());
             drawable.draw(canvas);
@@ -209,6 +223,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
         this.isDiscovered = false;
         this.isTouched = false;
         this.isFlagged = false;
+        this.isMarked = false;
 
         if(fieldValue == -1){
             this.isMine = true;

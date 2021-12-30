@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperCallback;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 
 public class GameBoard extends GridView {
