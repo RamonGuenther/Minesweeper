@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
