@@ -23,8 +23,8 @@ public class MinesweeperGame {
     MinesweeperCallback minesweeperCallback;
 
     public int numberOfMines = 10;
-    public int columnsX = 8;
-    public int rowsY = 8;
+    public int columnsX = 16;
+    public int rowsY = 16;
 
     private int[][] bombPlacementField = new int[columnsX][rowsY];
     private final Field[][] minesweeperBoard = new Field[columnsX][rowsY];
