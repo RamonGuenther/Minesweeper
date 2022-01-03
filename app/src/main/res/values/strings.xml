@@ -2,4 +2,17 @@
     <string name="app_name">Minesweeper</string>
     <string name="settings">Einstellungen</string>
 
+    <string-array name="level_select">
+        <item>Leicht</item>
+        <item>Mittel</item>
+        <item>Schwer</item>
+        <item>Benutzerdefiniert</item>
+    </string-array>
+
+    <string-array name="theme_select">
+        <item>Bordeaux</item>
+        <item>Blau</item>
+        <item>Classic</item>
+    </string-array>
+
 </resources>

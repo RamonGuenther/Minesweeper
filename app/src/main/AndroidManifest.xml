@@ -21,9 +21,21 @@
         </activity>
 
         <!-- android:theme="@style/CustomTheme" -->
-        <activity android:name=".activities.SettingsActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:theme="@style/Theme.AppCompat.SlidrActivityTheme"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".activities.HighScoreActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.HighScoreActivity"
+            android:theme="@style/Theme.AppCompat.SlidrActivityTheme"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activities.GameInstructionActivity"
+            android:theme="@style/Theme.AppCompat.SlidrActivityTheme"
+            android:screenOrientation="portrait"/>
+
 
 
         <activity
@@ -31,5 +43,7 @@
             android:exported="false">
         </activity>
     </application>
+
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
 </manifest>
