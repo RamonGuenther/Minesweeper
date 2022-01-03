@@ -1,11 +1,13 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperCallback;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gameComponents.GameBoardBuilder;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gameComponents.GameSettings;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gameComponents.MineCounter;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gameComponents.Timer;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.Field;
@@ -19,20 +21,21 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.Field;
 public class MinesweeperGame {
 
     private static MinesweeperGame instance;
+
     private Context context;
     MinesweeperCallback minesweeperCallback;
+    private GameSettings gameSettings = new GameSettings();
 
-    public int numberOfMines = 10;
-    public int columnsX = 16;
-    public int rowsY = 16;
+//    private int[][] bombPlacementField = new int[getColumnsX()][getRowsY()];
+//    private Field[][] minesweeperBoard = new Field[getColumnsX()][getRowsY()];
 
-    private int[][] bombPlacementField = new int[columnsX][rowsY];
-    private final Field[][] minesweeperBoard = new Field[columnsX][rowsY];
+    private int[][] bombPlacementField;
+    private Field[][] minesweeperBoard;
 
     private boolean firstClick = false;
 
     private GameMode gameMode = GameMode.MINE_MODE;
-    private final MineCounter mineCounter = new MineCounter(numberOfMines);
+    private final MineCounter mineCounter = new MineCounter(gameSettings.getNumberOfMines());
     private final Timer timer = new Timer();
 
 
@@ -64,8 +67,9 @@ public class MinesweeperGame {
      * @param context               Aktueller Zustand der Applikation
      */
     public void createEmptyBoard(Context context){
+
         this.context = context;
-        bombPlacementField = GameBoardBuilder.buildEmptyBoard(columnsX, rowsY);
+        bombPlacementField = GameBoardBuilder.buildEmptyBoard(getColumnsX(), getRowsY());
         setGameBoard(context,bombPlacementField);
     }
 
@@ -76,8 +80,9 @@ public class MinesweeperGame {
      * @param context               Aktueller Zustand der Applikation
      */
     public void createBoardWithMines(Context context, int startX, int startY){
+
         this.context = context;
-        GameBoardBuilder.generateBoardWithMines(numberOfMines, columnsX, rowsY, startX, startY, bombPlacementField);
+        GameBoardBuilder.generateBoardWithMines(gameSettings.getNumberOfMines(), getColumnsX(), getRowsY(), startX, startY, bombPlacementField);
         setGameBoard(context,bombPlacementField);
     }
 
@@ -89,11 +94,12 @@ public class MinesweeperGame {
      * @param bombPlacementField    integer-Feld, welches die Minenpositionen und die berechneten
      *                              Werte für Nachbarminen der leeren Felder enhtält.
      */
-    private void setGameBoard(final Context context, final int[][] bombPlacementField ){
-        for(int x = 0; x < columnsX; x++ ){
-            for(int y = 0; y < rowsY; y++ ){
+    private void setGameBoard(Context context, final int[][] bombPlacementField ){
+
+        for(int x = 0; x < getColumnsX(); x++ ){
+            for(int y = 0; y < getRowsY(); y++ ){
                 if( minesweeperBoard[x][y] == null ){
-                    minesweeperBoard[x][y] = new Field( context , x,y);
+                    minesweeperBoard[x][y] = new Field( context,x,y);
                 }
                 minesweeperBoard[x][y].setFieldValue(bombPlacementField[x][y]);
                 minesweeperBoard[x][y].invalidate();
@@ -110,8 +116,8 @@ public class MinesweeperGame {
      * @return                   Feld, dass der Spieler ausgewählt hat
      */
     public Field getFieldAt(int position) {
-        int x = position % columnsX;
-        int y = position / columnsX; //??? warum nicht Rows?
+        int x = position % getColumnsX();
+        int y = position / getColumnsX(); //??? warum nicht Rows?
 
         return minesweeperBoard[x][y];
     }
@@ -141,7 +147,7 @@ public class MinesweeperGame {
      */
     public void discoverField(int xPos, int yPos ){
 
-        if(xPos >= 0 && yPos >= 0 && xPos < columnsX && yPos < rowsY && !getFieldAt(xPos,yPos).isTouched()){
+        if(xPos >= 0 && yPos >= 0 && xPos < getColumnsX() && yPos < getRowsY() && !getFieldAt(xPos,yPos).isTouched()){
             getFieldAt(xPos,yPos).setTouched();
 
             if(getFieldAt(xPos,yPos).getFieldValue() == 0){
@@ -174,6 +180,10 @@ public class MinesweeperGame {
             Toast.makeText(context,"Die maximale Anzahl an Minen wurde markiert", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(getFieldAt(xPos, yPos).isDiscovered()){
+            Toast.makeText(context,"Keine Flagge auf aufgedecktem Feld möglich", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         getFieldAt(xPos,yPos).setFlagged(!getFieldAt(xPos,yPos).isFlagged());
         getFieldAt(xPos,yPos).invalidate();
@@ -198,6 +208,11 @@ public class MinesweeperGame {
      */
     public void placeQuestionMark(int xPos , int yPos ){
 
+        if(getFieldAt(xPos, yPos).isDiscovered()){
+            Toast.makeText(context,"Kein Fragezeichen auf aufgedecktem Feld möglich", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (getFieldAt(xPos,yPos).isFlagged()) {
             getFieldAt(xPos,yPos).setFlagged(false);
             mineCounter.increaseMineCount();
@@ -216,11 +231,11 @@ public class MinesweeperGame {
      */
     private boolean checkGameWon(){
 
-        int mineNotFound = numberOfMines;
-        int notDiscovered = columnsX * rowsY;
+        int mineNotFound = gameSettings.getNumberOfMines();
+        int notDiscovered = getColumnsX() * getRowsY();
 
-        for (int x = 0; x < columnsX; x++ ){
-            for(int y = 0; y < rowsY; y++ ){
+        for (int x = 0; x < getColumnsX(); x++ ){
+            for(int y = 0; y < getRowsY(); y++ ){
 
                 if( getFieldAt(x,y).isDiscovered() || getFieldAt(x,y).isFlagged()
                         || !getFieldAt(x,y).isDiscovered() && getFieldAt(x,y).isMine()){            // Für Sieg, auch wenn Felder mit Bomben unberührt, aber nicht markiert
@@ -251,8 +266,8 @@ public class MinesweeperGame {
         Toast.makeText(context,"Game lost", Toast.LENGTH_SHORT).show();                         // Hier ein Modal bauen!!!
         timer.stopTimer();
 
-        for (int x = 0; x < columnsX; x++ ) {
-            for (int y = 0; y < rowsY; y++) {
+        for (int x = 0; x < getColumnsX(); x++ ) {
+            for (int y = 0; y < getRowsY(); y++) {
                 getFieldAt(x,y).setDiscovered();
                 if(!getFieldAt(x,y).isMine()){                                                      // Deckt auch nicht aufgedeckte Felder ohne Mine auf
                     getFieldAt(x,y).setTouched();
@@ -283,8 +298,8 @@ public class MinesweeperGame {
         timer.resetTimer();
         minesweeperCallback.updateTimer(0);
 
-        minesweeperCallback.updateMineCounter(numberOfMines);
-        mineCounter.setMineCount(numberOfMines);
+        minesweeperCallback.updateMineCounter(gameSettings.getNumberOfMines());
+        mineCounter.setMineCount(gameSettings.getNumberOfMines());
     }
 
     /*----------------------------------------------------------------------------------------------
@@ -320,18 +335,31 @@ public class MinesweeperGame {
     }
 
     public int getColumnsX() {
-        return columnsX;
+        return gameSettings.getColumnsX();
     }
 
     public void setColumnsX(int columnsX) {
-        this.columnsX = columnsX;
+        gameSettings.setColumnsX(columnsX);
     }
 
     public int getRowsY() {
-        return rowsY;
+        return gameSettings.getRowsY();
     }
 
     public void setRowsY(int rowsY) {
-        this.rowsY = rowsY;
+        gameSettings.setRowsY(rowsY);
+    }
+
+    public GameSettings getGameSettings() {
+        return gameSettings;
+    }
+
+    public void setGameSettings(GameSettings gameSettings) {
+        this.gameSettings = gameSettings;
+    }
+
+    public void setGameBoardSize(){
+        this.bombPlacementField = new int[gameSettings.getColumnsX()][gameSettings.getRowsY()];
+        this.minesweeperBoard = new Field[gameSettings.getColumnsX()][gameSettings.getRowsY()];
     }
 }

@@ -11,7 +11,8 @@ public enum Level {
 
     BEGINNER("Anfänger"),
     ADVANCED("Fortgeschritten"),
-    PROFESSIONAL("Profi");
+    PROFESSIONAL("Profi"),
+    CUSTOM("Benutzerdefiniert");
 
     public final String label;
 

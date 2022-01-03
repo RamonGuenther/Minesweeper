@@ -49,6 +49,11 @@ public class Timer {
         timer.removeCallbacks(updateTime);
     }
 
+    public void restartTimer(){
+        timer.removeCallbacks(updateTime);
+        timer.postDelayed(updateTime, 1000);
+    }
+
     /**
      * Das Runnable-Object updateTime sorgt dafür, dass der Timer hochgezählt wird.
      * Sobald der Timer 999 Sekunden erreicht hat, hat der Spieler das aktuelle Spiel

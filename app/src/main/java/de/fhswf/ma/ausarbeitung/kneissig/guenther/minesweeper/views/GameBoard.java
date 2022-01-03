@@ -87,5 +87,10 @@ public class GameBoard extends GridView {
         public long getItemId(int position) {
             return 0;
         }
+
+        @Override
+        public void notifyDataSetChanged() {
+            super.notifyDataSetChanged();
+        }
     }
 }
