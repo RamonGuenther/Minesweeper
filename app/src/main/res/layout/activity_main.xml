@@ -2,137 +2,195 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/gameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity"
+    >
 
-    <de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.GameBoard
-        android:id="@+id/minesweeperGridView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/flagMode"
+    <TextView
+        android:id="@+id/gameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="22dp"
+        android:fontFamily="casual"
+        android:text="R &amp; I - Minesweeper"
+        android:textSize="40sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/resetGame" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/playButton"
+        android:layout_width="250dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="81dp"
+        android:backgroundTint="#D66060"
+        android:text="Spielen"
+        android:textSize="30sp"
+        app:cornerRadius="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gameTitle" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/gameSettingsLayout"
+        android:layout_width="251dp"
+        android:layout_height="342dp"
+        android:layout_marginStart="79dp"
+
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="78dp"
+        android:background="@drawable/layout_select_difficulty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playButton">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/heightLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            app:helperText="max 40"
+            app:helperTextEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/selectDifficultyLayout"
+            app:startIconDrawable="@drawable/ic_baseline_arrow_upward_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/heightTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Höhe" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/widthLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            app:helperText="max 40"
+            app:helperTextEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/heightLayout"
+            app:startIconDrawable="@drawable/ic_baseline_east_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/widthTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Breite" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/mineQuantityLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="5dp"
+            app:helperText="max 40"
+            app:helperTextEnabled="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/widthLayout"
+            app:startIconDrawable="@drawable/ic_baseline_warning_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mineQuantityTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Minenanzahl" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/selectDifficultyLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:hint="Schwierigkeit auswählen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <AutoCompleteTextView
+                android:id="@+id/selectDifficulty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/GameInstructionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="158dp"
+        android:layout_marginTop="30dp"
+
+        android:layout_marginEnd="159dp"
+        android:backgroundTint="#FFFA96"
+        android:text="Spielanleitung"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gameSettingsLayout" />
 
     <ImageButton
-        android:id="@+id/resetGame"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="181dp"
-        android:backgroundTint="#1E1F20"
-        android:contentDescription="Reset Game"
-        android:tooltipText="Spiel neu starten"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/highScoreButton"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="26dp"
+        android:background="@null"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:scaleType="fitXY"
+        app:tint="#FFEB3B"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_popup_sync" />
+        app:srcCompat="@drawable/ic_baseline_emoji_events_24"
+        />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/gameMode"
-        android:layout_width="91dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:checked="false"
-        android:splitTrack="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColorHighlight="#1E1F20"
-        android:textColorLink="#1E1F20"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/flagMode"
-        app:layout_constraintStart_toEndOf="@+id/mineMode"
-        app:switchMinWidth="90dp"
-        app:useMaterialThemeColors="false" />
-
-    <TextView
-        android:id="@+id/mineCounter"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="30dp"
-        android:fontFamily="casual"
-        android:gravity="center"
-        android:text="0"
-        android:textAlignment="center"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/resetGame"
-        app:layout_constraintStart_toEndOf="@id/iconMine"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/timer"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="casual"
-        android:gravity="center"
-        android:text="0"
-        android:textAlignment="center"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/iconTimer"
-        app:layout_constraintStart_toEndOf="@id/resetGame"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/mineMode"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="20dp"
-        android:fontFamily="casual"
-        android:gravity="center_vertical"
-        android:text="Minen - Modus"
-        android:textAlignment="gravity"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/gameMode"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/flagMode"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="casual"
-        android:gravity="right|center_vertical"
-        android:text="Flaggen - Modus"
-        android:textSize="16sp"
-        android:textStyle="bold"
+    <ImageButton
+        android:id="@+id/settingsButton"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="26dp"
+        android:background="@null"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/gameMode" />
+        app:srcCompat="@drawable/ic_baseline_settings_24"
+        />
 
-    <ImageView
-        android:id="@+id/iconMine"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/mineCounter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_mine" />
-
-    <ImageView
-        android:id="@+id/iconTimer"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/timer"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_timer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,14 +9,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Minesweeper">
+
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <!-- android:theme="@style/CustomTheme" -->
+        <activity android:name=".activities.SettingsActivity" android:screenOrientation="portrait"/>
+
+        <activity android:name=".activities.HighScoreActivity" android:screenOrientation="portrait"/>
+
+
+        <activity
+            android:name=".activities.GameActivity"
+            android:exported="false">
         </activity>
     </application>
 

@@ -1,4 +1,4 @@
-package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper;
+package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,10 +9,12 @@ import android.widget.TextView;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperCallback;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
 
-public class MainActivity extends AppCompatActivity implements MinesweeperCallback {
+public class GameActivity extends AppCompatActivity implements MinesweeperCallback {
 
     TextView mineCounter;
     TextView timer;
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements MinesweeperCallba
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_game);
 
         SwitchMaterial switchMaterial = findViewById(R.id.gameMode);
 
