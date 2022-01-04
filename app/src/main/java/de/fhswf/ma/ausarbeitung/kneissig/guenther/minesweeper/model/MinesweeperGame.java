@@ -1,7 +1,7 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperCallback;
@@ -20,6 +20,7 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.Field;
  */
 public class MinesweeperGame {
 
+    @SuppressLint("StaticFieldLeak")
     private static MinesweeperGame instance;
 
     private Context context;
@@ -149,6 +150,14 @@ public class MinesweeperGame {
 
         if(xPos >= 0 && yPos >= 0 && xPos < getColumnsX() && yPos < getRowsY() && !getFieldAt(xPos,yPos).isTouched()){
             getFieldAt(xPos,yPos).setTouched();
+
+        // Damit Flaggen entfernt werden, wenn Felder aufgedeckt werden, die keine Mine enthalten???
+        if(getFieldAt(xPos,yPos).isFlagged() || getFieldAt(xPos,yPos).isMarked()){
+            getFieldAt(xPos,yPos).setFlagged(false);
+            getFieldAt(xPos,yPos).setMarked(false);
+            MinesweeperGame.getInstance().getMineCounter().increaseMineCount();
+            minesweeperCallback.updateMineCounter(MinesweeperGame.getInstance().getMineCounter().getMineCount());
+        }
 
             if(getFieldAt(xPos,yPos).getFieldValue() == 0){
                 for(int x = -1 ; x <= 1 ; x++ ){

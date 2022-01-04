@@ -4,10 +4,17 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
+
+import java.util.Locale;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
@@ -22,7 +29,7 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMo
  */
 @SuppressLint("ViewConstructor")
 public class Field extends View implements View.OnClickListener , View.OnLongClickListener{
-
+    
     private final Context context;
 
     private int fieldValue;
@@ -178,7 +185,13 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
      * @param canvas            Erhält die Draw-Aufruf für die explodierte Mine.
      */
     private void drawMineExploded(Canvas canvas ){
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_bombexpl);
+        int drawableId = context.getResources().getIdentifier(
+                    "theme_"
+                        + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                        + "_bombexpl",
+                "drawable", context.getPackageName());
+        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
+
         if (drawable != null) {
             drawable.setBounds(0,0,getWidth(),getHeight());
             drawable.draw(canvas);
@@ -193,7 +206,13 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
      * @param canvas            Erhält die Draw-Aufruf für die Flagge.
      */
     private void drawFlag( Canvas canvas ){
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_flag);
+        int drawableId = context.getResources().getIdentifier(
+                "theme_"
+                        + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                        + "_flag",
+                "drawable", context.getPackageName());
+        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
+
         if (drawable != null) {
             drawable.setBounds(0,0,getWidth(),getHeight());
             drawable.draw(canvas);
@@ -207,7 +226,13 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
      * @param canvas            Erhält die Draw-Aufruf für ein unaufgedecktes Feld.
      */
     private void drawButton(Canvas canvas){
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_button);
+        int drawableId = context.getResources().getIdentifier(
+                "theme_"
+                        + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                        + "_button",
+                "drawable", context.getPackageName());
+        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
+
         if (drawable != null) {
             drawable.setBounds(0,0,getWidth(),getHeight());
             drawable.draw(canvas);
@@ -221,7 +246,13 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
      * @param canvas            Erhält die Draw-Aufruf für eine Mine.
      */
     private void drawMine(Canvas canvas ){
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_bomb);
+        int drawableId = context.getResources().getIdentifier(
+                "theme_"
+                        + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                        + "_bomb",
+                "drawable", context.getPackageName());
+        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
+
         if (drawable != null) {
             drawable.setBounds(0,0,getWidth(),getHeight());
             drawable.draw(canvas);
@@ -239,34 +270,80 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
      */
     private void drawNumber( Canvas canvas ){
         Drawable drawable = null;
+        int drawableId = 0;
 
         switch (getFieldValue() ){
             case 0:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_empty);
+                drawableId = context.getResources().getIdentifier(
+                        "theme_"
+                                + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                                + "_empty",
+                        "drawable", context.getPackageName());
+                drawable = getResources().getDrawable(drawableId, context.getTheme());
                 break;
             case 1:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_num1);
+                drawableId = context.getResources().getIdentifier(
+                        "theme_"
+                                + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                                + "_num1",
+                        "drawable", context.getPackageName());
+                drawable = getResources().getDrawable(drawableId, context.getTheme());
                 break;
             case 2:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_num2);
+                drawableId = context.getResources().getIdentifier(
+                        "theme_"
+                                + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                                + "_num2",
+                        "drawable", context.getPackageName());
+                drawable = getResources().getDrawable(drawableId, context.getTheme());
                 break;
             case 3:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_num3);
+                drawableId = context.getResources().getIdentifier(
+                        "theme_"
+                                + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                                + "_num3",
+                        "drawable", context.getPackageName());
+                drawable = getResources().getDrawable(drawableId, context.getTheme());
                 break;
             case 4:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_num4);
+                drawableId = context.getResources().getIdentifier(
+                        "theme_"
+                                + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                                + "_num4",
+                        "drawable", context.getPackageName());
+                drawable = getResources().getDrawable(drawableId, context.getTheme());
                 break;
             case 5:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_num5);
+                drawableId = context.getResources().getIdentifier(
+                        "theme_"
+                                + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                                + "_num5",
+                        "drawable", context.getPackageName());
+                drawable = getResources().getDrawable(drawableId, context.getTheme());
                 break;
             case 6:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_num6);
+                drawableId = context.getResources().getIdentifier(
+                        "theme_"
+                                + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                                + "_num6",
+                        "drawable", context.getPackageName());
+                drawable = getResources().getDrawable(drawableId, context.getTheme());
                 break;
             case 7:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_num7);
+                drawableId = context.getResources().getIdentifier(
+                        "theme_"
+                                + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                                + "_num7",
+                        "drawable", context.getPackageName());
+                drawable = getResources().getDrawable(drawableId, context.getTheme());
                 break;
             case 8:
-                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_num8);
+                drawableId = context.getResources().getIdentifier(
+                        "theme_"
+                                + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                                + "_num8",
+                        "drawable", context.getPackageName());
+                drawable = getResources().getDrawable(drawableId, context.getTheme());
                 break;
         }
         if (drawable != null) {
@@ -283,7 +360,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
      * @param canvas            Erhält die Draw-Aufruf für ein Fragezeichen.
      */
     private void drawQuestionMark( Canvas canvas ){
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.bd_question);
+        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.theme_bordeaux_question);
         if (drawable != null) {
             drawable.setBounds(0,0,getWidth(),getHeight());
             drawable.draw(canvas);
@@ -370,4 +447,6 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
 
         invalidate();
     }
+
+
 }

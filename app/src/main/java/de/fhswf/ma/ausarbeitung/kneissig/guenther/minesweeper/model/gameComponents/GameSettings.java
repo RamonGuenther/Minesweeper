@@ -9,6 +9,7 @@ public class GameSettings  {
     private boolean timerVisible;
     private boolean mineCounterVisible;
     private boolean gameModeVisible;
+    private boolean vibration;
 
     private Theme theme;
     private Level level;
@@ -26,7 +27,6 @@ public class GameSettings  {
         level = Level.BEGINNER;
 
         setBoardValuesByLevel();
-
     }
 
     public boolean isTimerVisible() {
@@ -61,12 +61,46 @@ public class GameSettings  {
         this.theme = theme;
     }
 
+    public void setTheme(String theme) {
+        switch (theme){
+            case "Bordeaux":
+                this.theme = Theme.BORDEAUX;
+                break;
+            case "Blau":
+                this.theme = Theme.BLUE;
+                break;
+            case "Classic":
+                this.theme = Theme.CLASSIC;
+                break;
+        }
+    }
+
     public Level getLevel() {
         return level;
     }
 
     public void setLevel(Level level) {
         this.level = level;
+        setBoardValuesByLevel();
+        MinesweeperGame.getInstance().setGameBoardSize();
+    }
+
+    public void setLevel(String level) {
+
+        switch (level){
+            case "Anfänger":
+                this.level = Level.BEGINNER;
+                break;
+            case "Fortgeschritten":
+                this.level = Level.ADVANCED;
+                break;
+            case "Profi":
+                this.level = Level.PROFESSIONAL;
+                break;
+            case "Benutzerdefiniert":
+                this.level = Level.CUSTOM;
+                break;
+        }
         setBoardValuesByLevel();
         MinesweeperGame.getInstance().setGameBoardSize();
     }
@@ -103,7 +137,7 @@ public class GameSettings  {
                 rowsY = 8;
                 break;
             case ADVANCED:
-                numberOfMines = 40;
+                numberOfMines = 20;
                 columnsX = 16;
                 rowsY = 16;
                 break;
@@ -124,5 +158,13 @@ public class GameSettings  {
             this.columnsX = columnsX;
             this.rowsY = rowsY;
         }
+    }
+
+    public boolean isVibration() {
+        return vibration;
+    }
+
+    public void setVibration(boolean vibration) {
+        this.vibration = vibration;
     }
 }
