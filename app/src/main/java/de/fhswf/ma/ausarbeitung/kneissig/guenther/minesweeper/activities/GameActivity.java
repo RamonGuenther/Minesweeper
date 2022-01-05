@@ -3,13 +3,11 @@ package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -18,7 +16,6 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperCallbac
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.GameBoard;
 
 public class GameActivity extends AppCompatActivity implements MinesweeperCallback{
 
@@ -29,14 +26,13 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
     ImageView mine;
     ImageView clock;
 
-    //R & I - Minesweeper
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        //Switch zum Wechseln zwischen Minen-Modus und Flaggen-Modus
         gameMode = findViewById(R.id.gameMode);
-
         gameMode.setOnClickListener(e -> {
             if(gameMode.isChecked()){
                 MinesweeperGame.getInstance().setGameMode(GameMode.FLAG_MODE);
@@ -46,26 +42,16 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
             }
         });
 
-        ImageButton resetButton = findViewById(R.id.resetGame);
-
+        // Button zum Zurücksetzen des Spiels
+        ImageButton resetButton = findViewById(R.id.gameView_resetGame);
         resetButton.setOnClickListener(e -> {
             MinesweeperGame.getInstance().resetGame();
         });
 
-        mineCounter = findViewById(R.id.mineCounter);
+        //Minen-Zähler
+        mineCounter = findViewById(R.id.gameView_mineCounter);
         mineCounter.setText(Integer.toString(MinesweeperGame.getInstance().getMineCounter().getMineCount()));
-
-        timer = findViewById(R.id.timer);
-        timer.setText(("0"));
-
-        clock = findViewById(R.id.iconTimer);
-        mine = findViewById(R.id.iconMine);
-
-        MinesweeperGame.getInstance().setMinesweeperCallback(this);
-        MinesweeperGame.getInstance().getTimer().setMinesweeperCallback(this);
-
-
-
+        mine = findViewById(R.id.gameView_iconMine);
 
         if(MinesweeperGame.getInstance().getGameSettings().isMineCounterVisible()){
             mineCounter.setVisibility(View.VISIBLE);
@@ -75,6 +61,11 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
             mine.setVisibility(View.INVISIBLE);
         }
 
+        // Timer
+        timer = findViewById(R.id.gameView_timer);
+        timer.setText(("0"));
+        clock = findViewById(R.id.gameView_iconTimer);
+
         if(MinesweeperGame.getInstance().getGameSettings().isTimerVisible()){
             timer.setVisibility(View.VISIBLE);
             clock.setVisibility(View.VISIBLE);
@@ -82,6 +73,23 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
             timer.setVisibility(View.INVISIBLE);
             clock.setVisibility(View.INVISIBLE);
         }
+
+        // Callbacks
+        MinesweeperGame.getInstance().setMinesweeperCallback(this);
+        MinesweeperGame.getInstance().getTimer().setMinesweeperCallback(this);
+
+        // Einstellungen
+        ImageButton gameSetting = findViewById(R.id.gameView_gameSettings);
+        gameSetting.setOnClickListener(event -> {
+            startActivity(new Intent(this, SettingsActivity.class));
+        });
+
+        // Zurück zum Hauptmenü
+        ImageButton backToMenue = findViewById(R.id.gameView_backToMenue);
+        backToMenue.setOnClickListener(event -> {
+            startActivity(new Intent(this, MainActivity.class));
+            MinesweeperGame.getInstance().resetFields();
+        });
     }
 
     @Override
@@ -102,28 +110,29 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
         MinesweeperGame.getInstance().getTimer().stopTimer();
     }
 
-//    @Override
-//    protected void onRestart() {
-//        super.onRestart();
-//        MinesweeperGame.getInstance().getTimer().startTimer();
-//    }
-
     @Override
     protected void onResume() {
         super.onResume();
         if(MinesweeperGame.getInstance().isFirstClick()){
             MinesweeperGame.getInstance().getTimer().restartTimer();
         }
-
-
-
-
-
-        Log.d("Resume", "onResume wurde aufgerufen");
-        // Wenn zurück Button und dann wieder auf Spielen, wird der hier aufgerufen
-
-        // Und wenn man raustabt und wieder reingeht
     }
+
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        MinesweeperGame.getInstance().newGame();
+//    }
+
+    //    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        MinesweeperGame.getInstance().getTimer().startTimer();
+//    }
+    // Wenn zurück Button und dann wieder auf Spielen, wird der hier aufgerufen
+
+    // Und wenn man raustabt und wieder reingeht
+}
 //
 //    @Override
 //    protected void onStart() {
@@ -133,4 +142,3 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
 //
 //        // wird auch aufgerufen, wenn rausgetabt wurde
 //    }
-}

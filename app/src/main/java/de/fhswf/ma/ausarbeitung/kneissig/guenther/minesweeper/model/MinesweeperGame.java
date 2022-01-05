@@ -1,10 +1,19 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperCallback;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities.MainActivity;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gameComponents.GameBoardBuilder;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gameComponents.GameSettings;
@@ -20,6 +29,9 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.Field;
  */
 public class MinesweeperGame {
 
+    private static final String GAME_LOST = "Du hast verloren!";
+    private static final String GAME_WON = "Du hast gewonnen!";
+
     @SuppressLint("StaticFieldLeak")
     private static MinesweeperGame instance;
 
@@ -27,11 +39,11 @@ public class MinesweeperGame {
     MinesweeperCallback minesweeperCallback;
     private GameSettings gameSettings = new GameSettings();
 
-//    private int[][] bombPlacementField = new int[getColumnsX()][getRowsY()];
-//    private Field[][] minesweeperBoard = new Field[getColumnsX()][getRowsY()];
+    private int[][] bombPlacementField = new int[getColumnsX()][getRowsY()];
+    private Field[][] minesweeperBoard = new Field[getColumnsX()][getRowsY()];
 
-    private int[][] bombPlacementField;
-    private Field[][] minesweeperBoard;
+//    private int[][] bombPlacementField;
+//    private Field[][] minesweeperBoard;
 
     private boolean firstClick = false;
 
@@ -71,6 +83,7 @@ public class MinesweeperGame {
 
         this.context = context;
         bombPlacementField = GameBoardBuilder.buildEmptyBoard(getColumnsX(), getRowsY());
+
         setGameBoard(context,bombPlacementField);
     }
 
@@ -100,7 +113,7 @@ public class MinesweeperGame {
         for(int x = 0; x < getColumnsX(); x++ ){
             for(int y = 0; y < getRowsY(); y++ ){
                 if( minesweeperBoard[x][y] == null ){
-                    minesweeperBoard[x][y] = new Field( context,x,y);
+                    minesweeperBoard[x][y] = new Field(context,x,y);
                 }
                 minesweeperBoard[x][y].setFieldValue(bombPlacementField[x][y]);
                 minesweeperBoard[x][y].invalidate();
@@ -258,7 +271,7 @@ public class MinesweeperGame {
             }
         }
         if( mineNotFound == 0 && notDiscovered == 0 ){
-            Toast.makeText(context,"Game won", Toast.LENGTH_SHORT).show();                      // Hier ein Modal bauen!!!
+            createDialog(GAME_WON);
             timer.stopTimer();
             minesweeperCallback.updateTimer(0);
         }
@@ -272,7 +285,7 @@ public class MinesweeperGame {
      * verloren, sobald er eine Mine aufgedeckt hat, oder der Timer abgelaufen ist.
      */
     private void gameLost(){
-        Toast.makeText(context,"Game lost", Toast.LENGTH_SHORT).show();                         // Hier ein Modal bauen!!!
+        createDialog(GAME_LOST);
         timer.stopTimer();
 
         for (int x = 0; x < getColumnsX(); x++ ) {
@@ -301,6 +314,21 @@ public class MinesweeperGame {
      */
     public void resetGame(){
         createEmptyBoard(context);
+        setFirstClick(false);
+
+        timer.stopTimer();
+        timer.resetTimer();
+        minesweeperCallback.updateTimer(0);
+
+        minesweeperCallback.updateMineCounter(gameSettings.getNumberOfMines());
+        mineCounter.setMineCount(gameSettings.getNumberOfMines());
+    }
+
+    public void newGame(){
+        createEmptyBoard(context);
+
+        resetFields();
+
         setFirstClick(false);
 
         timer.stopTimer();
@@ -370,5 +398,47 @@ public class MinesweeperGame {
     public void setGameBoardSize(){
         this.bombPlacementField = new int[gameSettings.getColumnsX()][gameSettings.getRowsY()];
         this.minesweeperBoard = new Field[gameSettings.getColumnsX()][gameSettings.getRowsY()];
+    }
+
+    public void resetFields(){
+        for(int x = 0; x < getColumnsX(); x++ ){
+            for(int y = 0; y < getRowsY(); y++ ){
+                minesweeperBoard[x][y] = null;
+            }
+        }
+    }
+
+    private void createDialog(String message){
+
+        AlertDialog gameLostDialog = new AlertDialog.Builder(context).create();
+        LayoutInflater inflater = gameLostDialog.getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.dialog_layout, null);
+
+        TextView gameMessage = alertLayout.findViewById(R.id.dialog_messageTop);
+        gameMessage.setText(message);
+
+        gameLostDialog.setView(alertLayout);
+        gameLostDialog.setCancelable(false);
+
+        gameLostDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Nein",
+                (dialog, which) -> {
+                    context.startActivity(new Intent(context, MainActivity.class));
+                    dialog.dismiss();
+                });
+
+        gameLostDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Ja",
+                (dialog, which) -> {
+                    MinesweeperGame.getInstance().resetGame();
+                    dialog.dismiss();
+                });
+        gameLostDialog.show();
+
+        Button btnPositive = gameLostDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        Button btnNegative = gameLostDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) btnPositive.getLayoutParams();
+        layoutParams.weight = 10;
+        btnPositive.setLayoutParams(layoutParams);
+        btnNegative.setLayoutParams(layoutParams);
     }
 }

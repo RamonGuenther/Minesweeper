@@ -29,7 +29,7 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMo
  */
 @SuppressLint("ViewConstructor")
 public class Field extends View implements View.OnClickListener , View.OnLongClickListener{
-    
+
     private final Context context;
 
     private int fieldValue;
@@ -42,6 +42,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
     private int xPos;
     private int yPos;
     private int position;
+
 
     /**
      * Der Konstruktor von Field speichert die Position des Feldes auf dem
@@ -447,6 +448,5 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
 
         invalidate();
     }
-
 
 }
