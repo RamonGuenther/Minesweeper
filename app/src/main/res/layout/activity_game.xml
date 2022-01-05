@@ -35,25 +35,6 @@
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ic_baseline_settings_24" />
 
-    <de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.GameBoard
-        android:id="@+id/minesweeperGridView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:drawSelectorOnTop="false"
-        android:foregroundGravity="center"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:scrollbars="horizontal|vertical"
-        app:flow_verticalAlign="center"
-        app:layout_constraintBottom_toTopOf="@+id/flagMode"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/gameView_resetGame" />
-
     <ImageButton
         android:id="@+id/gameView_resetGame"
         android:layout_width="50dp"
@@ -169,5 +150,34 @@
         app:layout_constraintStart_toEndOf="@+id/gameView_timer"
         app:layout_constraintTop_toBottomOf="@+id/gameView_gameSettings"
         app:srcCompat="@drawable/icon_timer" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/gameMode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gameView_resetGame">
+
+        <de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.GameBoard
+            android:id="@+id/minesweeperGridView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:drawSelectorOnTop="false"
+            android:gravity="center"
+            android:scrollbars="horizontal|vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
