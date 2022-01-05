@@ -21,15 +21,16 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.Set;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 
-//TODO: Auf pixel passt es nicht !!!!!!!!!!!!!!!!!!!!!
-
-//TODO AppCompatDelegate.setDefaultNightMode().
+//TODO: Auf pixel XL passt es nicht !!!!!!!!!!!!!!!!!!!!! FIXXXEN
 
 /**
  * windowBackground only affects the main window's background.
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton settingsButton = findViewById(R.id.settingsButton);
 
         settingsButton.setOnClickListener(e -> {
+
             startActivity(new Intent(this, SettingsActivity.class));
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //            startActivityForResult(new Intent(MainActivity.this, Pop.class)); //finishActivity() um es zu übergeben
@@ -63,25 +65,37 @@ public class MainActivity extends AppCompatActivity {
 
         String[] items = getResources().getStringArray(R.array.level_select);
 
-        AutoCompleteTextView autoCompleteTextView = findViewById(R.id.selectLevel);
-        autoCompleteTextView.setText(items[0]);
+        Spinner autoCompleteTextView = findViewById(R.id.selectDifficultyLayout);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item, items);
 
         autoCompleteTextView.setAdapter(adapter);
 
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String text = "Spielmodus \"" + adapterView.getItemAtPosition(i).toString() + "\" wurde ausgewählt!";
-                Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT).show();
-            }
+
+//        Button playButton = findViewById(R.id.playButton);
+//        playButton.setOnClickListener(e -> {
+//            startActivity(new Intent(this, GameActivity.class));
+//            boolean isVibrate = true ;
+//            if(isVibrate){
+//                Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+//                vib.vibrate(500);
+//                Toast.makeText(this, "vib started", Toast.LENGTH_LONG).show();
+//            }
+//
+//            else{
+//
+//
+//            }
+//        });
+
+        Button gameInstructionButton = findViewById(R.id.gameInstructionButton);
+        gameInstructionButton.setOnClickListener(e->{
+            startActivity(new Intent(this, GameInstructionActivity.class));
         });
 
 
         Button playButton = findViewById(R.id.playButton);
         playButton.setOnClickListener(e -> {
-            startActivity(new Intent(this, GameActivity.class));
             boolean isVibrate = true ;
             if(isVibrate){
                 Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -93,12 +107,17 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
+            MinesweeperGame.getInstance().getGameSettings().setLevel(Level.ADVANCED);
+            if(MinesweeperGame.getInstance().isFirstClick()){
+                MinesweeperGame.getInstance().resetGame();
+            }
+            startActivity(new Intent(this, GameActivity.class));
+
+//            Intent i = new Intent(this, GameActivity.class);
+//            i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//            startActivity(i);
         });
 
-        Button gameInstructionButton = findViewById(R.id.gameInstructionButton);
-        gameInstructionButton.setOnClickListener(e->{
-            startActivity(new Intent(this, GameInstructionActivity.class));
-        });
 
 
     }

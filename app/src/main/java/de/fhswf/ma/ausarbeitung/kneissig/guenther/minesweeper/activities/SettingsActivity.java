@@ -1,24 +1,20 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
 
-import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
+import androidx.room.Room;
 
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -26,15 +22,52 @@ import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrConfig;
 import com.r0adkll.slidr.model.SlidrPosition;
 
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.AppDatabase;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.Settings;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Theme;
+
+/**
+ * TODO: Theme change spinnt wenn man mit Systemdarkmode die App öffnet, wenn nicht ist alles ok !
+ * - allowMainThreadQueries alternative suchen bzw recherchieren
+ * <p>
+ * <p>
+ * - die activity wird safe destroyed !! siehe db.close
+ * <p>
+ * <p>
+ * ON RESUME ETC. mal reinhauen aus dem Link und nachvollziehen was genau abläuft
+ */
 public class SettingsActivity extends AppCompatActivity {
+
+    private Settings settings;
+    private AppDatabase db;
+    private SwitchMaterial darkModeSwitch;
+    private SwitchMaterial timerSwitch;
+    private SwitchMaterial modeChangeSwitch;
+    private SwitchMaterial mineCountSwitch;
+    private SwitchMaterial vibrationSwitch;
+    private List<String> items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acvitity_settings);
+
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database_minesweeper").allowMainThreadQueries().build();
+
+        settings = db.settingsDao().getSettings();
+
+        //Damit immer ein Settingsobjekt in der Datenbank gespeichert ist
+        if (settings == null) {
+            settings = new Settings();
+            db.settingsDao().insert(settings);
+        }
+
 
         View view = findViewById(R.id.birne);
 
@@ -55,42 +88,110 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
 
-        SwitchMaterial switchMaterial = findViewById(R.id.darkModeSwitch);
+        //TODO: Bug wenn helles system design und dunkle switch gesetzt
+        darkModeSwitch = findViewById(R.id.darkModeSwitch);
+        darkModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                settings.setDarkMode(true);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                settings.setDarkMode(false);
+            }
+        });
 
-        switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) -> {
-           if(isChecked){
-               AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-           }
-           else{
-               AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-           }
+        vibrationSwitch = findViewById(R.id.vibrationSwitch);
+        vibrationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                MinesweeperGame.getInstance().getGameSettings().setVibration(true);
+                settings.setVibration(true);
+            } else {
+                MinesweeperGame.getInstance().getGameSettings().setVibration(false);
+                settings.setVibration(false);
+            }
+        });
+
+        timerSwitch = findViewById(R.id.showTimerSwitch);
+        timerSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                MinesweeperGame.getInstance().getGameSettings().setTimerVisible(true);
+                settings.setShowTimer(true);
+            } else {
+                MinesweeperGame.getInstance().getGameSettings().setTimerVisible(false);
+                settings.setShowTimer(false);
+            }
+        });
+
+        mineCountSwitch = findViewById(R.id.showMineCountSwitch);
+        mineCountSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                MinesweeperGame.getInstance().getGameSettings().setMineCounterVisible(true);
+                settings.setShowMineCounter(true);
+            } else {
+                MinesweeperGame.getInstance().getGameSettings().setMineCounterVisible(false);
+                settings.setShowMineCounter(false);
+            }
+        });
+
+        modeChangeSwitch = findViewById(R.id.modeChangeShowSwitch);
+        modeChangeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                MinesweeperGame.getInstance().getGameSettings().setGameModeVisible(true);
+                settings.setShowModeSwitch(true);
+            } else {
+                MinesweeperGame.getInstance().getGameSettings().setGameModeVisible(false);
+                settings.setShowModeSwitch(false);
+            }
         });
 
 
-        String[] items = getResources().getStringArray(R.array.theme_select);
-
-        AutoCompleteTextView autoCompleteTextView = findViewById(R.id.selectTheme);
-        autoCompleteTextView.setText(items[0]);
-
+        items = new ArrayList<>();
+        Arrays.asList(Theme.values()).forEach(e -> items.add(e.label));
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item, items);
+        Spinner spinner = findViewById(R.id.spinner);
+        spinner.setAdapter(adapter);
 
-        autoCompleteTextView.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("APFEL", "LISTENER PARTTTYY)");
+                String theme = parent.getItemAtPosition(position).toString();
+                settings.setTheme(theme);
+                MinesweeperGame.getInstance().getGameSettings().setTheme(theme);
+                String text = "Das Design \"" + theme + "\" wurde ausgewählt!";
+                Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+            }
 
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String text = "Das Design \"" + adapterView.getItemAtPosition(i).toString() + "\" wurde ausgewählt!";
-                Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT).show();
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
 
         ImageButton button = findViewById(R.id.backButton);
         button.setOnClickListener(e -> {
-//            finishActivity(); //bei startactivityforreason
             finish();
         });
+
+
+        spinner.setSelection(getThemeIndex(settings.getTheme()));
+        darkModeSwitch.setChecked(settings.isDarkMode());
+        vibrationSwitch.setChecked(settings.isVibration());
+        timerSwitch.setChecked(settings.isShowTimer());
+        mineCountSwitch.setChecked(settings.isShowMineCounter());
+        modeChangeSwitch.setChecked(settings.isShowModeSwitch());
+
+
     }
+
+    private int getThemeIndex(String theme) {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).contains(theme)) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
 
     @Override
     public void finish() {
@@ -98,8 +199,30 @@ public class SettingsActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
+
     public static void toggleTheme() {
         int mode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES ? AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES;
         AppCompatDelegate.setDefaultNightMode(mode);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        db.settingsDao().update(settings);
+        Log.e("UPDATE SETTINGS", "Settings wurden gespeichert");
+//        db.close();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("DESTROY SETIINGS", "Settings wurden GELÖSCHT");
+
+//        db.close();
     }
 }

@@ -29,28 +29,39 @@
         android:background="@null"
         android:fontFamily="casual"
         android:text="Einstellungen"
-        android:textSize="30sp"
+        android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/selectDifficultyLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="200dp"
+    <TextView
+        android:id="@+id/spinnerLabel"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="50dp"
-        android:hint="Spieldesign"
+        android:layout_marginTop="40dp"
+        android:labelFor="@id/spinner"
+        android:text="Spieldesign auswählen"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title">
 
-        <AutoCompleteTextView
-            android:id="@+id/selectTheme"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </TextView>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/style_spinner"
+        android:dropDownVerticalOffset="50dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerLabel" />
 
 
     <TextView
@@ -58,20 +69,20 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="35dp"
         android:background="@null"
         android:fontFamily="casual"
         android:gravity="center_vertical"
         android:text="Dunkler Modus"
-        android:textSize="20sp"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectDifficultyLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/darkModeSwitch"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="35dp"
         android:layout_marginEnd="51dp"
         android:checked="false"
         android:splitTrack="false"
@@ -79,7 +90,7 @@
         android:textColorHighlight="#1E1F20"
         android:textColorLink="#1E1F20"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectDifficultyLayout"
+        app:layout_constraintTop_toBottomOf="@+id/spinner"
         app:switchMinWidth="90dp"
         app:useMaterialThemeColors="false" />
 
@@ -94,7 +105,7 @@
         android:fontFamily="casual"
         android:gravity="center_vertical"
         android:text="Vibration"
-        android:textSize="20sp"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/darkModeLabel" />
 
@@ -125,7 +136,7 @@
         android:fontFamily="casual"
         android:gravity="center_vertical"
         android:text="Timer anzeigen"
-        android:textSize="20sp"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vibrationLabel" />
 
@@ -155,7 +166,7 @@
         android:fontFamily="casual"
         android:gravity="center_vertical"
         android:text="Minenanzahl anzeigen"
-        android:textSize="20sp"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/showTimerLabel" />
 
@@ -176,8 +187,6 @@
         app:useMaterialThemeColors="false" />
 
 
-
-
     <TextView
         android:id="@+id/modeChangeShowLabel"
         android:layout_width="wrap_content"
@@ -188,7 +197,7 @@
         android:fontFamily="casual"
         android:gravity="center_vertical"
         android:text="Modiwechsel anzeigen"
-        android:textSize="20sp"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/showMineCountLabel" />
 

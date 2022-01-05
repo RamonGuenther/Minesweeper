@@ -16,7 +16,7 @@
         android:background="@null"
         android:fontFamily="casual"
         android:text="High Scores"
-        android:textSize="30sp"
+        android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

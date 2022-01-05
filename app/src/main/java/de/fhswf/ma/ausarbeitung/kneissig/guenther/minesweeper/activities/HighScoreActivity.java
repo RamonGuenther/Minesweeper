@@ -2,6 +2,7 @@ package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -14,6 +15,14 @@ import com.r0adkll.slidr.model.SlidrPosition;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 
+/**
+ * Das Backend Ihrer App muss eine „Hall of Fame“
+ * besitzen
+ * Jedes Spiel und die in diesem Spiel erreichten
+ * Punkte werden dort abgespeichert.
+ *
+ * in leicht mittel schwer unterscheiden,  benutzerdefinierte werden erstmal nicht gespeichert
+ */
 public class HighScoreActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +58,11 @@ public class HighScoreActivity extends AppCompatActivity {
 
     @Override
     public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        try {
+            super.finish();
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }catch(Exception e){
+            Log.e("TEST" , e.getMessage());
+        }
     }
 }
