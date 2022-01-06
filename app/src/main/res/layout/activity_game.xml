@@ -52,7 +52,7 @@
         app:srcCompat="@android:drawable/ic_popup_sync" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/gameMode"
+        android:id="@+id/gameView_gameMode"
         android:layout_width="91dp"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
@@ -63,8 +63,8 @@
         android:textColorHighlight="#1E1F20"
         android:textColorLink="#1E1F20"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/flagMode"
-        app:layout_constraintStart_toEndOf="@+id/mineMode"
+        app:layout_constraintEnd_toStartOf="@+id/gameView_flagMode"
+        app:layout_constraintStart_toEndOf="@+id/gameView_mineMode"
         app:switchMinWidth="90dp"
         app:useMaterialThemeColors="false" />
 
@@ -101,7 +101,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/mineMode"
+        android:id="@+id/gameView_mineMode"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
@@ -112,11 +112,11 @@
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/gameMode"
+        app:layout_constraintEnd_toStartOf="@+id/gameView_gameMode"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/flagMode"
+        android:id="@+id/gameView_flagMode"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginEnd="20dp"
@@ -127,7 +127,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/gameMode" />
+        app:layout_constraintStart_toEndOf="@+id/gameView_gameMode" />
 
     <ImageView
         android:id="@+id/gameView_iconMine"
@@ -152,18 +152,19 @@
         app:srcCompat="@drawable/icon_timer" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/gameView_GridContainerLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/gameMode"
+        app:layout_constraintBottom_toTopOf="@+id/gameView_gameMode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gameView_resetGame">
 
         <de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.GameBoard
-            android:id="@+id/minesweeperGridView"
+            android:id="@+id/gameView_minesweeperGridView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

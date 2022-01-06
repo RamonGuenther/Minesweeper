@@ -199,11 +199,15 @@ public class MinesweeperGame {
     public void placeFlag(int xPos , int yPos ){
 
         if(mineCounter.getMineCount() == 0){
-            Toast.makeText(context,"Die maximale Anzahl an Minen wurde markiert", Toast.LENGTH_SHORT).show();
+            if(gameSettings.isHints()){
+                Toast.makeText(context,"Die maximale Anzahl an Minen wurde markiert", Toast.LENGTH_SHORT).show();
+            }
             return;
         }
         if(getFieldAt(xPos, yPos).isDiscovered()){
-            Toast.makeText(context,"Keine Flagge auf aufgedecktem Feld möglich", Toast.LENGTH_SHORT).show();
+            if(gameSettings.isHints()){
+                Toast.makeText(context,"Keine Flagge auf aufgedecktem Feld möglich", Toast.LENGTH_SHORT).show();
+            }
             return;
         }
 
@@ -231,7 +235,9 @@ public class MinesweeperGame {
     public void placeQuestionMark(int xPos , int yPos ){
 
         if(getFieldAt(xPos, yPos).isDiscovered()){
-            Toast.makeText(context,"Kein Fragezeichen auf aufgedecktem Feld möglich", Toast.LENGTH_SHORT).show();
+            if(gameSettings.isHints()){
+                Toast.makeText(context,"Kein Fragezeichen auf aufgedecktem Feld möglich", Toast.LENGTH_SHORT).show();
+            }
             return;
         }
 
@@ -274,6 +280,17 @@ public class MinesweeperGame {
             createDialog(GAME_WON);
             timer.stopTimer();
             minesweeperCallback.updateTimer(0);
+
+            //Ramonnilein
+            HighscoreService.createHighScore(
+                    context,
+                    timer.getSecondsPassed(),
+                    gameSettings.getLevel(),
+                    GameResult.WON,
+                    gameSettings.getNumberOfMines() + "/" + gameSettings.getNumberOfMines(),
+                    gameSettings.getColumnsX() + " x " + gameSettings.getRowsY()
+            //Ende :3
+            );
         }
         return false;
     }
@@ -287,6 +304,17 @@ public class MinesweeperGame {
     private void gameLost(){
         createDialog(GAME_LOST);
         timer.stopTimer();
+
+        //Ramonnilein
+        HighscoreService.createHighScore(
+                context,
+                timer.getSecondsPassed(),
+                gameSettings.getLevel(),
+                GameResult.LOST,
+                mineCounter.getMineCount() + "/" + gameSettings.getNumberOfMines(),
+                gameSettings.getColumnsX() + " x " + gameSettings.getRowsY()
+        );
+        //Ende :3
 
         for (int x = 0; x < getColumnsX(); x++ ) {
             for (int y = 0; y < getRowsY(); y++) {
@@ -313,8 +341,10 @@ public class MinesweeperGame {
      * neue Spielrunde auf dem gleichen Schwierigkeitsgrad beginnen kann.
      */
     public void resetGame(){
-        createEmptyBoard(context);
         setFirstClick(false);
+        setGameMode(GameMode.MINE_MODE);
+
+        createEmptyBoard(context);
 
         timer.stopTimer();
         timer.resetTimer();
@@ -324,19 +354,60 @@ public class MinesweeperGame {
         mineCounter.setMineCount(gameSettings.getNumberOfMines());
     }
 
+
     public void newGame(){
-        createEmptyBoard(context);
-
+        resetGame();
         resetFields();
+    }
 
-        setFirstClick(false);
+    public void resetFields(){
+        for(int x = 0; x < getColumnsX(); x++ ){
+            for(int y = 0; y < getRowsY(); y++ ){
+                minesweeperBoard[x][y] = null;
+            }
+        }
+    }
 
-        timer.stopTimer();
-        timer.resetTimer();
-        minesweeperCallback.updateTimer(0);
+    public void changeTheme(){
+        for(int x = 0; x < getColumnsX(); x++ ){
+            for(int y = 0; y < getRowsY(); y++ ){
+                minesweeperBoard[x][y].invalidate();
+            }
+        }
+    }
 
-        minesweeperCallback.updateMineCounter(gameSettings.getNumberOfMines());
-        mineCounter.setMineCount(gameSettings.getNumberOfMines());
+    private void createDialog(String message){
+
+        AlertDialog gameLostDialog = new AlertDialog.Builder(context).create();
+        LayoutInflater inflater = gameLostDialog.getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.dialog_layout, null);
+
+        TextView gameMessage = alertLayout.findViewById(R.id.dialog_messageTop);
+        gameMessage.setText(message);
+
+        gameLostDialog.setView(alertLayout);
+        gameLostDialog.setCancelable(false);
+
+        gameLostDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Nein",
+                (dialog, which) -> {
+                    context.startActivity(new Intent(context, MainActivity.class));
+                    dialog.dismiss();
+                });
+
+        gameLostDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Ja",
+                (dialog, which) -> {
+                    MinesweeperGame.getInstance().resetGame();
+                    dialog.dismiss();
+                });
+        gameLostDialog.show();
+
+        Button btnPositive = gameLostDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        Button btnNegative = gameLostDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) btnPositive.getLayoutParams();
+        layoutParams.weight = 10;
+        btnPositive.setLayoutParams(layoutParams);
+        btnNegative.setLayoutParams(layoutParams);
     }
 
     /*----------------------------------------------------------------------------------------------
@@ -398,47 +469,5 @@ public class MinesweeperGame {
     public void setGameBoardSize(){
         this.bombPlacementField = new int[gameSettings.getColumnsX()][gameSettings.getRowsY()];
         this.minesweeperBoard = new Field[gameSettings.getColumnsX()][gameSettings.getRowsY()];
-    }
-
-    public void resetFields(){
-        for(int x = 0; x < getColumnsX(); x++ ){
-            for(int y = 0; y < getRowsY(); y++ ){
-                minesweeperBoard[x][y] = null;
-            }
-        }
-    }
-
-    private void createDialog(String message){
-
-        AlertDialog gameLostDialog = new AlertDialog.Builder(context).create();
-        LayoutInflater inflater = gameLostDialog.getLayoutInflater();
-        View alertLayout = inflater.inflate(R.layout.dialog_layout, null);
-
-        TextView gameMessage = alertLayout.findViewById(R.id.dialog_messageTop);
-        gameMessage.setText(message);
-
-        gameLostDialog.setView(alertLayout);
-        gameLostDialog.setCancelable(false);
-
-        gameLostDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Nein",
-                (dialog, which) -> {
-                    context.startActivity(new Intent(context, MainActivity.class));
-                    dialog.dismiss();
-                });
-
-        gameLostDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Ja",
-                (dialog, which) -> {
-                    MinesweeperGame.getInstance().resetGame();
-                    dialog.dismiss();
-                });
-        gameLostDialog.show();
-
-        Button btnPositive = gameLostDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-        Button btnNegative = gameLostDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) btnPositive.getLayoutParams();
-        layoutParams.weight = 10;
-        btnPositive.setLayoutParams(layoutParams);
-        btnNegative.setLayoutParams(layoutParams);
     }
 }

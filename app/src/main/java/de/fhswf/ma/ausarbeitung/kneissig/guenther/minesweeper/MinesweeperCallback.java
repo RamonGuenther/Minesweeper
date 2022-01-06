@@ -26,4 +26,5 @@ public interface MinesweeperCallback {
      * @param time              Aktuelle Zahl der verstrichenen Sekunden seit Spielbeginn
      */
     void updateTimer(int time);
+
 }

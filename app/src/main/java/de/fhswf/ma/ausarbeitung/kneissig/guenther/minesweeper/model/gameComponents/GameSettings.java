@@ -10,6 +10,7 @@ public class GameSettings  {
     private boolean mineCounterVisible;
     private boolean gameModeVisible;
     private boolean vibration;
+    private boolean hints;
 
     private Theme theme;
     private Level level;
@@ -22,6 +23,7 @@ public class GameSettings  {
         timerVisible = true;
         mineCounterVisible = true;
         gameModeVisible = true;
+        hints = false;
 
         theme = Theme.BLUE;
         level = Level.BEGINNER;
@@ -83,10 +85,10 @@ public class GameSettings  {
         this.level = level;
         setBoardValuesByLevel();
         MinesweeperGame.getInstance().setGameBoardSize();
+        MinesweeperGame.getInstance().getMineCounter().setMineCount(numberOfMines);
     }
 
     public void setLevel(String level) {
-
         switch (level){
             case "Anfänger":
                 this.level = Level.BEGINNER;
@@ -103,6 +105,16 @@ public class GameSettings  {
         }
         setBoardValuesByLevel();
         MinesweeperGame.getInstance().setGameBoardSize();
+        MinesweeperGame.getInstance().getMineCounter().setMineCount(numberOfMines);
+    }
+
+    public void setLevel(String level, int columnsX, int rowsY, int numberOfMines){
+        if(level.equals(Level.CUSTOM.label)){
+            this.level = Level.CUSTOM;
+            setCustomBoardValues(numberOfMines, columnsX, rowsY);
+        }
+        MinesweeperGame.getInstance().setGameBoardSize();
+        MinesweeperGame.getInstance().getMineCounter().setMineCount(numberOfMines);
     }
 
     public int getNumberOfMines() {
@@ -166,5 +178,13 @@ public class GameSettings  {
 
     public void setVibration(boolean vibration) {
         this.vibration = vibration;
+    }
+
+    public boolean isHints() {
+        return hints;
+    }
+
+    public void setHints(boolean hints) {
+        this.hints = hints;
     }
 }

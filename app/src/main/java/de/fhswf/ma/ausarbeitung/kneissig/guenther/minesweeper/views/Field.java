@@ -80,8 +80,10 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
 
         if(!MinesweeperGame.getInstance().isFirstClick()){
             if(MinesweeperGame.getInstance().getGameMode().equals(GameMode.FLAG_MODE)){             // damit keine Flagge gesetzt werden kann, solange das erste Feld nicht angeklickt wurde
-                Toast.makeText(context,"Es mus erst ein Feld aufgedeckt werden",
-                        Toast.LENGTH_SHORT).show();
+                if(MinesweeperGame.getInstance().getGameSettings().isHints()){
+                    Toast.makeText(context,"Es mus erst ein Feld aufgedeckt werden",
+                            Toast.LENGTH_SHORT).show();
+                }
                 return;
             }
             MinesweeperGame.getInstance().setFirstClick(true);
@@ -91,8 +93,10 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
         switch (MinesweeperGame.getInstance().getGameMode()){
             case MINE_MODE:
                 if(isFlagged() || isMarked()){                                                      // damit ein Feld nicht aufdeckbar ist, solange dort eine Flagge oder ein Fragezeichen platziert ist
-                    Toast.makeText(context,"Kann nicht aufgdeckt werden, wenn markiert",
-                            Toast.LENGTH_SHORT).show();
+                   if(MinesweeperGame.getInstance().getGameSettings().isHints()){
+                       Toast.makeText(context,"Kann nicht aufgdeckt werden, wenn markiert",
+                               Toast.LENGTH_SHORT).show();
+                   }
                 }
                 else{
                     MinesweeperGame.getInstance().discoverField(getXPos(), getYPos());
@@ -115,8 +119,10 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
     @Override
     public boolean onLongClick(View view) {
         if(!MinesweeperGame.getInstance().isFirstClick()){
-            Toast.makeText(context,"Es mus erst ein Feld aufgedeckt werden",
-                    Toast.LENGTH_SHORT).show();
+            if(MinesweeperGame.getInstance().getGameSettings().isHints()){
+                Toast.makeText(context,"Es mus erst ein Feld aufgedeckt werden",
+                        Toast.LENGTH_SHORT).show();
+            }
             return true;
         }
         switch (MinesweeperGame.getInstance().getGameMode()){
@@ -206,7 +212,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
      *
      * @param canvas            Erhält die Draw-Aufruf für die Flagge.
      */
-    private void drawFlag( Canvas canvas ){
+    private void drawFlag(Canvas canvas ){
         int drawableId = context.getResources().getIdentifier(
                 "theme_"
                         + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
@@ -361,7 +367,12 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
      * @param canvas            Erhält die Draw-Aufruf für ein Fragezeichen.
      */
     private void drawQuestionMark( Canvas canvas ){
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.theme_bordeaux_question);
+        int drawableId = context.getResources().getIdentifier(
+                "theme_"
+                        + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                        + "_question",
+                "drawable", context.getPackageName());
+        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
         if (drawable != null) {
             drawable.setBounds(0,0,getWidth(),getHeight());
             drawable.draw(canvas);

@@ -20,6 +20,9 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMo
 public class GameActivity extends AppCompatActivity implements MinesweeperCallback{
 
     SwitchMaterial gameMode;
+    TextView flagMode;
+    TextView mineMode;
+
     TextView mineCounter;
     TextView timer;
 
@@ -31,8 +34,10 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+
+
         //Switch zum Wechseln zwischen Minen-Modus und Flaggen-Modus
-        gameMode = findViewById(R.id.gameMode);
+        gameMode = findViewById(R.id.gameView_gameMode);
         gameMode.setOnClickListener(e -> {
             if(gameMode.isChecked()){
                 MinesweeperGame.getInstance().setGameMode(GameMode.FLAG_MODE);
@@ -41,6 +46,18 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
                 MinesweeperGame.getInstance().setGameMode(GameMode.MINE_MODE);
             }
         });
+        mineMode = findViewById(R.id.gameView_mineMode);
+        flagMode = findViewById(R.id.gameView_flagMode);
+
+        if(MinesweeperGame.getInstance().getGameSettings().isGameModeVisible()){
+            gameMode.setVisibility(View.VISIBLE);
+            mineMode.setVisibility(View.VISIBLE);
+            flagMode.setVisibility(View.VISIBLE);
+        }else{
+            gameMode.setVisibility(View.INVISIBLE);
+            mineMode.setVisibility(View.INVISIBLE);
+            flagMode.setVisibility(View.INVISIBLE);
+        }
 
         // Button zum Zurücksetzen des Spiels
         ImageButton resetButton = findViewById(R.id.gameView_resetGame);
@@ -116,6 +133,47 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
         if(MinesweeperGame.getInstance().isFirstClick()){
             MinesweeperGame.getInstance().getTimer().restartTimer();
         }
+        updateView();
+    }
+
+    private void updateView(){
+        if(MinesweeperGame.getInstance().getGameSettings().isGameModeVisible()){
+            gameMode.setVisibility(View.VISIBLE);
+            mineMode.setVisibility(View.VISIBLE);
+            flagMode.setVisibility(View.VISIBLE);
+        }else{
+            gameMode.setVisibility(View.INVISIBLE);
+            mineMode.setVisibility(View.INVISIBLE);
+            flagMode.setVisibility(View.INVISIBLE);
+        }
+
+        if(MinesweeperGame.getInstance().getGameSettings().isMineCounterVisible()){
+            mineCounter.setVisibility(View.VISIBLE);
+            mine.setVisibility(View.VISIBLE);
+        }else{
+            mineCounter.setVisibility(View.INVISIBLE);
+            mine.setVisibility(View.INVISIBLE);
+        }
+
+        if(MinesweeperGame.getInstance().getGameSettings().isTimerVisible()){
+            timer.setVisibility(View.VISIBLE);
+            clock.setVisibility(View.VISIBLE);
+        }else{
+            timer.setVisibility(View.INVISIBLE);
+            clock.setVisibility(View.INVISIBLE);
+        }
+
+        if(MinesweeperGame.getInstance().getGameSettings().isGameModeVisible()){
+            gameMode.setVisibility(View.VISIBLE);
+            mineMode.setVisibility(View.VISIBLE);
+            flagMode.setVisibility(View.VISIBLE);
+        }else{
+            gameMode.setVisibility(View.INVISIBLE);
+            mineMode.setVisibility(View.INVISIBLE);
+            flagMode.setVisibility(View.INVISIBLE);
+        }
+
+        MinesweeperGame.getInstance().changeTheme();
     }
 
 //    @Override
