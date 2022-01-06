@@ -91,5 +91,7 @@ public class Timer {
         this.minesweeperCallback = minesweeperCallback;
     }
 
-
+    public int getSecondsPassed() {
+        return secondsPassed;
+    }
 }

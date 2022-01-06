@@ -20,15 +20,22 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Theme;
 
 //TODO: Auf pixel XL passt es nicht !!!!!!!!!!!!!!!!!!!!! FIXXXEN
 
@@ -44,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         ImageButton settingsButton = findViewById(R.id.settingsButton);
@@ -57,67 +65,87 @@ public class MainActivity extends AppCompatActivity {
 
 
         ImageButton highScoreButton = findViewById(R.id.highScoreButton);
-        highScoreButton.setOnClickListener(e->{
+        highScoreButton.setOnClickListener(e -> {
             startActivity(new Intent(this, HighScoreActivity.class));
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         });
 
 
-        String[] items = getResources().getStringArray(R.array.level_select);
-
-        Spinner autoCompleteTextView = findViewById(R.id.selectDifficultyLayout);
-
+        List<String> items = new ArrayList<>();
+        Arrays.asList(Level.values()).forEach(e -> items.add(e.label));
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item, items);
+        Spinner spinner = findViewById(R.id.selectDifficultySpinner);
+        spinner.setAdapter(adapter);
 
-        autoCompleteTextView.setAdapter(adapter);
 
+        EditText heightTextInput = findViewById(R.id.heightTextInput);
+        EditText widthTextInput = findViewById(R.id.widthTextInput);
+        EditText numberOfMinesInput = findViewById(R.id.numberOfMinesInput);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-//        Button playButton = findViewById(R.id.playButton);
-//        playButton.setOnClickListener(e -> {
-//            startActivity(new Intent(this, GameActivity.class));
-//            boolean isVibrate = true ;
-//            if(isVibrate){
-//                Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-//                vib.vibrate(500);
-//                Toast.makeText(this, "vib started", Toast.LENGTH_LONG).show();
-//            }
-//
-//            else{
-//
-//
-//            }
-//        });
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //Man müsste das ganze nochmal iwie bestätigen können oder über den Playbutton der nochmal alles checkt
+
+                String level = parent.getItemAtPosition(position).toString();
+
+                MinesweeperGame.getInstance().getGameSettings().setLevel(level);
+
+                if (level.equals(Level.CUSTOM.label)) {
+                    heightTextInput.setText("");
+                    widthTextInput.setText("");
+                    numberOfMinesInput.setText("");
+                    //Toast
+
+                } else {
+                    heightTextInput.setText(String.valueOf(MinesweeperGame.getInstance().getGameSettings().getColumnsX()));
+                    widthTextInput.setText(String.valueOf(MinesweeperGame.getInstance().getGameSettings().getRowsY()));
+                    numberOfMinesInput.setText(String.valueOf(MinesweeperGame.getInstance().getGameSettings().getNumberOfMines()));
+                }
+
+                String text = "Das Level \"" + level + "\" wurde ausgewählt!";
+                Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         Button gameInstructionButton = findViewById(R.id.gameInstructionButton);
-        gameInstructionButton.setOnClickListener(e->{
+        gameInstructionButton.setOnClickListener(e -> {
             startActivity(new Intent(this, GameInstructionActivity.class));
         });
 
 
         Button playButton = findViewById(R.id.playButton);
         playButton.setOnClickListener(e -> {
-            boolean isVibrate = true ;
-            if(isVibrate){
+            boolean isVibrate = true;
+            if (isVibrate) {
                 Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 vib.vibrate(500);
-                Toast.makeText(this, "vib started", Toast.LENGTH_LONG).show();
-            }
-
-            else{
+            } else {
 
 
             }
-            MinesweeperGame.getInstance().getGameSettings().setLevel(Level.ADVANCED);
-            if(MinesweeperGame.getInstance().isFirstClick()){
-                MinesweeperGame.getInstance().resetGame();
+            if (MinesweeperGame.getInstance().getGameSettings().getLevel().equals(Level.CUSTOM)) {
+                MinesweeperGame.getInstance().getGameSettings().setCustomBoardValues(
+                        Integer.parseInt(numberOfMinesInput.getText().toString()),
+                        Integer.parseInt(widthTextInput.getText().toString()),
+                        Integer.parseInt(heightTextInput.getText().toString())
+                );
+
+            }
+
+            if (MinesweeperGame.getInstance().isFirstClick()) {
+                MinesweeperGame.getInstance().newGame();
             }
             startActivity(new Intent(this, GameActivity.class));
 
-//            Intent i = new Intent(this, GameActivity.class);
-//            i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//            startActivity(i);
         });
 
+
+        //setCustomBoardValues für benutzerdefniert in gamesettings
 
 
     }

@@ -17,9 +17,13 @@ public class Settings {
     @ColumnInfo(name = "vibration")
     public boolean vibration;
 
+    @ColumnInfo(name = "show_timer")
     public boolean showTimer;
 
+    @ColumnInfo(name = "show_mine_counter")
     public boolean showMineCounter;
+
+    @ColumnInfo(name = "show_mode_switch")
     public boolean showModeSwitch;
 
     public String theme;

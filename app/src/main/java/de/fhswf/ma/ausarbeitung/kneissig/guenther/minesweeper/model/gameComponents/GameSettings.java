@@ -81,13 +81,6 @@ public class GameSettings  {
         return level;
     }
 
-    public void setLevel(Level level) {
-        this.level = level;
-        setBoardValuesByLevel();
-        MinesweeperGame.getInstance().setGameBoardSize();
-        MinesweeperGame.getInstance().getMineCounter().setMineCount(numberOfMines);
-    }
-
     public void setLevel(String level) {
         switch (level){
             case "Anfänger":
@@ -101,21 +94,22 @@ public class GameSettings  {
                 break;
             case "Benutzerdefiniert":
                 this.level = Level.CUSTOM;
-                break;
+                return;
         }
         setBoardValuesByLevel();
         MinesweeperGame.getInstance().setGameBoardSize();
         MinesweeperGame.getInstance().getMineCounter().setMineCount(numberOfMines);
     }
 
-    public void setLevel(String level, int columnsX, int rowsY, int numberOfMines){
-        if(level.equals(Level.CUSTOM.label)){
-            this.level = Level.CUSTOM;
-            setCustomBoardValues(numberOfMines, columnsX, rowsY);
-        }
+    public void setCustomBoardValues(int numberOfMines, int columnsX, int rowsY){
+
+        this.numberOfMines = numberOfMines;
+        this.columnsX = columnsX;
+        this.rowsY = rowsY;
         MinesweeperGame.getInstance().setGameBoardSize();
         MinesweeperGame.getInstance().getMineCounter().setMineCount(numberOfMines);
     }
+
 
     public int getNumberOfMines() {
         return numberOfMines;
@@ -161,16 +155,7 @@ public class GameSettings  {
         }
     }
 
-    public void setCustomBoardValues(int numberOfMines, int columnsX, int rowsY){
 
-        level = Level.CUSTOM;
-
-        if(MinesweeperGame.getInstance().getGameSettings().level.equals(Level.CUSTOM)){
-            this.numberOfMines = numberOfMines;
-            this.columnsX = columnsX;
-            this.rowsY = rowsY;
-        }
-    }
 
     public boolean isVibration() {
         return vibration;

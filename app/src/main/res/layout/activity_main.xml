@@ -51,6 +51,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/playButton">
 
+        <Spinner
+            android:id="@+id/selectDifficultySpinner"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:hint="Schwierigkeit auswählen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </Spinner>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/heightLayout"
@@ -64,7 +78,7 @@
             app:helperTextEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/selectDifficultyLayout"
+            app:layout_constraintTop_toBottomOf="@+id/selectDifficultySpinner"
             app:startIconDrawable="@drawable/ic_baseline_arrow_upward_24">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -116,7 +130,7 @@
             app:startIconDrawable="@drawable/ic_baseline_warning_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/mineQuantityTextInput"
+                android:id="@+id/numberOfMinesInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Minenanzahl"
@@ -124,19 +138,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/selectDifficultyLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="20dp"
-            android:hint="Schwierigkeit auswählen"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </Spinner>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

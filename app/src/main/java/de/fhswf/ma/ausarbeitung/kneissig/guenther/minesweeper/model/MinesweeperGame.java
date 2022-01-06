@@ -10,11 +10,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperCallback;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities.MainActivity;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.HighscoreService;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameResult;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gameComponents.GameBoardBuilder;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gameComponents.GameSettings;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gameComponents.MineCounter;
@@ -279,6 +280,7 @@ public class MinesweeperGame {
         if( mineNotFound == 0 && notDiscovered == 0 ){
             createDialog(GAME_WON);
             timer.stopTimer();
+
             minesweeperCallback.updateTimer(0);
 
             //Ramonnilein

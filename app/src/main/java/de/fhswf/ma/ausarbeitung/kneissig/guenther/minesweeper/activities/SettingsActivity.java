@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -22,14 +21,21 @@ import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrConfig;
 import com.r0adkll.slidr.model.SlidrPosition;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.AppDatabase;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.MinesweeperDatabase;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.HighScore;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.Settings;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameResult;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Theme;
 
 /**
@@ -45,7 +51,8 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Theme;
 public class SettingsActivity extends AppCompatActivity {
 
     private Settings settings;
-    private AppDatabase db;
+    private MinesweeperDatabase db;
+
     private SwitchMaterial darkModeSwitch;
     private SwitchMaterial timerSwitch;
     private SwitchMaterial modeChangeSwitch;
@@ -58,7 +65,9 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acvitity_settings);
 
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database_minesweeper").allowMainThreadQueries().build();
+        db = MinesweeperDatabase.createDatabase(this);
+
+//        db = Room.databaseBuilder(getApplicationContext(), MinesweeperDatabase.class, "database_minesweeper").allowMainThreadQueries().build();
 
         settings = db.settingsDao().getSettings();
 
@@ -66,6 +75,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (settings == null) {
             settings = new Settings();
             db.settingsDao().insert(settings);
+            Log.e("test", settings.getTheme());
         }
 
 

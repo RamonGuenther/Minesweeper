@@ -54,6 +54,8 @@ public class HighScoreActivity extends AppCompatActivity {
             finish();
         });
 
+
+
     }
 
     @Override
