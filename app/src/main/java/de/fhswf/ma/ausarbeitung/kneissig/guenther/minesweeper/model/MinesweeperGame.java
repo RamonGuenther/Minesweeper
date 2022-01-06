@@ -304,7 +304,7 @@ public class MinesweeperGame {
      * verloren, sobald er eine Mine aufgedeckt hat, oder der Timer abgelaufen ist.
      */
     private void gameLost(){
-        createDialog(GAME_LOST);
+//        createDialog(GAME_LOST);
         timer.stopTimer();
 
         //Ramonnilein

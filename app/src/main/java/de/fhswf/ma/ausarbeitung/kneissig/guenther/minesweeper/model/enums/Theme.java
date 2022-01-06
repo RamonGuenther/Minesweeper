@@ -4,6 +4,8 @@ public enum Theme {
 
     BORDEAUX("Bordeaux"),
     BLUE("Blau"),
+    GREEN("Gruen"),
+    GREY("Grau"),
     CLASSIC("Classic");
 
     public final String label;

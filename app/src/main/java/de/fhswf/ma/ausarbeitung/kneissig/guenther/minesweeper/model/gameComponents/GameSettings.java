@@ -71,6 +71,12 @@ public class GameSettings  {
             case "Blau":
                 this.theme = Theme.BLUE;
                 break;
+            case "Gruen":
+                this.theme = Theme.GREEN;
+                break;
+            case "Grau":
+                this.theme = Theme.GREY;
+                break;
             case "Classic":
                 this.theme = Theme.CLASSIC;
                 break;
