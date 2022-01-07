@@ -37,14 +37,11 @@ public class MinesweeperGame {
     private static MinesweeperGame instance;
 
     private Context context;
-    MinesweeperCallback minesweeperCallback;
-    private GameSettings gameSettings = new GameSettings();
+    private MinesweeperCallback minesweeperCallback;
+    private final GameSettings gameSettings = new GameSettings();
 
     private int[][] bombPlacementField = new int[getColumnsX()][getRowsY()];
     private Field[][] minesweeperBoard = new Field[getColumnsX()][getRowsY()];
-
-//    private int[][] bombPlacementField;
-//    private Field[][] minesweeperBoard;
 
     private boolean firstClick = false;
 
@@ -67,10 +64,18 @@ public class MinesweeperGame {
         return instance;
     }
 
-
     /*----------------------------------------------------------------------------------------------
                                             METHODEN
     ----------------------------------------------------------------------------------------------*/
+
+    /**
+     * Die Methode setGameBoardSize passt die Array-Felder für das Spiel entsprechend des vom
+     * Spieler ausgewählten Schwierigkeitsgrades an.
+     */
+    public void setGameBoardSize(){
+        this.bombPlacementField = new int[gameSettings.getColumnsX()][gameSettings.getRowsY()];
+        this.minesweeperBoard = new Field[gameSettings.getColumnsX()][gameSettings.getRowsY()];
+    }
 
     /**
      * Die Methode createEmptyBoard erstellt ein neues Spielfeld, welches zunächst für
@@ -165,13 +170,13 @@ public class MinesweeperGame {
         if(xPos >= 0 && yPos >= 0 && xPos < getColumnsX() && yPos < getRowsY() && !getFieldAt(xPos,yPos).isTouched()){
             getFieldAt(xPos,yPos).setTouched();
 
-        // Damit Flaggen entfernt werden, wenn Felder aufgedeckt werden, die keine Mine enthalten???
-        if(getFieldAt(xPos,yPos).isFlagged() || getFieldAt(xPos,yPos).isMarked()){
-            getFieldAt(xPos,yPos).setFlagged(false);
-            getFieldAt(xPos,yPos).setMarked(false);
-            MinesweeperGame.getInstance().getMineCounter().increaseMineCount();
-            minesweeperCallback.updateMineCounter(MinesweeperGame.getInstance().getMineCounter().getMineCount());
-        }
+            // Damit Flaggen entfernt werden, wenn Felder aufgedeckt werden, die keine Mine enthalten
+            if(getFieldAt(xPos,yPos).isFlagged() || getFieldAt(xPos,yPos).isMarked()){
+                getFieldAt(xPos,yPos).setFlagged(false);
+                getFieldAt(xPos,yPos).setMarked(false);
+                MinesweeperGame.getInstance().getMineCounter().increaseMineCount();
+                minesweeperCallback.updateMineCounter(MinesweeperGame.getInstance().getMineCounter().getMineCount());
+            }
 
             if(getFieldAt(xPos,yPos).getFieldValue() == 0){
                 for(int x = -1 ; x <= 1 ; x++ ){
@@ -254,11 +259,10 @@ public class MinesweeperGame {
     /**
      * Die Methode checkGameWon prüft, ob die Bedingungen für das Ende des Spiels gegeben sind.
      * Sind alle Felder ohne Minen aufgedeckt und die Felder mit Minen markiert oder noch
-     * unaufgedeckt, ist das Spiel zuende und der Spieler hat gewonnen.
-     *
-     * @return                  Gibt zurück, ob das Spiel beendet wurde.
+     * unaufgedeckt, ist das Spiel zuende und der Spieler hat gewonnen. Die aktuellen Spielwerte
+     * werden in der Highscore-Datenbank gespeichert.
      */
-    private boolean checkGameWon(){
+    private void checkGameWon(){
 
         int mineNotFound = gameSettings.getNumberOfMines();
         int notDiscovered = getColumnsX() * getRowsY();
@@ -271,13 +275,13 @@ public class MinesweeperGame {
                     notDiscovered--;
                 }
 
-                if( getFieldAt(x,y).isFlagged() && getFieldAt(x,y).isMine()
+                if(getFieldAt(x,y).isFlagged() && getFieldAt(x,y).isMine()
                         || !getFieldAt(x,y).isDiscovered() && getFieldAt(x,y).isMine()){            // Für Sieg, auch wenn Felder mit Bomben unberührt, aber nicht markiert
                     mineNotFound--;
                 }
             }
         }
-        if( mineNotFound == 0 && notDiscovered == 0 ){
+        if(mineNotFound == 0 && notDiscovered == 0){
             createDialog(GAME_WON);
             timer.stopTimer();
 
@@ -294,7 +298,6 @@ public class MinesweeperGame {
             //Ende :3
             );
         }
-        return false;
     }
 
 
@@ -302,9 +305,11 @@ public class MinesweeperGame {
      * Die Methode gameLost deckt in dem Fall, dass der Spiele das Spiel verloren
      * hat alle bisher nicht aufgedeckten Felder auf. Der Spieler hat das Spiel
      * verloren, sobald er eine Mine aufgedeckt hat, oder der Timer abgelaufen ist.
+     *
+     * Die aktuellen Spielwerte werden in der Highscore-Datenbank gespeichert?!?!?
      */
-    private void gameLost(){
-//        createDialog(GAME_LOST);
+    public void gameLost(){
+        createDialog(GAME_LOST);
         timer.stopTimer();
 
         //Ramonnilein
@@ -322,20 +327,18 @@ public class MinesweeperGame {
             for (int y = 0; y < getRowsY(); y++) {
                 getFieldAt(x,y).setDiscovered();
                 if(!getFieldAt(x,y).isMine()){                                                      // Deckt auch nicht aufgedeckte Felder ohne Mine auf
-                    getFieldAt(x,y).setTouched();
+                    if(getFieldAt(x,y).isFlagged()){
+                        getFieldAt(x,y).setFlagged(false);
+                        getFieldAt(x,y).setFlagFalse(true);
+                        mineCounter.increaseMineCount();
+                        minesweeperCallback.updateMineCounter(mineCounter.getMineCount());
+                    }
+                    else{
+                        getFieldAt(x,y).setTouched();
+                    }
                 }
-                mineCounter.setMineCount(0);
-                minesweeperCallback.updateMineCounter(0);
             }
         }
-    }
-
-    /**
-     * Die Methode timeIsOver sorgt dafür, dass das Spiel verloren ist, sobald
-     * der Timer abgelaufen ist, also die 999 Sekunden erreicht hat.
-     */
-    public void timeIsOver(){
-        gameLost();
     }
 
     /**
@@ -356,12 +359,20 @@ public class MinesweeperGame {
         mineCounter.setMineCount(gameSettings.getNumberOfMines());
     }
 
-
+    /**
+     * Die Methode newGame ist dafür zuständig, das Spielfeld zurückzusetzen, wenn man bereits ein
+     * Spiel gespielt hat, ins Hauptmenü zurückkehrt und dann ein neues Spiel startet.
+     */
     public void newGame(){
         resetGame();
         resetFields();
     }
 
+    /**
+     * Die Methode resetField setzt das gezeichnete Feld auf null zurück, damit die Felder bei einem
+     * neuen Spiel neu gezeichnet werden können, ohne das dabei aus dem vorherigen Spiel noch
+     * Werte in den Feldern vorhanden sind.
+     */
     public void resetFields(){
         for(int x = 0; x < getColumnsX(); x++ ){
             for(int y = 0; y < getRowsY(); y++ ){
@@ -370,6 +381,9 @@ public class MinesweeperGame {
         }
     }
 
+    /**
+     * Zeichnet das Spielfeld neu, wenn der Spieler während des laufenden Spiels das Theme wechselt.
+     */
     public void changeTheme(){
         for(int x = 0; x < getColumnsX(); x++ ){
             for(int y = 0; y < getRowsY(); y++ ){
@@ -378,6 +392,13 @@ public class MinesweeperGame {
         }
     }
 
+    /**
+     * Die Methode createDialog erzeugt einene Dialog, der dem Spiele mitteilt, ob er das Spiel
+     * gewonnen oder verloren hat. Er hat aus dem Dialog heraus die Möglichkeit, ein neues Spiel zu
+     * starten, oder ins Hauptmenü zurückzukehren.
+     *
+     * @param message       Nachricht, ob das Spiel gewonnen oder verloren wurde
+     */
     private void createDialog(String message){
 
         AlertDialog gameLostDialog = new AlertDialog.Builder(context).create();
@@ -448,28 +469,11 @@ public class MinesweeperGame {
         return gameSettings.getColumnsX();
     }
 
-    public void setColumnsX(int columnsX) {
-        gameSettings.setColumnsX(columnsX);
-    }
-
     public int getRowsY() {
         return gameSettings.getRowsY();
     }
 
-    public void setRowsY(int rowsY) {
-        gameSettings.setRowsY(rowsY);
-    }
-
     public GameSettings getGameSettings() {
         return gameSettings;
-    }
-
-    public void setGameSettings(GameSettings gameSettings) {
-        this.gameSettings = gameSettings;
-    }
-
-    public void setGameBoardSize(){
-        this.bombPlacementField = new int[gameSettings.getColumnsX()][gameSettings.getRowsY()];
-        this.minesweeperBoard = new Field[gameSettings.getColumnsX()][gameSettings.getRowsY()];
     }
 }

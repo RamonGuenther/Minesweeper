@@ -38,6 +38,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
     private boolean isTouched;
     private boolean isFlagged;
     private boolean isMarked;
+    private boolean isFlagFalse;
 
     private int xPos;
     private int yPos;
@@ -170,6 +171,9 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
         else if(isDiscovered() && isMine() && !isTouched()){
             drawMine(canvas);
         }
+        else if(isFlagFalse()){
+            drawFlagFalse(canvas);
+        }
         else {
             if(isTouched()){
                 if(getFieldValue() == -1 ){
@@ -186,51 +190,10 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
     }
 
     /**
-     * Die Methode drawBombExploded zeichnet das Symbol für eine explodierte Mine auf dem
-     * Spielfeld.
-     *
-     * @param canvas            Erhält die Draw-Aufruf für die explodierte Mine.
-     */
-    private void drawMineExploded(Canvas canvas ){
-        int drawableId = context.getResources().getIdentifier(
-                    "theme_"
-                        + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
-                        + "_bombexpl",
-                "drawable", context.getPackageName());
-        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
-
-        if (drawable != null) {
-            drawable.setBounds(0,0,getWidth(),getHeight());
-            drawable.draw(canvas);
-        }
-    }
-
-
-    /**
-     * Die Methode drawFlag zeichnet das Symbol für eine Flagge auf dem
-     * Spielfeld.
-     *
-     * @param canvas            Erhält die Draw-Aufruf für die Flagge.
-     */
-    private void drawFlag(Canvas canvas ){
-        int drawableId = context.getResources().getIdentifier(
-                "theme_"
-                        + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
-                        + "_flag",
-                "drawable", context.getPackageName());
-        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
-
-        if (drawable != null) {
-            drawable.setBounds(0,0,getWidth(),getHeight());
-            drawable.draw(canvas);
-        }
-    }
-
-    /**
      * Die Methode drawButton zeichnet das Symbol für einen Button, also ein unaufgedecktes
      * Feld auf dem Spielfeld.
      *
-     * @param canvas            Erhält die Draw-Aufruf für ein unaufgedecktes Feld.
+     * @param canvas            Erhält die Draw-Aufrufe für ein unaufgedecktes Feld.
      */
     private void drawButton(Canvas canvas){
         int drawableId = context.getResources().getIdentifier(
@@ -250,7 +213,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
      * Die Methode drawMine zeichnet das Symbol für eine nicht explodierte Mine auf dem
      * Spielfeld.
      *
-     * @param canvas            Erhält die Draw-Aufruf für eine Mine.
+     * @param canvas            Erhält die Draw-Aufrufe für eine Mine.
      */
     private void drawMine(Canvas canvas ){
         int drawableId = context.getResources().getIdentifier(
@@ -268,11 +231,90 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
     }
 
     /**
+     * Die Methode drawBombExploded zeichnet das Symbol für eine explodierte Mine auf dem
+     * Spielfeld.
+     *
+     * @param canvas            Erhält die Draw-Aufrufe für die explodierte Mine.
+     */
+    private void drawMineExploded(Canvas canvas ){
+        int drawableId = context.getResources().getIdentifier(
+                    "theme_"
+                        + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                        + "_bombexpl",
+                "drawable", context.getPackageName());
+        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
+
+        if (drawable != null) {
+            drawable.setBounds(0,0,getWidth(),getHeight());
+            drawable.draw(canvas);
+        }
+    }
+
+    /**
+     * Die Methode drawFlag zeichnet das Symbol für eine Flagge auf dem Spielfeld.
+     *
+     * @param canvas            Erhält die Draw-Aufrufe für die Flagge.
+     */
+    private void drawFlag(Canvas canvas ){
+        int drawableId = context.getResources().getIdentifier(
+                "theme_"
+                        + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                        + "_flag",
+                "drawable", context.getPackageName());
+        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
+
+        if (drawable != null) {
+            drawable.setBounds(0,0,getWidth(),getHeight());
+            drawable.draw(canvas);
+        }
+    }
+
+    /**
+     * Die Methode drawFlagFalse zeichnet das Symbol für eine falsch gesetzte Flagge auf dem
+     * Spielfeld.
+     *
+     * @param canvas            Erhält die Draw-Aufrufe für eine falsch gesetzte Flagge.
+     */
+    private void drawFlagFalse(Canvas canvas ){
+        int drawableId = context.getResources().getIdentifier(
+                "theme_"
+                        + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                        + "_flagfalse",
+                "drawable", context.getPackageName());
+        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
+
+        if (drawable != null) {
+            drawable.setBounds(0,0,getWidth(),getHeight());
+            drawable.draw(canvas);
+        }
+    }
+
+    /**
+     * Die Methode drawQuestionMark zeichnet das Symbol für ein Fragezeichen auf dem
+     * Spielfeld.
+     *
+     * @param canvas            Erhält die Draw-Aufrufe für ein Fragezeichen.
+     */
+    private void drawQuestionMark( Canvas canvas ){
+        int drawableId = context.getResources().getIdentifier(
+                "theme_"
+                        + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
+                        + "_question",
+                "drawable", context.getPackageName());
+        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
+        if (drawable != null) {
+            drawable.setBounds(0,0,getWidth(),getHeight());
+            drawable.draw(canvas);
+        }
+
+    }
+
+    /**
      * Die Methode drawNumber zeichnet das Symbol für die Anzahl der benachbarten Minen auf
      * dem Spielfeld. Die dargestellte Ziffer richtet sich nach der jeweiligen angrenzenden
      * Minen an das Feld.
      *
-     * @param canvas            Erhält die Draw-Aufruf für eine Zahl, welche die Anzahl der
+     * @param canvas            Erhält die Draw-Aufrufe für eine Zahl, welche die Anzahl der
      *                          benachbarten Minen darstellt.
      */
     private void drawNumber( Canvas canvas ){
@@ -357,27 +399,6 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
             drawable.setBounds(0,0,getWidth(),getHeight());
             drawable.draw(canvas);
         }
-
-    }
-
-    /**
-     * Die Methode drawQuestionMark zeichnet das Symbol für ein Fragezeichen auf dem
-     * Spielfeld.
-     *
-     * @param canvas            Erhält die Draw-Aufruf für ein Fragezeichen.
-     */
-    private void drawQuestionMark( Canvas canvas ){
-        int drawableId = context.getResources().getIdentifier(
-                "theme_"
-                        + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
-                        + "_question",
-                "drawable", context.getPackageName());
-        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
-        if (drawable != null) {
-            drawable.setBounds(0,0,getWidth(),getHeight());
-            drawable.draw(canvas);
-        }
-
     }
 
     /*----------------------------------------------------------------------------------------------
@@ -388,6 +409,12 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
         return fieldValue;
     }
 
+    /**
+     * Der Setter setFieldValue setzt die Basiswerte für ein Feld.
+     *
+     * @param fieldValue           Wert der angibt, ob das Feld leer ist, eine Mine, oder eine
+     *                             Zahl für angrenzende Minen enthält.
+     */
     public void setFieldValue(int fieldValue) {
         this.fieldValue = fieldValue;
 
@@ -396,6 +423,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
         this.isTouched = false;
         this.isFlagged = false;
         this.isMarked = false;
+        this.isFlagFalse = false;
 
         if(fieldValue == -1){
             this.isMine = true;
@@ -413,7 +441,6 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
     public void setDiscovered() {
         isDiscovered = true;
         invalidate();
-
     }
 
     public boolean isTouched() {
@@ -423,7 +450,6 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
     public void setTouched() {
         this.isTouched = true;
         this.isDiscovered = true;
-
         invalidate();
     }
 
@@ -454,10 +480,15 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
     public void setPosition(int x, int y) {
         this.xPos = x;
         this.yPos = y;
-
         this.position = y * MinesweeperGame.getInstance().getColumnsX() + x;
-
         invalidate();
     }
 
+    public boolean isFlagFalse() {
+        return isFlagFalse;
+    }
+
+    public void setFlagFalse(boolean flagFalse) {
+        isFlagFalse = flagFalse;
+    }
 }

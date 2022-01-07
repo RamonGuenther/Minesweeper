@@ -70,7 +70,7 @@ public class Timer {
             timer.postDelayed(updateTime, 1000);
 
             if(secondsPassed == 999){
-                MinesweeperGame.getInstance().timeIsOver();
+                MinesweeperGame.getInstance().gameLost();
             }
         }
     };
