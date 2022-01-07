@@ -1,6 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Minesweeper</string>
-    <string name="settings">Einstellungen</string>
 
     <!--String für Spielregeln und Game-->
     <string name="ziel_des_spiels_ist_es_innerhalb_eines_zeitlimits_von_999_sekunden_alle_felder_aufzudecken_die_keine_mine_enthalten_sobald_eine_mine_aufgedeckt_wurde_ist_das_spiel_verloren_die_zahl_auf_einem_aufgedeckten_feld_gibt_an_wie_viele_minen_an_dieses_feld_angrenzen_dabei_sind_auch_diagonal_angrenzende_felder_gemeint">Ziel des Spiels ist es, innerhalb eines Zeitlimits von 999 Sekunden alle Felder aufzudecken, die keine Mine enthalten. Sobald eine Mine aufgedeckt wurde, ist das Spiel verloren. Die Zahl auf einem aufgedeckten Feld gibt an, wie viele Minen an dieses Feld angrenzen. Dabei sind auch diagonal angrenzende Felder gemeint.</string>
@@ -29,18 +28,5 @@
     <string name="flaggen_modus_game">Flaggen - Modus</string>
     <string name="icon_mine">Icon Mine</string>
     <string name="icon_timer">Icon Timer</string>
-
-    <string-array name="level_select">
-        <item>Leicht</item>
-        <item>Mittel</item>
-        <item>Schwer</item>
-        <item>Benutzerdefiniert</item>
-    </string-array>
-
-    <string-array name="theme_select">
-        <item>Bordeaux</item>
-        <item>Blau</item>
-        <item>Classic</item>
-    </string-array>
 
 </resources>

@@ -1,7 +1,281 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/banane">
+    android:fillViewport="true"
+    android:tooltipText="Laufendes Spiel">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/instructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_material_light">
+
+        <ImageButton
+            android:id="@+id/instructions_backButton"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@null"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_west_24"
+            android:contentDescription="@string/zurueck_button"/>
+
+        <TextView
+            android:id="@+id/instructions_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="120dp"
+            android:background="@null"
+            android:fontFamily="casual"
+            android:text="@string/spielregeln"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+        <TextView
+            android:id="@+id/instructions_part1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/ziel_des_spiels_ist_es_innerhalb_eines_zeitlimits_von_999_sekunden_alle_felder_aufzudecken_die_keine_mine_enthalten_sobald_eine_mine_aufgedeckt_wurde_ist_das_spiel_verloren_die_zahl_auf_einem_aufgedeckten_feld_gibt_an_wie_viele_minen_an_dieses_feld_angrenzen_dabei_sind_auch_diagonal_angrenzende_felder_gemeint"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_title" />
+
+        <ImageView
+            android:id="@+id/instructions_image1"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_part1"
+            app:srcCompat="@drawable/instructions02"
+            android:contentDescription="@string/laufendes_spiel" />
+
+        <TextView
+            android:id="@+id/instructions_imageText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="180dp"
+            android:layout_marginEnd="180dp"
+            android:text="@string/laufendes_spiel_mit_markierten_minen"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_image1" />
+
+        <ImageView
+            android:id="@+id/instructions_image2"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_imageText1"
+            app:srcCompat="@drawable/instructions05"
+            android:contentDescription="@string/spiel_verloren" />
+
+        <TextView
+            android:id="@+id/instructions_imageText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="175dp"
+            android:layout_marginEnd="175dp"
+            android:text="@string/eine_mine_wurde_aufgedeckt_und_das_spiel_verloren"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_image2" />
+
+        <TextView
+            android:id="@+id/instructions_part2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/die_anzahl_der_noch_verbleibenden_minen_und_die_aktuell_verstrichene_zeit_wird_am_oberen_bildschirmrand_angezeigt_durch_das_setzen_von_flaggen_wird_die_anzahl_verbleibender_minen_verringert_die_anzahl_der_felder_und_minen_ist_abh_ngig_vom_ausgew_hlten_schwierigkeitsgrad"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_imageText2" />
+
+        <ImageView
+            android:id="@+id/instructions_image3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_part2"
+            app:srcCompat="@drawable/instructions01"
+            android:contentDescription="@string/counter_und_timer" />
+
+        <TextView
+            android:id="@+id/instructions_part3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/das_spiel_enth_lt_zwei_modi_den_minen_modus_und_den_flaggen_modus_der_modus_kann_w_hrend_des_spiels_jederzeit_am_unteren_bildschirmrand_gewechselt_werden"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.436"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_image3" />
+
+        <ImageView
+            android:id="@+id/instructions_image4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_part3"
+            app:srcCompat="@drawable/instructions03"
+            android:contentDescription="@string/spielmodi" />
+
+        <TextView
+            android:id="@+id/instructions_part4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/minen_modus"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_image4" />
+
+        <TextView
+            android:id="@+id/instructions_part5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/im_minen_modus_kann_durch_einfaches_tippen_auf_den_bildschirm_ein_feld_aufgedeckt_werden_durch_gedr_ckt_halten_auf_ein_feld_wird_eine_flagge_gesetzt_flaggen_k_nnen_nicht_auf_bereits_aufgedeckte_felder_gesetzt_werden_oder_wenn_noch_kein_feld_aufgedeckt_wurde"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_part4" />
+
+        <TextView
+            android:id="@+id/instructions_part6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/flaggen_modus"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_part5" />
+
+        <TextView
+            android:id="@+id/instructions_part7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/im_flaggen_modus_wird_durch_kurzes_tippen_auf_den_bildschirm_eine_flagge_gesetzt_und_durch_gedr_ckt_halten_ein_fragezeichen_werden_fragezeichen_k_nnen_durch_flaggen_ersetzt_werden_und_umgekehrt_ein_feld_mit_einer_flagge_oder_einem_fragezeichen_kann_nicht_aufgedeckt_werden_dazu_muss_die_markierung_erst_wieder_entfernt_werden"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_part6" />
+
+        <ImageView
+            android:id="@+id/instructions_image5"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_part7"
+            app:srcCompat="@drawable/instructions04"
+            android:contentDescription="@string/flaggen_und_fragezeichen" />
+
+        <TextView
+            android:id="@+id/instructions_imageText3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="175dp"
+            android:layout_marginEnd="175dp"
+            android:text="@string/es_wurden_flaggen_und_fragezeichen_gesetzt"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.515"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_image5" />
+
+        <TextView
+            android:id="@+id/instructions_part8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/m_chtest_du_noch_weitere_herausforderungen"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_imageText3" />
+
+        <TextView
+            android:id="@+id/instructions_part9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="sans-serif"
+            android:paddingBottom="20dp"
+            android:text="@string/du_kannst_in_den_einstellungen_den_flaggen_modus_den_minenz_hler_den_timer_oder_auch_einfach_alles_nach_belieben_ausschalten"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instructions_part8" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
+
+
