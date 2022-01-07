@@ -318,7 +318,7 @@ public class MinesweeperGame {
                 timer.getSecondsPassed(),
                 gameSettings.getLevel(),
                 GameResult.LOST,
-                mineCounter.getMineCount() + "/" + gameSettings.getNumberOfMines(),
+                gameSettings.getNumberOfMines() - mineCounter.getMineCount() + "/" + gameSettings.getNumberOfMines(),
                 gameSettings.getColumnsX() + " x " + gameSettings.getRowsY()
         );
         //Ende :3

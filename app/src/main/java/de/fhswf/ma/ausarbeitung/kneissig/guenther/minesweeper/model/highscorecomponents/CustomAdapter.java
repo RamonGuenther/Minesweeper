@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.ColumnInfo;
 import androidx.room.PrimaryKey;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.HighScore;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameResult;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
     private List<HighScore> highScoreItemList;
@@ -55,10 +57,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
         HighScore currentItem = highScoreItemList.get(position);
 
+        if(currentItem.getGameResult().equals(GameResult.WON.label)){
+            holder.gameResult.setTextColor(ContextCompat.getColor(holder.gameResult.getContext(), android.R.color.holo_green_dark));
+        }
+        else{
+            holder.gameResult.setTextColor(ContextCompat.getColor(holder.gameResult.getContext(), android.R.color.holo_red_dark));
+        }
+        holder.gameResult.setText(currentItem.getGameResult());
+
         holder.gamePlayedOn.setText(currentItem.getGamePlayedOn());
         holder.playedTime.setText(String.valueOf(currentItem.getPlayedTime()));
         holder.level.setText(currentItem.getLevel());
-        holder.gameResult.setText(currentItem.getGameResult());
         holder.minesLeft.setText(currentItem.getMinesLeft());
         holder.fieldSize.setText(currentItem.getFieldSize());
     }
