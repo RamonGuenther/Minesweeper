@@ -17,7 +17,7 @@ public class HighScore {
     public String gamePlayedOn;
 
     @ColumnInfo(name = "played_time")
-    public int playedTime;
+    public String playedTime;
 
     public String level;
 
@@ -33,7 +33,7 @@ public class HighScore {
     public HighScore(){
 
     }
-    public HighScore(String gamePlayedOn, int playedTime, Level level, GameResult gameResult, String minesLeft, String fieldSize) {
+    public HighScore(String gamePlayedOn, String playedTime, Level level, GameResult gameResult, String minesLeft, String fieldSize) {
         this.gamePlayedOn = gamePlayedOn;
         this.playedTime = playedTime;
         this.level = level.label;
@@ -50,7 +50,7 @@ public class HighScore {
         return gamePlayedOn;
     }
 
-    public int getPlayedTime() {
+    public String getPlayedTime() {
         return playedTime;
     }
 

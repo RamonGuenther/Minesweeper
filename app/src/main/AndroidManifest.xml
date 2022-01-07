@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,41 +11,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Minesweeper">
-
         <activity
             android:name=".activities.MainActivity"
-            android:screenOrientation="portrait"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- android:theme="@style/CustomTheme" -->
+        </activity> <!-- android:theme="@style/CustomTheme" -->
         <activity
             android:name=".activities.SettingsActivity"
-            android:theme="@style/Theme.AppCompat.SlidrActivityTheme"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.SlidrActivityTheme" />
         <activity
             android:name=".activities.HighScoreActivity"
-            android:theme="@style/Theme.AppCompat.SlidrActivityTheme"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.SlidrActivityTheme" />
         <activity
             android:name=".activities.GameInstructionActivity"
-            android:theme="@style/Theme.AppCompat.SlidrActivityTheme"
-            android:screenOrientation="portrait"/>
-
-
-
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.SlidrActivityTheme" />
         <activity
             android:name=".activities.GameActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
     </application>
-
-    <uses-permission android:name="android.permission.VIBRATE"/>
 
 </manifest>

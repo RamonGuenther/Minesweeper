@@ -15,6 +15,15 @@
         <item name="android:windowBackground">@color/white</item>
     </style>
 
+    <style name="Theme.Minesweeper.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Minesweeper.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Minesweeper.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>
 
-<!--TODO https://material.io/develop/android/theming/color-->
+    <!--TODO https://material.io/develop/android/theming/color-->

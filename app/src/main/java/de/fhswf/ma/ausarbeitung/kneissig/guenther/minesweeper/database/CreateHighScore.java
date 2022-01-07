@@ -11,9 +11,9 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameResult;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 
-public class HighscoreService {
+public class CreateHighScore {
 
-    HighscoreService(){
+    CreateHighScore(){
 
     }
 
@@ -22,8 +22,9 @@ public class HighscoreService {
         MinesweeperDatabase db = MinesweeperDatabase.createDatabase(context);
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(new Locale("de"));
         String gamePlayedOn = LocalDateTime.now().format(formatter);
-        HighScore highScore = new HighScore(gamePlayedOn,playedTime,level, gameResult,  minesLeft,fieldSize);
+        HighScore highScore = new HighScore(gamePlayedOn,playedTime + " sek.",level, gameResult,  minesLeft,fieldSize);
         db.highscoreDao().insert(highScore);
+        db.close();
     }
 
 }

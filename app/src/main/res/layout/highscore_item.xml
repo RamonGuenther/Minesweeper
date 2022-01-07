@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    app:cardCornerRadius="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="4dp">
+
+        <TextView
+            android:id="@+id/gameResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Gewonnen"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/gamePlayedOn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="120dp"
+            android:layout_toEndOf="@+id/gameResult"
+            android:text="01.07.2021, 11.35"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/gameResult"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="Einfach"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/playedTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/gamePlayedOn"
+            android:layout_marginStart="220dp"
+            android:layout_marginTop="4dp"
+            android:text="40 Sekunden"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/minesLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/level"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="40/40"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/fieldSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/playedTime"
+            android:layout_marginStart="220dp"
+            android:layout_marginTop="4dp"
+            android:text="16 x 16"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

@@ -8,22 +8,36 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrConfig;
 import com.r0adkll.slidr.model.SlidrPosition;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.MinesweeperDatabase;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.HighScore;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.highscorecomponents.CustomAdapter;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.highscorecomponents.HighScoreItem;
 
 /**
- * Das Backend Ihrer App muss eine „Hall of Fame“
- * besitzen
- * Jedes Spiel und die in diesem Spiel erreichten
- * Punkte werden dort abgespeichert.
- *
- * in leicht mittel schwer unterscheiden,  benutzerdefinierte werden erstmal nicht gespeichert
+* Swipen geht nur auf dem wirklichen Hintergrund
  */
 public class HighScoreActivity extends AppCompatActivity {
+
+    //Highscore_item
+    private RecyclerView recyclerView;
+
+    //Brücke Highscore und der Recyclerview
+    private RecyclerView.Adapter adapter;
+
+    //
+    private RecyclerView.LayoutManager layoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +67,19 @@ public class HighScoreActivity extends AppCompatActivity {
         imageButton.setOnClickListener(e -> {
             finish();
         });
+
+
+        MinesweeperDatabase db = MinesweeperDatabase.createDatabase(this);
+        List<HighScore> highScoreList = db.highscoreDao().getHighscores() ;
+
+        recyclerView = findViewById(R.id.recyclerview);
+        recyclerView.setHasFixedSize(true); //wenn die Größe sich nicht ändern steigert performance aber nochmal googeln
+        layoutManager = new LinearLayoutManager(this);
+        adapter = new CustomAdapter(highScoreList);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
 
 
 
