@@ -17,6 +17,7 @@ public class GameSettings  {
     private boolean gameModeVisible;
     private boolean vibration;
     private boolean hints;
+    private boolean flagsPossible;
 
     private Theme theme;
     private Level level;
@@ -35,6 +36,7 @@ public class GameSettings  {
         mineCounterVisible = true;
         gameModeVisible = true;
         hints = false;
+        flagsPossible = true;
 
         theme = Theme.BLUE;
         level = Level.BEGINNER;
@@ -205,5 +207,14 @@ public class GameSettings  {
 
     public void setHints(boolean hints) {
         this.hints = hints;
+    }
+
+    public boolean isFlagsPossible() {
+        return flagsPossible;
+    }
+
+    public void setFlagsPossible(boolean flagsPossible) {
+        gameModeVisible = flagsPossible;
+        this.flagsPossible = flagsPossible;
     }
 }

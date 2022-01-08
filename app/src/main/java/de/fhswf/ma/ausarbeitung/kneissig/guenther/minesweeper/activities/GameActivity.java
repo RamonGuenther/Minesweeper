@@ -1,13 +1,16 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
@@ -37,6 +40,9 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        View view = findViewById(R.id.gameLayout);
+        view.setKeepScreenOn(true);
 
         //Switch zum Wechseln zwischen Minen-Modus und Flaggen-Modus
         gameMode = findViewById(R.id.gameView_gameMode);
@@ -170,11 +176,28 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
             mineMode.setVisibility(View.VISIBLE);
             flagMode.setVisibility(View.VISIBLE);
         } else {
-            gameMode.setVisibility(View.INVISIBLE);
-            mineMode.setVisibility(View.INVISIBLE);
-            flagMode.setVisibility(View.INVISIBLE);
+            gameMode.setVisibility(View.GONE);
+            mineMode.setVisibility(View.GONE);
+            flagMode.setVisibility(View.GONE);
         }
 
         MinesweeperGame.getInstance().changeTheme();
+    }
+
+    /**
+     * Die Methode onConfiguationChanged sorgt dafür, dass das aktuelle Spielfeld beim Drehen
+     * des Bildschirms vorhanden bleibt.
+     *
+     * @param newConfig             Aktuelle Einstellung (hier Bildschirm-Orientierung)
+     */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            MinesweeperGame.getInstance().changeTheme();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            MinesweeperGame.getInstance().changeTheme();
+        }
     }
 }

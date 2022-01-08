@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -119,19 +120,21 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
      */
     @Override
     public boolean onLongClick(View view) {
-        if(!MinesweeperGame.getInstance().isFirstClick()){
-            if(MinesweeperGame.getInstance().getGameSettings().isHints()){
-                Toast.makeText(context,"Es mus erst ein Feld aufgedeckt werden",
-                        Toast.LENGTH_SHORT).show();
+        if(MinesweeperGame.getInstance().getGameSettings().isFlagsPossible()){
+            if(!MinesweeperGame.getInstance().isFirstClick()){
+                if(MinesweeperGame.getInstance().getGameSettings().isHints()){
+                    Toast.makeText(context,"Es mus erst ein Feld aufgedeckt werden",
+                            Toast.LENGTH_SHORT).show();
+                }
+                return true;
             }
-            return true;
-        }
-        switch (MinesweeperGame.getInstance().getGameMode()){
-            case MINE_MODE: MinesweeperGame.getInstance().placeFlag(getXPos() , getYPos());
-                break;
-            case FLAG_MODE: MinesweeperGame.getInstance().placeQuestionMark(getXPos() , getYPos());
-                break;
+            switch (MinesweeperGame.getInstance().getGameMode()){
+                case MINE_MODE: MinesweeperGame.getInstance().placeFlag(getXPos() , getYPos());
+                    break;
+                case FLAG_MODE: MinesweeperGame.getInstance().placeQuestionMark(getXPos() , getYPos());
+                    break;
 
+            }
         }
         return true;
     }

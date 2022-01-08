@@ -29,6 +29,12 @@
     <string name="flaggen_modus_game">Flaggen - Modus</string>
     <string name="icon_mine">Icon Mine</string>
     <string name="icon_timer">Icon Timer</string>
+    <string name="noch_einmal_versuchen">Noch einmal versuchen?</string>
+    <string name="du_hast_gewonnen">Du hast gewonnen!</string>
+    <string name="schwierigkeitsgrad">Schwierigkeitsgrad</string>
+    <string name="zeit">Zeit</string>
+    <string name="gefundene_minen">Gefundene Minen</string>
+    <string name="felder">Felder</string>
 
     <string-array name="level_select">
         <item>Leicht</item>

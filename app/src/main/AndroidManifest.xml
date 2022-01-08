@@ -35,7 +35,8 @@
             android:theme="@style/Theme.AppCompat.SlidrActivityTheme" />
         <activity
             android:name=".activities.GameActivity"
-            android:exported="false"></activity>
+            android:exported="false"
+            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
     </application>
 
 </manifest>

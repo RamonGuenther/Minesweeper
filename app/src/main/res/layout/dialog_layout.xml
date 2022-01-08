@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialog_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/dialog_messageTop"
-        android:layout_width="378dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="20dp"
         android:fontFamily="casual"
-        android:text="Du hast gewonnen!"
+        android:text="@string/du_hast_gewonnen"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold"
@@ -22,23 +21,114 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/dialog_image_difficulty"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_messageTop"
+        app:srcCompat="@drawable/ic_muscle"
+        android:contentDescription="@string/schwierigkeitsgrad" />
+
+    <TextView
+        android:id="@+id/dialog_level"
+        android:layout_width="140dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/dialog_messageTop"
+        android:layout_marginTop="10dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/dialog_image_difficulty"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_messageTop" />
+
+    <ImageView
+        android:id="@+id/dialog_imgae_timer"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_playedTime"
+        app:layout_constraintStart_toEndOf="@+id/dialog_level"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_messageTop"
+        app:srcCompat="@drawable/icon_timer"
+        android:contentDescription="@string/zeit" />
+
+    <TextView
+        android:id="@+id/dialog_playedTime"
+        android:layout_width="140dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/dialog_messageTop"
+        android:layout_marginTop="10dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/dialog_imgae_timer"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_messageTop" />
+
+    <TextView
+        android:id="@+id/dialog_minesLeft"
+        android:layout_width="140dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/dialog_level"
+        android:layout_marginTop="5dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/dialog_image_mine"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_level" />
+
+    <ImageView
+        android:id="@+id/dialog_image_mine"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_image_difficulty"
+        app:srcCompat="@drawable/icon_mine"
+        android:contentDescription="@string/gefundene_minen" />
+
+    <ImageView
+        android:id="@+id/dialog_image_field"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_fieldSize"
+        app:layout_constraintStart_toEndOf="@+id/dialog_minesLeft"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_imgae_timer"
+        app:srcCompat="@drawable/ic_field"
+        android:contentDescription="@string/felder" />
+
+    <TextView
+        android:id="@+id/dialog_fieldSize"
+        android:layout_width="140dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/dialog_playedTime"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/dialog_image_field"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_playedTime" />
+
     <TextView
         android:id="@+id/dialog_messageBottom"
         android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
         android:fontFamily="casual"
-        android:text="Noch einmal versuchen?"
+        android:text="@string/noch_einmal_versuchen"
         android:textAlignment="center"
-        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_messageTop" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_minesLeft" />
 
-<!--    <Button-->
+    <!--    <Button-->
 <!--        android:id="@+id/dialog_yesButton"-->
 <!--        android:layout_width="100dp"-->
 <!--        android:layout_height="wrap_content"-->
