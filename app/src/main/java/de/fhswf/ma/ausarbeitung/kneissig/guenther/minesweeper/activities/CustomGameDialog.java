@@ -21,9 +21,13 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Objects;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.MinesweeperDatabase;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.CustomGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 
 /**
  * TODO: - Wahrscheinlich nochmal in ein Constraintlayout (oder relative) packen damit alles richtig liegt
@@ -44,13 +48,19 @@ public class CustomGameDialog extends AppCompatDialogFragment {
     private boolean checkWidth;
     private boolean checkHeight;
     private boolean checkNumberOfMines;
+    private CustomGame customGame;
+    private HorizontalStringPicker horizontalStringPicker;
 
+
+    public CustomGameDialog(HorizontalStringPicker horizontalStringPicker) {
+        this.horizontalStringPicker = horizontalStringPicker;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.layout_custom_game_dialog, null);
 
         widthTextInput = view.findViewById(R.id.widthTextInput);
@@ -164,7 +174,6 @@ public class CustomGameDialog extends AppCompatDialogFragment {
             }
         });
 
-
         numberOfMinesInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -206,14 +215,26 @@ public class CustomGameDialog extends AppCompatDialogFragment {
             }
         });
 
+        MinesweeperDatabase db = MinesweeperDatabase.createDatabase(this.getContext());
+        customGame = db.customGameDao().getCustomGame();
+
+        widthTextInput.setText(customGame.getWidth());
+        heightTextInput.setText(customGame.getHeight());
+        numberOfMinesInput.setText(customGame.getMines());
 
         Button startCustomGameButton = view.findViewById(R.id.startCustomGame);
 
-//        startCustomGameButton.setEnabled(false);
-
         startCustomGameButton.setOnClickListener(e -> {
-
             if (checkHeight && checkWidth && checkNumberOfMines) {
+
+                customGame.setHeight(heightTextInput.getText().toString());
+                customGame.setWidth(widthTextInput.getText().toString());
+                customGame.setMines(numberOfMinesInput.getText().toString());
+
+                db.customGameDao().update(customGame);
+
+                horizontalStringPicker.setValue(Level.CUSTOM.label);
+
                 MinesweeperGame.getInstance().getGameSettings().setCustomBoardValues(
                         Integer.parseInt(numberOfMinesInput.getText().toString()),
                         Integer.parseInt(widthTextInput.getText().toString()),
@@ -223,6 +244,7 @@ public class CustomGameDialog extends AppCompatDialogFragment {
                     MinesweeperGame.getInstance().newGame();
                 }
                 startActivity(new Intent(this.getContext(), GameActivity.class));
+                dismiss();
             }
         });
 

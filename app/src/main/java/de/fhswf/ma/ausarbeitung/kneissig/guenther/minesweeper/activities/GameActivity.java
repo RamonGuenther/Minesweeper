@@ -84,8 +84,9 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
         // Zurück zum Hauptmenü
         ImageButton backToMenue = findViewById(R.id.gameView_backToMenue);
         backToMenue.setOnClickListener(event -> {
-            startActivity(new Intent(this, MainActivity.class));
+//            startActivity(new Intent(this, MainActivity.class));
             MinesweeperGame.getInstance().resetFields();
+            finish();
         });
 
         updateView();

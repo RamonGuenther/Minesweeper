@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.MinesweeperDatabase;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.CustomGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.Settings;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 
@@ -38,6 +39,13 @@ public class MinesweeperApplication extends Application {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             settings.setDarkMode(false);
+        }
+
+        CustomGame customGame = db.customGameDao().getCustomGame();
+
+        if(customGame == null){
+            customGame = new CustomGame();
+            db.customGameDao().insert(customGame);
         }
 
         db.close();

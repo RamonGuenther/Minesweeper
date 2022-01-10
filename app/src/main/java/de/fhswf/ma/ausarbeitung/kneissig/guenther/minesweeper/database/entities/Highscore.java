@@ -11,24 +11,24 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 public class HighScore {
 
     @PrimaryKey(autoGenerate = true)
-    public Long id;
+    private Long id;
 
     @ColumnInfo(name = "game_played_on")
-    public String gamePlayedOn;
+    private String gamePlayedOn;
 
     @ColumnInfo(name = "played_time")
-    public String playedTime;
+    private String playedTime;
 
-    public String level;
+    private String level;
 
     @ColumnInfo(name = "game_result")
-    public String gameResult;
+    private String gameResult;
 
     @ColumnInfo(name = "mines_left")
-    public String minesLeft;
+    private String minesLeft;
 
     @ColumnInfo(name = "field_size")
-    public String fieldSize;
+    private String fieldSize;
 
     public HighScore(){
 
@@ -39,6 +39,34 @@ public class HighScore {
         this.level = level.label;
         this.gameResult = gameResult.label;
         this.minesLeft = minesLeft;
+        this.fieldSize = fieldSize;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setGamePlayedOn(String gamePlayedOn) {
+        this.gamePlayedOn = gamePlayedOn;
+    }
+
+    public void setPlayedTime(String playedTime) {
+        this.playedTime = playedTime;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public void setGameResult(String gameResult) {
+        this.gameResult = gameResult;
+    }
+
+    public void setMinesLeft(String minesLeft) {
+        this.minesLeft = minesLeft;
+    }
+
+    public void setFieldSize(String fieldSize) {
         this.fieldSize = fieldSize;
     }
 

@@ -17,29 +17,21 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.MinesweeperDatabase;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.CustomGame;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.Settings;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 
 
-//TODO: Benutzerdefiniert reiter binhaltet immer das letzte erstellte spiel
-//TODO beim start der APP muss der letzte Spieltyp wieder ausgewählt sein
-
-
-//TODO: Auf pixel XL passt es nicht !!!!!!!!!!!!!!!!!!!!!
-
-/**
- * windowBackground only affects the main window's background.
- * <p>
- * colorBackground affects not only the background of the main window but also of all components e.g. dialogs unless you override it in the component layout.
- * <p>
- * So both of them change the activity's background, but the colorBackground changes many more things as well.
- */
 public class MainActivity extends AppCompatActivity {
 
-    private HorizontalStringPIcker horizontalStringPicker;
+    private HorizontalStringPicker horizontalStringPicker;
     private TextView heightTextView;
     private TextView widthTextView;
     private TextView minesTextView;
+    private CustomGame customGame;
+    private MinesweeperDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,13 +65,17 @@ public class MainActivity extends AppCompatActivity {
         widthTextView = findViewById(R.id.widthTextView);
         minesTextView = findViewById(R.id.minesTextView);
 
+        db = MinesweeperDatabase.createDatabase(this);
+        Settings settings = db.settingsDao().getSettings();
+        customGame = db.customGameDao().getCustomGame();
+
+
         List<String> items = new ArrayList<>();
         Arrays.asList(Level.values()).forEach(e -> items.add(e.label));
-//        items.remove(items.size() - 1);
+//        items.remove(items.size() - 1); //TODO VLLT DOCH NICHT REMOVEN UND AUCH BEACHTEN
 
         horizontalStringPicker = findViewById(R.id.horizontalStringPicker);
         horizontalStringPicker.setItems(items);
-        horizontalStringPicker.setValue(Level.PROFESSIONAL.label);
         horizontalStringPicker.getTextView().addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -94,11 +90,24 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String level = horizontalStringPicker.getValue();
                 MinesweeperGame.getInstance().getGameSettings().setLevel(level);
+                settings.setLastLevel(level);
+                db.settingsDao().update(settings);
+
+                if (level.equals(Level.CUSTOM.label)) {
+                    MinesweeperGame.getInstance().getGameSettings().setCustomBoardValues(
+                            Integer.parseInt(customGame.getMines()),
+                            Integer.parseInt(customGame.getWidth()),
+                            Integer.parseInt(customGame.getHeight())
+                    );
+                }
                 heightTextView.setText(String.valueOf(MinesweeperGame.getInstance().getGameSettings().getRowsY()));
                 widthTextView.setText(String.valueOf(MinesweeperGame.getInstance().getGameSettings().getColumnsX()));
                 minesTextView.setText(String.valueOf(MinesweeperGame.getInstance().getGameSettings().getNumberOfMines()));
             }
         });
+
+        horizontalStringPicker.setValue(settings.getLastLevel());
+
 
         Button gameInstructionButton = findViewById(R.id.gameInstructionButton);
         gameInstructionButton.setOnClickListener(e -> {
@@ -126,14 +135,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openDialog() {
-        CustomGameDialog customGameDialog = new CustomGameDialog();
-        customGameDialog.show(getSupportFragmentManager(), "example dialog");
+        CustomGameDialog customGameDialog = new CustomGameDialog(horizontalStringPicker);
+        customGameDialog.show(getSupportFragmentManager(), "Create Custom Game Dialog");
     }
 
-//    @Override
-//    public void applyTexts(String username, String password) {
-//        textViewUsername.setText(username);
-//        textViewPassword.setText(password);
-//    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(horizontalStringPicker.getValue().equals(Level.CUSTOM.label)){
+            customGame = db.customGameDao().getCustomGame();
+            heightTextView.setText(customGame.getHeight());
+            widthTextView.setText(customGame.getWidth());
+            minesTextView.setText(customGame.getMines());
+        }
+    }
 
 }

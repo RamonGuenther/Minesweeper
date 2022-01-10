@@ -17,15 +17,15 @@ import java.util.List;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 
 
-public class HorizontalStringPIcker extends ConstraintLayout {
+public class HorizontalStringPicker extends ConstraintLayout {
 
     private final TextView textView;
     private int counter;
     private List<String> stringList;
-    private ImageButton imageButtonRight;
-    private ImageButton imageButtonLeft;
+    private final ImageButton imageButtonRight;
+    private final ImageButton imageButtonLeft;
 
-    public HorizontalStringPIcker(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public HorizontalStringPicker(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         inflate(context, R.layout.horizontal_string_picker, this);
 
@@ -103,8 +103,14 @@ public class HorizontalStringPIcker extends ConstraintLayout {
     }
 
     public void setValue(String level) {
-
         counter = findIdByLevel(level);
+
+        if(counter <= 0){
+            imageButtonLeft.setVisibility(INVISIBLE);
+        }
+        if(counter == stringList.size()-1){
+            imageButtonRight.setVisibility(INVISIBLE);
+        }
         textView.setText(stringList.get(counter));
     }
 

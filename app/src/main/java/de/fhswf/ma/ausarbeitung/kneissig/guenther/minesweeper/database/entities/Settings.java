@@ -4,35 +4,39 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Theme;
 
 @Entity
 public class Settings {
     @PrimaryKey
-    public int id;
+    private int id;
 
     @ColumnInfo(name = "dark_mode")
-    public boolean darkMode;
+    private boolean darkMode;
 
     @ColumnInfo(name = "vibration")
-    public boolean vibration;
+    private boolean vibration;
 
     @ColumnInfo(name = "show_timer")
-    public boolean showTimer;
+    private boolean showTimer;
 
     @ColumnInfo(name = "show_mine_counter")
-    public boolean showMineCounter;
+    private boolean showMineCounter;
 
     @ColumnInfo(name = "show_mode_switch")
-    public boolean showModeSwitch;
+    private boolean showModeSwitch;
 
     @ColumnInfo(name = "use_flags")
-    public boolean useFlags;
+    private boolean useFlags;
 
     @ColumnInfo(name = "show_hints")
-    public boolean showHints;
+    private boolean showHints;
 
-    public String theme;
+    @ColumnInfo(name = "last_level")
+    private String lastLevel;
+
+    private String theme;
 
     public Settings() {
         id = 1;
@@ -44,10 +48,8 @@ public class Settings {
         useFlags = true;
         showHints = true;
         theme = Theme.BLUE.label;
+        lastLevel = Level.BEGINNER.label;
     }
-
-    //Getter & Setter nur zur besseren Lesbarkeit im Code
-
 
     public int getId() {
         return id;
@@ -85,6 +87,10 @@ public class Settings {
         return theme;
     }
 
+    public String getLastLevel() {
+        return lastLevel;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -119,5 +125,9 @@ public class Settings {
 
     public void setTheme(String theme) {
         this.theme = theme;
+    }
+
+    public void setLastLevel(String lastLevel) {
+        this.lastLevel = lastLevel;
     }
 }
