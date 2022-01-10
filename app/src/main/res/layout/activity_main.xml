@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--TODO: Cardview spackt komplett wahrscheinlich keine label weil selbst erklärend select für schwieirgkeiten siehe zoom und
-            Spiel erstellen öffnet sich ein Modal oder so dann können wir wieder eine Methode für alles vllt benutzen? -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"

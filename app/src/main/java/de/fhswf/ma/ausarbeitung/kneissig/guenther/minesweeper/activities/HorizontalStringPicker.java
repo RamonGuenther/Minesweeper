@@ -2,7 +2,6 @@ package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
@@ -37,35 +36,35 @@ public class HorizontalStringPicker extends ConstraintLayout {
 
         counter = 0;
 
-        imageButtonLeft.setOnClickListener(e->{
+        imageButtonLeft.setOnClickListener(e -> {
             if (counter <= 0 || stringList.isEmpty()) {
                 return;
             }
-            if(imageButtonRight.getVisibility() == INVISIBLE){
+            if (imageButtonRight.getVisibility() == INVISIBLE) {
                 imageButtonRight.setVisibility(VISIBLE);
             }
             counter--;
             RunAnimationRight();
             textView.setText(stringList.get(counter));
             RunAnimationRight();
-            if(counter <= 0){
+            if (counter <= 0) {
                 imageButtonLeft.setVisibility(INVISIBLE);
             }
         });
 
 
-        imageButtonRight.setOnClickListener(e->{
+        imageButtonRight.setOnClickListener(e -> {
             if (counter == stringList.size() - 1 || stringList.isEmpty()) {
                 return;
             }
-            if(imageButtonLeft.getVisibility() == INVISIBLE){
+            if (imageButtonLeft.getVisibility() == INVISIBLE) {
                 imageButtonLeft.setVisibility(VISIBLE);
             }
             counter++;
             RunAnimationLeft();
             textView.setText(stringList.get(counter));
             RunAnimationLeft();
-            if(counter == stringList.size()-1){
+            if (counter == stringList.size() - 1) {
                 imageButtonRight.setVisibility(INVISIBLE);
             }
         });
@@ -105,11 +104,15 @@ public class HorizontalStringPicker extends ConstraintLayout {
     public void setValue(String level) {
         counter = findIdByLevel(level);
 
-        if(counter <= 0){
+        if (counter <= 0) {
             imageButtonLeft.setVisibility(INVISIBLE);
+        } else {
+            imageButtonLeft.setVisibility(VISIBLE);
         }
-        if(counter == stringList.size()-1){
+        if (counter == stringList.size() - 1) {
             imageButtonRight.setVisibility(INVISIBLE);
+        } else {
+            imageButtonRight.setVisibility(VISIBLE);
         }
         textView.setText(stringList.get(counter));
     }

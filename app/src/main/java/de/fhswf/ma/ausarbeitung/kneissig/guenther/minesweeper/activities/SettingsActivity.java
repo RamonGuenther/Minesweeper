@@ -38,30 +38,12 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameRe
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Theme;
 
-/**
- * TODO: Theme change spinnt wenn man mit Systemdarkmode die App öffnet, wenn nicht ist alles ok !
- * - allowMainThreadQueries alternative suchen bzw recherchieren
- * <p>
- * <p>
- * - die activity wird safe destroyed !! siehe db.close
- * <p>
- * <p>
- * ON RESUME ETC. mal reinhauen aus dem Link und nachvollziehen was genau abläuft
- */
 public class SettingsActivity extends AppCompatActivity {
 
     private Settings settings;
     private MinesweeperDatabase db;
 
     private List<String> items;
-
-    private SwitchMaterial darkModeSwitch;
-    private SwitchMaterial timerSwitch;
-    private SwitchMaterial modeChangeSwitch;
-    private SwitchMaterial mineCountSwitch;
-    private SwitchMaterial vibrationSwitch;
-    private SwitchMaterial showHintsSwitch;
-    private SwitchMaterial useFlagsSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +53,7 @@ public class SettingsActivity extends AppCompatActivity {
         db = MinesweeperDatabase.createDatabase(this);
         settings = db.settingsDao().getSettings();
 
-        View view = findViewById(R.id.birne);
+        View view = findViewById(R.id.settingsLayout);
 
         Slidr.attach(this, new SlidrConfig.Builder()
                 .position(SlidrPosition.LEFT)
@@ -90,8 +72,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
 
-        //TODO: Bug wenn helles system design und dunkle switch gesetzt
-        darkModeSwitch = findViewById(R.id.darkModeSwitch);
+        SwitchMaterial darkModeSwitch = findViewById(R.id.darkModeSwitch);
         darkModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -102,40 +83,40 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        vibrationSwitch = findViewById(R.id.vibrationSwitch);
+        SwitchMaterial vibrationSwitch = findViewById(R.id.vibrationSwitch);
         vibrationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             MinesweeperGame.getInstance().getGameSettings().setVibration(isChecked);
             settings.setVibration(isChecked);
         });
 
-        timerSwitch = findViewById(R.id.showTimerSwitch);
+        SwitchMaterial timerSwitch = findViewById(R.id.showTimerSwitch);
         timerSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             MinesweeperGame.getInstance().getGameSettings().setTimerVisible(isChecked);
             settings.setShowTimer(isChecked);
         });
 
 
-        mineCountSwitch = findViewById(R.id.showMineCountSwitch);
+        SwitchMaterial mineCountSwitch = findViewById(R.id.showMineCountSwitch);
         mineCountSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             MinesweeperGame.getInstance().getGameSettings().setMineCounterVisible(isChecked);
             settings.setShowMineCounter(isChecked);
         });
 
-        modeChangeSwitch = findViewById(R.id.modeChangeShowSwitch);
+        SwitchMaterial modeChangeSwitch = findViewById(R.id.modeChangeShowSwitch);
         modeChangeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             MinesweeperGame.getInstance().getGameSettings().setGameModeVisible(isChecked);
             settings.setShowModeSwitch(isChecked);
         });
 
 
-        useFlagsSwitch = findViewById(R.id.useFlagsSwitch);
+        SwitchMaterial useFlagsSwitch = findViewById(R.id.useFlagsSwitch);
         useFlagsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             MinesweeperGame.getInstance().getGameSettings().setFlagsPossible(isChecked);
             settings.setUseFlags(isChecked);
         });
 
 
-        showHintsSwitch = findViewById(R.id.showHintsSwitch);
+        SwitchMaterial showHintsSwitch = findViewById(R.id.showHintsSwitch);
         showHintsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             MinesweeperGame.getInstance().getGameSettings().setHints(isChecked);
             settings.setShowHints(isChecked);
@@ -150,24 +131,17 @@ public class SettingsActivity extends AppCompatActivity {
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("APFEL", "LISTENER PARTTTYY)");
                 String theme = parent.getItemAtPosition(position).toString();
                 settings.setTheme(theme);
                 MinesweeperGame.getInstance().getGameSettings().setTheme(theme);
-                String text = "Das Design \"" + theme + "\" wurde ausgewählt!";
-                Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
             }
 
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
 
         ImageButton button = findViewById(R.id.backButton);
-        button.setOnClickListener(e -> {
-            finish();
-        });
+        button.setOnClickListener(e -> finish());
 
 
         spinner.setSelection(getThemeIndex(settings.getTheme()));
@@ -196,7 +170,7 @@ public class SettingsActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_down, R.anim.slide_out_right);
     }
 
-
+    //Falls man von den Einstellungen auf den Homescreen geht sollen die Daten wenigstens gespeichert sein
     @Override
     protected void onPause() {
         super.onPause();
@@ -206,15 +180,10 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.e("DESTROY SETIINGS", "Settings wurden GELÖSCHT");
-
-//        db.close();
+        db.close();
     }
+
 }

@@ -42,10 +42,8 @@ public class MainActivity extends AppCompatActivity {
         ImageButton settingsButton = findViewById(R.id.settingsButton);
 
         settingsButton.setOnClickListener(e -> {
-
             startActivity(new Intent(this, SettingsActivity.class));
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//            startActivityForResult(new Intent(MainActivity.this, Pop.class)); //finishActivity() um es zu übergeben
         });
 
 
@@ -143,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(horizontalStringPicker.getValue().equals(Level.CUSTOM.label)){
+        if (horizontalStringPicker.getValue().equals(Level.CUSTOM.label)) {
             customGame = db.customGameDao().getCustomGame();
             heightTextView.setText(customGame.getHeight());
             widthTextView.setText(customGame.getWidth());

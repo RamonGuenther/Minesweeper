@@ -2,10 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/birne"
+    android:id="@+id/settingsLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_material_light">
+    android:layout_height="match_parent">
 
     <ImageButton
         android:id="@+id/backButton"
@@ -41,33 +40,30 @@
 
     <TextView
         android:id="@+id/spinnerLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="40dp"
         android:labelFor="@id/spinner"
         android:text="Spieldesign auswählen"
         android:textSize="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title">
 
     </TextView>
 
+
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="200dp"
         android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/style_spinner"
         android:dropDownVerticalOffset="50dp"
         android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerLabel" />
-
 
     <TextView
         android:id="@+id/darkModeLabel"
