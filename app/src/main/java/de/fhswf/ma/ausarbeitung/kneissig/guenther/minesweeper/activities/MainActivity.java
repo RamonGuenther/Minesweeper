@@ -17,6 +17,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.MinesweeperDatabase;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.Settings;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button createGameButton = findViewById(R.id.createGameButton);
-        createGameButton.setOnClickListener(e ->{
+        createGameButton.setOnClickListener(e -> {
             openDialog();
         });
 
@@ -122,10 +124,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, GameActivity.class));
 
         });
-
-
-        //setCustomBoardValues für benutzerdefniert in gamesettings
-
 
     }
 

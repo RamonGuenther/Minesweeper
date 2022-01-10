@@ -220,4 +220,66 @@
         app:useMaterialThemeColors="false" />
 
 
+    <TextView
+        android:id="@+id/useFlagsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="20dp"
+        android:background="@null"
+        android:fontFamily="casual"
+        android:gravity="center_vertical"
+        android:text="Flaggen aktivieren"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/modeChangeShowLabel" />
+
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/useFlagsSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="51dp"
+        android:checked="false"
+        android:splitTrack="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColorHighlight="#1E1F20"
+        android:textColorLink="#1E1F20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showHintsSwitch"
+        app:switchMinWidth="90dp"
+        app:useMaterialThemeColors="false" />
+
+    <TextView
+        android:id="@+id/showHintsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="20dp"
+        android:background="@null"
+        android:fontFamily="casual"
+        android:gravity="center_vertical"
+        android:text="Hilfe anzeigen"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/useFlagsLabel" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/showHintsSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="51dp"
+        android:checked="false"
+        android:splitTrack="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColorHighlight="#1E1F20"
+        android:textColorLink="#1E1F20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/modeChangeShowSwitch"
+        app:switchMinWidth="90dp"
+        app:useMaterialThemeColors="false" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

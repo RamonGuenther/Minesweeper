@@ -53,12 +53,15 @@ public class SettingsActivity extends AppCompatActivity {
     private Settings settings;
     private MinesweeperDatabase db;
 
+    private List<String> items;
+
     private SwitchMaterial darkModeSwitch;
     private SwitchMaterial timerSwitch;
     private SwitchMaterial modeChangeSwitch;
     private SwitchMaterial mineCountSwitch;
     private SwitchMaterial vibrationSwitch;
-    private List<String> items;
+    private SwitchMaterial showHintsSwitch;
+    private SwitchMaterial useFlagsSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,46 +115,41 @@ public class SettingsActivity extends AppCompatActivity {
 
         vibrationSwitch = findViewById(R.id.vibrationSwitch);
         vibrationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                MinesweeperGame.getInstance().getGameSettings().setVibration(true);
-                settings.setVibration(true);
-            } else {
-                MinesweeperGame.getInstance().getGameSettings().setVibration(false);
-                settings.setVibration(false);
-            }
+            MinesweeperGame.getInstance().getGameSettings().setVibration(isChecked);
+            settings.setVibration(isChecked);
         });
 
         timerSwitch = findViewById(R.id.showTimerSwitch);
         timerSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                MinesweeperGame.getInstance().getGameSettings().setTimerVisible(true);
-                settings.setShowTimer(true);
-            } else {
-                MinesweeperGame.getInstance().getGameSettings().setTimerVisible(false);
-                settings.setShowTimer(false);
-            }
+            MinesweeperGame.getInstance().getGameSettings().setTimerVisible(isChecked);
+            settings.setShowTimer(isChecked);
         });
+
 
         mineCountSwitch = findViewById(R.id.showMineCountSwitch);
         mineCountSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                MinesweeperGame.getInstance().getGameSettings().setMineCounterVisible(true);
-                settings.setShowMineCounter(true);
-            } else {
-                MinesweeperGame.getInstance().getGameSettings().setMineCounterVisible(false);
-                settings.setShowMineCounter(false);
-            }
+            MinesweeperGame.getInstance().getGameSettings().setMineCounterVisible(isChecked);
+            settings.setShowMineCounter(isChecked);
         });
 
         modeChangeSwitch = findViewById(R.id.modeChangeShowSwitch);
         modeChangeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                MinesweeperGame.getInstance().getGameSettings().setGameModeVisible(true);
-                settings.setShowModeSwitch(true);
-            } else {
-                MinesweeperGame.getInstance().getGameSettings().setGameModeVisible(false);
-                settings.setShowModeSwitch(false);
-            }
+            MinesweeperGame.getInstance().getGameSettings().setGameModeVisible(isChecked);
+            settings.setShowModeSwitch(isChecked);
+        });
+
+
+        useFlagsSwitch = findViewById(R.id.useFlagsSwitch);
+        useFlagsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            MinesweeperGame.getInstance().getGameSettings().setFlagsPossible(isChecked);
+            settings.setUseFlags(isChecked);
+        });
+
+
+        showHintsSwitch = findViewById(R.id.showHintsSwitch);
+        showHintsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            MinesweeperGame.getInstance().getGameSettings().setHints(isChecked);
+            settings.setShowHints(isChecked);
         });
 
 
@@ -189,8 +187,8 @@ public class SettingsActivity extends AppCompatActivity {
         timerSwitch.setChecked(settings.isShowTimer());
         mineCountSwitch.setChecked(settings.isShowMineCounter());
         modeChangeSwitch.setChecked(settings.isShowModeSwitch());
-
-
+        useFlagsSwitch.setChecked(settings.isUseFlags());
+        showHintsSwitch.setChecked(settings.isShowHints());
     }
 
     private int getThemeIndex(String theme) {
@@ -209,11 +207,6 @@ public class SettingsActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_down, R.anim.slide_out_right);
     }
 
-
-    public static void toggleTheme() {
-        int mode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES ? AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES;
-        AppCompatDelegate.setDefaultNightMode(mode);
-    }
 
     @Override
     protected void onPause() {

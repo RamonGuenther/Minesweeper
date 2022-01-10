@@ -26,19 +26,28 @@ public class Settings {
     @ColumnInfo(name = "show_mode_switch")
     public boolean showModeSwitch;
 
+    @ColumnInfo(name = "use_flags")
+    public boolean useFlags;
+
+    @ColumnInfo(name = "show_hints")
+    public boolean showHints;
+
     public String theme;
 
     public Settings() {
-        this.id = 1;
-        this.darkMode = false;
-        this.vibration = true;
-        this.showTimer = true;
-        this.showMineCounter = true;
-        this.showModeSwitch = true;
-        this.theme = Theme.BLUE.label;
+        id = 1;
+        darkMode = false;
+        vibration = true;
+        showTimer = true;
+        showMineCounter = true;
+        showModeSwitch = true;
+        useFlags = true;
+        showHints = true;
+        theme = Theme.BLUE.label;
     }
 
     //Getter & Setter nur zur besseren Lesbarkeit im Code
+
 
     public int getId() {
         return id;
@@ -64,8 +73,20 @@ public class Settings {
         return showModeSwitch;
     }
 
+    public boolean isUseFlags() {
+        return useFlags;
+    }
+
+    public boolean isShowHints() {
+        return showHints;
+    }
+
     public String getTheme() {
         return theme;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setDarkMode(boolean darkMode) {
@@ -86,6 +107,14 @@ public class Settings {
 
     public void setShowModeSwitch(boolean showModeSwitch) {
         this.showModeSwitch = showModeSwitch;
+    }
+
+    public void setUseFlags(boolean useFlags) {
+        this.useFlags = useFlags;
+    }
+
+    public void setShowHints(boolean showHints) {
+        this.showHints = showHints;
     }
 
     public void setTheme(String theme) {
