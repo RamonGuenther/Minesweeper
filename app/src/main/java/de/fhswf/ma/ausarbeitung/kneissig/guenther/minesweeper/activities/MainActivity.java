@@ -1,43 +1,31 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.app.UiModeManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
-import android.widget.Toast;
-
-import com.google.android.material.textfield.TextInputEditText;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Theme;
 
-//TODO: Auf pixel XL passt es nicht !!!!!!!!!!!!!!!!!!!!! FIXXXEN
+
+//TODO: Benutzerdefiniert reiter binhaltet immer das letzte erstellte spiel
+//TODO beim start der APP muss der letzte Spieltyp wieder ausgewählt sein
+
+
+//TODO: Auf pixel XL passt es nicht !!!!!!!!!!!!!!!!!!!!!
 
 /**
  * windowBackground only affects the main window's background.
@@ -47,6 +35,11 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Theme;
  * So both of them change the activity's background, but the colorBackground changes many more things as well.
  */
 public class MainActivity extends AppCompatActivity {
+
+    private HorizontalStringPIcker horizontalStringPicker;
+    private TextView heightTextView;
+    private TextView widthTextView;
+    private TextView minesTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,47 +63,42 @@ public class MainActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         });
 
+        Button createGameButton = findViewById(R.id.createGameButton);
+        createGameButton.setOnClickListener(e ->{
+            openDialog();
+        });
+
+
+        heightTextView = findViewById(R.id.heightTextView);
+        widthTextView = findViewById(R.id.widthTextView);
+        minesTextView = findViewById(R.id.minesTextView);
 
         List<String> items = new ArrayList<>();
         Arrays.asList(Level.values()).forEach(e -> items.add(e.label));
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item, items);
-        Spinner spinner = findViewById(R.id.selectDifficultySpinner);
-        spinner.setAdapter(adapter);
+//        items.remove(items.size() - 1);
 
+        horizontalStringPicker = findViewById(R.id.horizontalStringPicker);
+        horizontalStringPicker.setItems(items);
+        horizontalStringPicker.setValue(Level.PROFESSIONAL.label);
+        horizontalStringPicker.getTextView().addTextChangedListener(new TextWatcher() {
 
-        EditText heightTextInput = findViewById(R.id.heightTextInput);
-        EditText widthTextInput = findViewById(R.id.widthTextInput);
-        EditText numberOfMinesInput = findViewById(R.id.numberOfMinesInput);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //Man müsste das ganze nochmal iwie bestätigen können oder über den Playbutton der nochmal alles checkt
-
-                String level = parent.getItemAtPosition(position).toString();
-
-                MinesweeperGame.getInstance().getGameSettings().setLevel(level);
-
-                if (level.equals(Level.CUSTOM.label)) {
-                    heightTextInput.setText("");
-                    widthTextInput.setText("");
-                    numberOfMinesInput.setText("");
-                    //Toast
-
-                } else {
-                    heightTextInput.setText(String.valueOf(MinesweeperGame.getInstance().getGameSettings().getColumnsX()));
-                    widthTextInput.setText(String.valueOf(MinesweeperGame.getInstance().getGameSettings().getRowsY()));
-                    numberOfMinesInput.setText(String.valueOf(MinesweeperGame.getInstance().getGameSettings().getNumberOfMines()));
-                }
-
-                String text = "Das Level \"" + level + "\" wurde ausgewählt!";
-                Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
 
-            public void onNothingSelected(AdapterView<?> parent) {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String level = horizontalStringPicker.getValue();
+                MinesweeperGame.getInstance().getGameSettings().setLevel(level);
+                heightTextView.setText(String.valueOf(MinesweeperGame.getInstance().getGameSettings().getRowsY()));
+                widthTextView.setText(String.valueOf(MinesweeperGame.getInstance().getGameSettings().getColumnsX()));
+                minesTextView.setText(String.valueOf(MinesweeperGame.getInstance().getGameSettings().getNumberOfMines()));
             }
         });
-
 
         Button gameInstructionButton = findViewById(R.id.gameInstructionButton);
         gameInstructionButton.setOnClickListener(e -> {
@@ -128,15 +116,6 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
-            if (MinesweeperGame.getInstance().getGameSettings().getLevel().equals(Level.CUSTOM)) {
-                MinesweeperGame.getInstance().getGameSettings().setCustomBoardValues(
-                        Integer.parseInt(numberOfMinesInput.getText().toString()),
-                        Integer.parseInt(widthTextInput.getText().toString()),
-                        Integer.parseInt(heightTextInput.getText().toString())
-                );
-
-            }
-
             if (MinesweeperGame.getInstance().isFirstClick()) {
                 MinesweeperGame.getInstance().newGame();
             }
@@ -149,5 +128,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public void openDialog() {
+        ExampleDialog exampleDialog = new ExampleDialog();
+        exampleDialog.show(getSupportFragmentManager(), "example dialog");
+    }
+
+//    @Override
+//    public void applyTexts(String username, String password) {
+//        textViewUsername.setText(username);
+//        textViewPassword.setText(password);
+//    }
 
 }

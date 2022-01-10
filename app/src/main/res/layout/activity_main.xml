@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--TODO: Cardview spackt komplett wahrscheinlich keine label weil selbst erklärend select für schwieirgkeiten siehe zoom und
+            Spiel erstellen öffnet sich ein Modal oder so dann können wir wieder eine Methode für alles vllt benutzen? -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity"
+    android:tooltipText="BOOO!"
     >
+
 
     <ImageView
         android:id="@+id/gameTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_marginStart="21dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="22dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,172 +23,181 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo1" />
 
+
+    <de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities.HorizontalStringPIcker
+        android:id="@+id/horizontalStringPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playButton" />
+
     <Button
         android:id="@+id/playButton"
         android:layout_width="250dp"
         android:layout_height="75dp"
         android:layout_marginStart="80dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="81dp"
         android:backgroundTint="#D66060"
         android:text="Spielen"
         android:textSize="14dp"
+        android:tooltipText="Startet ein neues Spiel"
         app:cornerRadius="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gameTitle" />
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/gameSettingsLayout"
-        android:layout_width="237dp"
-        android:layout_height="wrap_content"
-
-        android:layout_marginStart="86dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="86dp"
-        android:background="@drawable/layout_select_difficulty"
+    <Button
+        android:id="@+id/createGameButton"
+        android:layout_width="250dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="81dp"
+        android:backgroundTint="#00897B"
+        android:text="Spiel erstellen"
+        android:textSize="14dp"
+        android:tooltipText="Startet ein neues Spiel"
+        app:cornerRadius="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playButton">
-
-        <Spinner
-            android:id="@+id/selectDifficultySpinner"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="20dp"
-            android:hint="Schwierigkeit auswählen"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </Spinner>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/heightLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="20dp"
-            app:helperText="max 40"
-            app:helperTextEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/selectDifficultySpinner"
-            app:startIconDrawable="@drawable/ic_baseline_arrow_upward_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/heightTextInput"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Höhe"
-                android:textSize="16dp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/widthLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="20dp"
-            app:helperText="max 40"
-            app:helperTextEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/heightLayout"
-            app:startIconDrawable="@drawable/ic_baseline_east_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/widthTextInput"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Breite"
-                android:textSize="16dp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/mineQuantityLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="20dp"
-            app:helperText="max 40"
-            app:helperTextEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/widthLayout"
-            app:startIconDrawable="@drawable/ic_baseline_warning_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/numberOfMinesInput"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Minenanzahl"
-                android:textSize="16dp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <Button
         android:id="@+id/gameInstructionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="158dp"
-        android:layout_marginTop="30dp"
 
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="159dp"
         android:backgroundTint="#FFFA96"
         android:text="Spielanleitung"
         android:textColor="@color/black"
         android:textSize="14dp"
+        android:tooltipText="Öffnet die Spielanleitung"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gameSettingsLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/createGameButton" />
 
     <ImageButton
         android:id="@+id/highScoreButton"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="25dp"
         android:layout_marginBottom="26dp"
         android:background="@null"
         android:foreground="?android:attr/selectableItemBackground"
         android:scaleType="fitXY"
-        app:tint="#FFEB3B"
+        android:tooltipText="Spielhistorie"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_baseline_emoji_events_24"
-        />
+        app:tint="#FFEB3B" />
 
     <ImageButton
         android:id="@+id/settingsButton"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="26dp"
         android:background="@null"
         android:foreground="?android:attr/selectableItemBackground"
         android:scaleType="fitXY"
+        android:tooltipText="Einstellungen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_settings_24"
-        />
+        app:srcCompat="@drawable/ic_baseline_settings_24" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="244dp"
+        android:layout_height="36dp"
+        android:layout_margin="4dp"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="85dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalStringPicker">
+
+        <TextView
+            android:id="@+id/minesTextView"
+            android:layout_width="40dp"
+            android:layout_height="27dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="100"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/mineImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/widthImage"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="4dp"
+            android:padding="1dp"
+            app:layout_constraintStart_toEndOf="@+id/heightTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_field_width_black" />
+
+        <TextView
+            android:id="@+id/heightTextView"
+            android:layout_width="40dp"
+            android:layout_height="27dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="40"
+            android:textSize="16sp"
+            android:tooltipText="Minenanzahl!"
+            app:layout_constraintStart_toEndOf="@+id/heightImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/mineImage"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="4dp"
+            android:padding="1dp"
+            app:layout_constraintStart_toEndOf="@+id/widthTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icon_mine" />
+
+        <ImageView
+            android:id="@+id/heightImage"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="4dp"
+            android:padding="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_field_height_black" />
+
+        <TextView
+            android:id="@+id/widthTextView"
+            android:layout_width="40dp"
+            android:layout_height="27dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="16"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/widthImage"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

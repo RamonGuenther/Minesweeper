@@ -16,9 +16,11 @@
         android:background="@null"
         android:foreground="?android:attr/selectableItemBackground"
         android:scaleType="fitXY"
+        android:tooltipText="Zurück zum Hauptmenü"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_west_24" />
+        app:srcCompat="@drawable/ic_baseline_west_24"
+        />
 
     <TextView
         android:id="@+id/title"

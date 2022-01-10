@@ -32,7 +32,8 @@
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_east_24" />
+        app:srcCompat="@drawable/ic_baseline_east_24"
+        android:tooltipText="Zurück zum Hauptmenü"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"

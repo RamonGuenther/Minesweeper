@@ -1,5 +1,6 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.highscorecomponents;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.ColumnInfo;
@@ -30,9 +32,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         public TextView gameResult;
         public TextView minesLeft;
         public TextView fieldSize;
+        private CardView cardView;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
+            cardView = itemView.findViewById(R.id.highScoreCard);
+
             gamePlayedOn = itemView.findViewById(R.id.gamePlayedOn);
             playedTime = itemView.findViewById(R.id.playedTime);
             level = itemView.findViewById(R.id.level);
@@ -55,7 +60,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
+
         HighScore currentItem = highScoreItemList.get(position);
+
+
+        holder.cardView.setOnClickListener(v -> {
+            //implement onClick
+            Log.e("CLICK","ID: "+currentItem.getId());
+        });
 
         if(currentItem.getGameResult().equals(GameResult.WON.label)){
             holder.gameResult.setTextColor(ContextCompat.getColor(holder.gameResult.getContext(), android.R.color.holo_green_dark));
