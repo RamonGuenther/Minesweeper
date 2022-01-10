@@ -76,7 +76,10 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
 
         // Einstellungen
         ImageButton gameSetting = findViewById(R.id.gameView_gameSettings);
-        gameSetting.setOnClickListener(event -> startActivity(new Intent(this, SettingsActivity.class)));
+        gameSetting.setOnClickListener(event -> {
+            startActivity(new Intent(this, SettingsActivity.class));
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        });
 
         // Zurück zum Hauptmenü
         ImageButton backToMenue = findViewById(R.id.gameView_backToMenue);

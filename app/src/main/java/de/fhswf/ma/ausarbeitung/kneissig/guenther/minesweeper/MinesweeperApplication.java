@@ -10,12 +10,20 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 
 public class MinesweeperApplication extends Application {
+
     @Override
     public void onCreate() {
         super.onCreate();
         MinesweeperDatabase db = MinesweeperDatabase.createDatabase(this);
 
         Settings settings = db.settingsDao().getSettings();
+
+        //Damit immer ein Settingsobjekt in der Datenbank gespeichert ist
+        if (settings == null) {
+            settings = new Settings();
+            db.settingsDao().insert(settings);
+        }
+
 
         MinesweeperGame.getInstance().getGameSettings().setVibration(settings.isVibration());
         MinesweeperGame.getInstance().getGameSettings().setTimerVisible(settings.isShowTimer());

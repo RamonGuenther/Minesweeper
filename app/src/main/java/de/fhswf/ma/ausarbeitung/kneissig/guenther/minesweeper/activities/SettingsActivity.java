@@ -69,18 +69,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.acvitity_settings);
 
         db = MinesweeperDatabase.createDatabase(this);
-
-//        db = Room.databaseBuilder(getApplicationContext(), MinesweeperDatabase.class, "database_minesweeper").allowMainThreadQueries().build();
-
         settings = db.settingsDao().getSettings();
-
-        //Damit immer ein Settingsobjekt in der Datenbank gespeichert ist
-        if (settings == null) {
-            settings = new Settings();
-            db.settingsDao().insert(settings);
-            Log.e("test", settings.getTheme());
-        }
-
 
         View view = findViewById(R.id.birne);
 

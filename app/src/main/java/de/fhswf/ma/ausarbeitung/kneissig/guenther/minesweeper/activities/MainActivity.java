@@ -17,8 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.MinesweeperDatabase;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.Settings;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 
@@ -128,8 +126,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openDialog() {
-        ExampleDialog exampleDialog = new ExampleDialog();
-        exampleDialog.show(getSupportFragmentManager(), "example dialog");
+        CustomGameDialog customGameDialog = new CustomGameDialog();
+        customGameDialog.show(getSupportFragmentManager(), "example dialog");
     }
 
 //    @Override

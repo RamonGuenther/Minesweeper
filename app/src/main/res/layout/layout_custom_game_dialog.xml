@@ -4,8 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
-   >
+    android:padding="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="229dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/minesPercentTextView"
+            android:layout_width="52dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:text="20.50%"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icon_mine" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/heightTextInputLayout"
@@ -13,14 +50,17 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="103dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="103dp"
-        app:helperText="Kein Limit"
+        app:endIconDrawable="@drawable/ic_baseline_check_circle_24"
+        app:endIconMode="custom"
+        app:endIconTint="#388E3C"
+        app:errorEnabled="true"
+        app:helperText="Mindestens 4 | Maximal 100"
         app:helperTextEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-       >
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/heightTextInput"
@@ -36,9 +76,13 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="103dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="103dp"
-        app:helperText="Maximal 16"
+        app:endIconDrawable="@drawable/ic_baseline_check_circle_24"
+        app:endIconMode="custom"
+        app:endIconTint="#388E3C"
+        app:errorEnabled="true"
+        app:helperText="Mindestens 4 | Maximal 16"
         app:helperTextEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,14 +102,16 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="103dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="103dp"
-        app:helperText="max 40"
+        app:endIconDrawable="@drawable/ic_baseline_check_circle_24"
+        app:endIconMode="custom"
+        app:endIconTint="#388E3C"
+        app:errorEnabled="true"
         app:helperTextEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/widthTextInputLayout"
-        app:startIconDrawable="@drawable/ic_baseline_warning_24">
+        app:layout_constraintTop_toBottomOf="@+id/widthTextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/mineQuantityTextInput"
@@ -86,33 +132,10 @@
         android:text="Spiel starten"
         android:textSize="14dp"
         android:tooltipText="Startet ein neues Spiel"
-        app:cornerRadius="10sp"
+        app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mineQuantityTextInputLayout" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="40dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="2dp"
-        android:gravity="center"
-        android:text="20%"
-        app:layout_constraintBottom_toTopOf="@+id/heightTextInputLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="20dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginBottom="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/heightTextInputLayout"
-        app:layout_constraintEnd_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_mine" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -46,7 +46,7 @@
         android:text="Spielen"
         android:textSize="14dp"
         android:tooltipText="Startet ein neues Spiel"
-        app:cornerRadius="10sp"
+        app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gameTitle" />
@@ -62,7 +62,7 @@
         android:text="Spiel erstellen"
         android:textSize="14dp"
         android:tooltipText="Startet ein neues Spiel"
-        app:cornerRadius="10sp"
+        app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
@@ -80,6 +80,7 @@
         android:textColor="@color/black"
         android:textSize="14dp"
         android:tooltipText="Öffnet die Spielanleitung"
+        app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createGameButton" />
