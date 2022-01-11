@@ -1,6 +1,5 @@
-package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
+package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -21,9 +20,9 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Objects;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities.GameActivity;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.MinesweeperDatabase;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.CustomGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
@@ -90,12 +89,10 @@ public class CustomGameDialog extends AppCompatDialogFragment {
 
         heightTextInput.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void afterTextChanged(Editable editable) {

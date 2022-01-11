@@ -1,27 +1,17 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperCallback;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities.MainActivity;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.CreateHighScore;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameResult;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gameComponents.GameBoardBuilder;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gameComponents.GameEndDialog;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gameComponents.GameSettings;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gameComponents.MineCounter;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gameComponents.Timer;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gamecomponents.GameBoardBuilder;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.GameEndDialog;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gamecomponents.GameSettings;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gamecomponents.MineCounter;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gamecomponents.Timer;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.Field;
 
 /**

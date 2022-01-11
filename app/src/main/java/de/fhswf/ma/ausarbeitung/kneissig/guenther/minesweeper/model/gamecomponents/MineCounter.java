@@ -1,4 +1,4 @@
-package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gameComponents;
+package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gamecomponents;
 
 /**
  * Die Klasse MineCounter speichert die Anzahl noch verbleibender

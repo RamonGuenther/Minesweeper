@@ -1,6 +1,11 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
 
 import android.os.Bundle;
+import android.transition.AutoTransition;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.Transition;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +22,7 @@ import androidx.room.Room;
 
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.transition.platform.MaterialFade;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrConfig;
 import com.r0adkll.slidr.model.SlidrPosition;
@@ -49,6 +55,9 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acvitity_settings);
+
+        getWindow().setEnterTransition(new AutoTransition());
+        getWindow().setExitTransition(new AutoTransition());
 
         db = MinesweeperDatabase.createDatabase(this);
         settings = db.settingsDao().getSettings();

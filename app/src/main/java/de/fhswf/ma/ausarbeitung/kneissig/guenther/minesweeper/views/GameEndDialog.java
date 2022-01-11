@@ -1,4 +1,4 @@
-package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gameComponents;
+package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views;
 
 import android.app.AlertDialog;
 import android.content.Context;

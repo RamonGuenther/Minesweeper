@@ -2,6 +2,7 @@ package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.Settings;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.CustomGameDialog;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.HorizontalStringPicker;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -42,8 +45,9 @@ public class MainActivity extends AppCompatActivity {
         ImageButton settingsButton = findViewById(R.id.settingsButton);
 
         settingsButton.setOnClickListener(e -> {
-            startActivity(new Intent(this, SettingsActivity.class));
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//            startActivity(new Intent(this, SettingsActivity.class));
+//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            startActivity(new Intent(this, SettingsActivity.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         });
 
 
@@ -70,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
         List<String> items = new ArrayList<>();
         Arrays.asList(Level.values()).forEach(e -> items.add(e.label));
-//        items.remove(items.size() - 1); //TODO VLLT DOCH NICHT REMOVEN UND AUCH BEACHTEN
 
         horizontalStringPicker = findViewById(R.id.horizontalStringPicker);
         horizontalStringPicker.setItems(items);

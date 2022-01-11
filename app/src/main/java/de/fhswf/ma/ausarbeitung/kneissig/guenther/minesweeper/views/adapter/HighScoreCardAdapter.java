@@ -1,20 +1,15 @@
-package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.highscorecomponents;
+package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.adapter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.ColumnInfo;
-import androidx.room.PrimaryKey;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -22,10 +17,10 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.HighScore;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameResult;
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
+public class HighScoreCardAdapter extends RecyclerView.Adapter<HighScoreCardAdapter.HighScoreViewHolder> {
     private List<HighScore> highScoreItemList;
 
-    public static class CustomViewHolder extends RecyclerView.ViewHolder {
+    public static class HighScoreViewHolder extends RecyclerView.ViewHolder {
         public TextView gamePlayedOn;
         public TextView playedTime;
         public TextView level;
@@ -34,10 +29,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         public TextView fieldSize;
         private CardView cardView;
 
-        public CustomViewHolder(@NonNull View itemView) {
+        public HighScoreViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.highScoreCard);
-
             gamePlayedOn = itemView.findViewById(R.id.gamePlayedOn);
             playedTime = itemView.findViewById(R.id.playedTime);
             level = itemView.findViewById(R.id.level);
@@ -47,32 +41,31 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         }
     }
 
-    public CustomAdapter(List<HighScore> highScoreItemList) {
+    public HighScoreCardAdapter(List<HighScore> highScoreItemList) {
         this.highScoreItemList = highScoreItemList;
     }
 
     @NonNull
     @Override
-    public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HighScoreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.highscore_item, parent, false);
-        return new CustomViewHolder(view);
+        return new HighScoreViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HighScoreViewHolder holder, int position) {
 
         HighScore currentItem = highScoreItemList.get(position);
 
 
         holder.cardView.setOnClickListener(v -> {
             //implement onClick
-            Log.e("CLICK","ID: "+currentItem.getId());
+            Log.e("CLICK", "ID: " + currentItem.getId());
         });
 
-        if(currentItem.getGameResult().equals(GameResult.WON.label)){
+        if (currentItem.getGameResult().equals(GameResult.WON.label)) {
             holder.gameResult.setTextColor(ContextCompat.getColor(holder.gameResult.getContext(), android.R.color.holo_green_dark));
-        }
-        else{
+        } else {
             holder.gameResult.setTextColor(ContextCompat.getColor(holder.gameResult.getContext(), android.R.color.holo_red_dark));
         }
         holder.gameResult.setText(currentItem.getGameResult());

@@ -22,7 +22,7 @@
         app:srcCompat="@drawable/logo1" />
 
 
-    <de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities.HorizontalStringPicker
+    <de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.HorizontalStringPicker
         android:id="@+id/horizontalStringPicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

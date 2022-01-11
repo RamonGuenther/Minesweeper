@@ -15,14 +15,12 @@ import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrConfig;
 import com.r0adkll.slidr.model.SlidrPosition;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.MinesweeperDatabase;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.HighScore;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.highscorecomponents.CustomAdapter;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.highscorecomponents.HighScoreItem;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.adapter.HighScoreCardAdapter;
 
 /**
 * Swipen geht nur auf dem wirklichen Hintergrund
@@ -75,7 +73,7 @@ public class HighScoreActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true); //wenn die Größe sich nicht ändern steigert performance aber nochmal googeln
         layoutManager = new LinearLayoutManager(this);
-        adapter = new CustomAdapter(highScoreList);
+        adapter = new HighScoreCardAdapter(highScoreList);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
