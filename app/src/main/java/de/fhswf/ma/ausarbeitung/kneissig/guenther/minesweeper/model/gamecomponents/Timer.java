@@ -2,7 +2,7 @@ package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gamecompone
 
 import android.os.Handler;
 
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperCallback;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.callback.MinesweeperCallback;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 
 /**

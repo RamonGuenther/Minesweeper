@@ -62,15 +62,15 @@ public class GameEndDialog extends AlertDialog {
         playedTime.setText(time);
 
         // Button - Listener
-        gameEndDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Nein",
+        gameEndDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Ja",
                 (dialog, which) -> {
-                    context.startActivity(new Intent(context, MainActivity.class));
+                    MinesweeperGame.getInstance().resetGame();
                     dialog.dismiss();
                 });
 
-        gameEndDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Ja",
+        gameEndDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Nein",
                 (dialog, which) -> {
-                    MinesweeperGame.getInstance().resetGame();
+                    context.startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     dialog.dismiss();
                 });
 

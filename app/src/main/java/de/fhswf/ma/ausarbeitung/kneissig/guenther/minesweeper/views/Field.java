@@ -115,6 +115,11 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
      */
     @Override
     public boolean onLongClick(View view) {
+
+        if(MinesweeperGame.getInstance().getGameSettings().isVibration()){
+            MinesweeperGame.getInstance().getGameVibrationCallback().onLongClickVibration();
+        }
+
         if(MinesweeperGame.getInstance().getGameSettings().isFlagsPossible()){
             if(!MinesweeperGame.getInstance().isFirstClick()){
                 if(MinesweeperGame.getInstance().getGameSettings().isHints()){

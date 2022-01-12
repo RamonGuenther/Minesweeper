@@ -2,9 +2,12 @@ package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -13,8 +16,9 @@ import android.widget.TextView;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperCallback;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.callback.MinesweeperCallback;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.callback.GameVibrationsCallback;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
 
@@ -23,7 +27,7 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMo
  *
  * @author Ivonne Kneißig
  */
-public class GameActivity extends AppCompatActivity implements MinesweeperCallback {
+public class GameActivity extends AppCompatActivity implements MinesweeperCallback, GameVibrationsCallback {
 
     SwitchMaterial gameMode;
     TextView flagMode;
@@ -35,6 +39,8 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
     ImageView mine;
     ImageView clock;
 
+    Vibrator vibrator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +48,8 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
 
         View view = findViewById(R.id.gameLayout);
         view.setKeepScreenOn(true);
+
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         //Switch zum Wechseln zwischen Minen-Modus und Flaggen-Modus
         gameMode = findViewById(R.id.gameView_gameMode);
@@ -72,6 +80,7 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
         // Callbacks
         MinesweeperGame.getInstance().setMinesweeperCallback(this);
         MinesweeperGame.getInstance().getTimer().setMinesweeperCallback(this);
+        MinesweeperGame.getInstance().setGameVibrationCallback(this);
 
         // Einstellungen
         ImageButton gameSetting = findViewById(R.id.gameView_gameSettings);
@@ -186,17 +195,6 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
             flagMode.setVisibility(View.GONE);
         }
 
-//        Log.d("Flags Possible", Boolean.toString(MinesweeperGame.getInstance().getGameSettings().isFlagsPossible()));
-//        if(MinesweeperGame.getInstance().getGameSettings().isFlagsPossible()){
-//            gameMode.setVisibility(View.VISIBLE);
-//            mineMode.setVisibility(View.VISIBLE);
-//            flagMode.setVisibility(View.VISIBLE);
-//        } else {
-//            gameMode.setVisibility(View.GONE);
-//            mineMode.setVisibility(View.GONE);
-//            flagMode.setVisibility(View.GONE);
-//        }
-
         MinesweeperGame.getInstance().invalidateBoard();
     }
 
@@ -214,6 +212,29 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
             MinesweeperGame.getInstance().invalidateBoard();
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
             MinesweeperGame.getInstance().invalidateBoard();
+        }
+    }
+
+    @Override
+    public void bombExlposionVibration() {
+
+        long[] vibrationPattern = new long[]{0, 300, 100, 100, 200, 300, 200, 500};
+        int[] vibrationAmplitudes = new int[]{255, 100, 255, 100, 255, 100, 255, 100};
+
+        // repeat: -1 führt das Pattern genau einmal aus
+        if (vibrator.hasAmplitudeControl()) {
+            VibrationEffect effect = VibrationEffect.createWaveform(vibrationPattern, vibrationAmplitudes, -1);
+            vibrator.vibrate(effect);
+        }
+    }
+
+    @Override
+    public void onLongClickVibration() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK));
+        }
+        else{
+            vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
         }
     }
 }

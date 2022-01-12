@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
 
         //checken was es ist und dann die andere xml nehmen
@@ -128,16 +130,17 @@ public class MainActivity extends AppCompatActivity {
 
         Button playButton = findViewById(R.id.playButton);
         playButton.setOnClickListener(e -> {
-            boolean isVibrate = true;
-            if (isVibrate) {
-                Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                vib.vibrate(500);
-            } else {
+            if (MinesweeperGame.getInstance().getGameSettings().isVibration()) {
 
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-            }
-            if (MinesweeperGame.getInstance().isFirstClick()) {
-                MinesweeperGame.getInstance().newGame();
+                long[] vibrationPattern = new long[]{200, 50, 200 };
+                int[] vibrationAmplitudes = new int[]{255, 0, 255 };
+
+                if (vibrator.hasAmplitudeControl()) {
+                    VibrationEffect effect = VibrationEffect.createWaveform(vibrationPattern, vibrationAmplitudes, -1);
+                    vibrator.vibrate(effect);
+                }
             }
             startActivity(new Intent(this, GameActivity.class));
 

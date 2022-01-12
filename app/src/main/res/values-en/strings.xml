@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">Minesweeper</string>
+    <string name="settings">Settings</string>
+
+    <!--String für Spielregeln und Game-->
+    <string name="instruction_part1">"The aim of the game is to uncover all fields that do not contain a mine within a time limit of 999 seconds. As soon as a mine is uncovered, the game is lost. The number on a revealed space indicates how many mines are adjacent to this space. This also includes diagonally adjacent fields. "</string>
+    <string name="laufendes_spiel">Current game</string>
+    <string name="intructions_image_text1">Current game with marked mines</string>
+    <string name="spielregeln">Game Instructions</string>
+    <string name="zurueck_button">Back button</string>
+    <string name="spiel_verloren">Game lost</string>
+    <string name="instructions_image_text2">"A mine was uncovered and the game was lost "</string>
+    <string name="instruction_part2">"The number of mines remaining and the current elapsed time is displayed at the top of the screen. Setting flags will reduce the number of mines left. The number of fields and mines depends on the difficulty level selected. "</string>
+    <string name="counter_und_timer">Counter and timer</string>
+    <string name="instruction_part3">"The game contains two modes, the mine mode and the flag mode. The mode can be changed at any time during the game at the bottom of the screen. "</string>
+    <string name="spielmodi">Game modes</string>
+    <string name="minen_modus">Mine mode</string>
+    <string name="instruction_part5">"In mine mode, a field can be revealed by simply tapping the screen. Holding down a field will set a flag. Flags cannot be placed on fields that have already been revealed, or if no field has yet been revealed. "</string>
+    <string name="instruction_part6">Flag mode</string>
+    <string name="instruction_part7">"In flag mode, a flag is set by briefly tapping the screen and a question mark is created by holding it down. Question marks can be replaced by flags and vice versa. A field with a flag or question mark cannot be revealed. To do this, the marking must first be removed again. "</string>
+    <string name="flaggen_und_fragezeichen">Flaggen and question marks</string>
+    <string name="instruction_image_text3">Flags and question marks were set</string>
+    <string name="instruction_part8">"Do you want more challenges? "</string>
+    <string name="instruction_part9">In the settings you can switch off the flag mode, the mine counter, the timer or just everything as you wish.</string>
+    <string name="einstellungen">Settings</string>
+    <string name="reset_game">Reset game</string>
+    <string name="_0">0</string>
+    <string name="minen_modus_game">Mine mode</string>
+    <string name="flaggen_modus_game">Flag mode</string>
+    <string name="icon_mine">Icon mine</string>
+    <string name="icon_timer">Icon timer</string>
+    <string name="noch_einmal_versuchen">"Try again? "</string>
+    <string name="du_hast_gewonnen">You won!</string>
+    <string name="schwierigkeitsgrad">"Level of difficulty "</string>
+    <string name="zeit">Time</string>
+    <string name="gefundene_minen">Mines found</string>
+    <string name="felder">fields</string>
+    <string name="instructions_part10">Still not enough? Deactivate the flag function completely and win the game without being able to mark the flags.</string>
+
+    <string-array name="level_select">
+        <item>Leicht</item>
+        <item>Mittel</item>
+        <item>Schwer</item>
+        <item>Benutzerdefiniert</item>
+    </string-array>
+
+    <string-array name="theme_select">
+        <item>Bordeaux</item>
+        <item>Blau</item>
+        <item>Classic</item>
+    </string-array>
+
+</resources>

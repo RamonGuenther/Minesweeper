@@ -1,4 +1,4 @@
-package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper;
+package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.callback;
 
 
 /**

@@ -3,7 +3,9 @@ package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.Toast;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperCallback;
+
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.callback.GameVibrationsCallback;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.callback.MinesweeperCallback;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.CreateHighScore;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameResult;
@@ -30,6 +32,7 @@ public class MinesweeperGame {
 
     private Context context;
     private MinesweeperCallback minesweeperCallback;
+    private GameVibrationsCallback gameVibrationsCallback;
     private final GameSettings gameSettings = new GameSettings();
 
     private int[][] bombPlacementField = new int[getColumnsX()][getRowsY()];
@@ -180,6 +183,9 @@ public class MinesweeperGame {
                 }
             }
             if(getFieldAt(xPos,yPos).isMine()){
+                if(MinesweeperGame.getInstance().getGameSettings().isVibration()){
+                    gameVibrationsCallback.bombExlposionVibration();
+                }
                 gameLost();
             }
         }
@@ -427,5 +433,13 @@ public class MinesweeperGame {
 
     public GameSettings getGameSettings() {
         return gameSettings;
+    }
+
+    public GameVibrationsCallback getGameVibrationCallback() {
+        return gameVibrationsCallback;
+    }
+
+    public void setGameVibrationCallback(GameVibrationsCallback gameVibrationsCallback) {
+        this.gameVibrationsCallback = gameVibrationsCallback;
     }
 }

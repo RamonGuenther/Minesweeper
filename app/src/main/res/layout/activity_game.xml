@@ -123,7 +123,7 @@
         android:layout_height="50dp"
         android:layout_marginEnd="20dp"
         android:fontFamily="casual"
-        android:gravity="right|center_vertical"
+        android:gravity="end|center_vertical"
         android:text="@string/flaggen_modus_game"
         android:textSize="14sp"
         android:textStyle="bold"
