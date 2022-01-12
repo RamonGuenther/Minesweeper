@@ -214,7 +214,7 @@ public class GameSettings  {
     }
 
     public void setFlagsPossible(boolean flagsPossible) {
-        gameModeVisible = flagsPossible;
+//        gameModeVisible = flagsPossible;
         this.flagsPossible = flagsPossible;
     }
 }

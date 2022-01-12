@@ -1,16 +1,15 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
@@ -110,6 +109,7 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
     @Override
     protected void onRestart() {
         super.onRestart();
+        updateView();
     }
 
     @Override
@@ -175,6 +175,7 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
             clock.setVisibility(View.INVISIBLE);
         }
 
+        Log.d("Mode Visible", Boolean.toString(MinesweeperGame.getInstance().getGameSettings().isGameModeVisible()));
         if (MinesweeperGame.getInstance().getGameSettings().isGameModeVisible()) {
             gameMode.setVisibility(View.VISIBLE);
             mineMode.setVisibility(View.VISIBLE);
@@ -185,7 +186,18 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
             flagMode.setVisibility(View.GONE);
         }
 
-        MinesweeperGame.getInstance().changeTheme();
+//        Log.d("Flags Possible", Boolean.toString(MinesweeperGame.getInstance().getGameSettings().isFlagsPossible()));
+//        if(MinesweeperGame.getInstance().getGameSettings().isFlagsPossible()){
+//            gameMode.setVisibility(View.VISIBLE);
+//            mineMode.setVisibility(View.VISIBLE);
+//            flagMode.setVisibility(View.VISIBLE);
+//        } else {
+//            gameMode.setVisibility(View.GONE);
+//            mineMode.setVisibility(View.GONE);
+//            flagMode.setVisibility(View.GONE);
+//        }
+
+        MinesweeperGame.getInstance().invalidateBoard();
     }
 
     /**
@@ -199,9 +211,9 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
         super.onConfigurationChanged(newConfig);
 
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            MinesweeperGame.getInstance().changeTheme();
+            MinesweeperGame.getInstance().invalidateBoard();
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            MinesweeperGame.getInstance().changeTheme();
+            MinesweeperGame.getInstance().invalidateBoard();
         }
     }
 }

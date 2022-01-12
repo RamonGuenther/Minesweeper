@@ -4,20 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import java.util.Locale;
 
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
 
@@ -105,7 +98,9 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
                 }
                 break;
             case FLAG_MODE:
-                MinesweeperGame.getInstance().placeFlag(getXPos() , getYPos());
+                if(MinesweeperGame.getInstance().getGameSettings().isFlagsPossible()){
+                    MinesweeperGame.getInstance().placeFlag(getXPos() , getYPos());
+                }
                 break;
         }
     }
@@ -204,7 +199,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
                         + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
                         + "_button",
                 "drawable", context.getPackageName());
-        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
+        Drawable drawable = ResourcesCompat.getDrawable(context.getResources() ,drawableId, context.getTheme());
 
         if (drawable != null) {
             drawable.setBounds(0,0,getWidth(),getHeight());
@@ -224,7 +219,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
                         + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
                         + "_bomb",
                 "drawable", context.getPackageName());
-        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
+        Drawable drawable = ResourcesCompat.getDrawable(context.getResources() ,drawableId, context.getTheme());
 
         if (drawable != null) {
             drawable.setBounds(0,0,getWidth(),getHeight());
@@ -245,7 +240,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
                         + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
                         + "_bombexpl",
                 "drawable", context.getPackageName());
-        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
+        Drawable drawable = ResourcesCompat.getDrawable(context.getResources() ,drawableId, context.getTheme());
 
         if (drawable != null) {
             drawable.setBounds(0,0,getWidth(),getHeight());
@@ -264,7 +259,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
                         + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
                         + "_flag",
                 "drawable", context.getPackageName());
-        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
+        Drawable drawable = ResourcesCompat.getDrawable(context.getResources() ,drawableId, context.getTheme());
 
         if (drawable != null) {
             drawable.setBounds(0,0,getWidth(),getHeight());
@@ -284,7 +279,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
                         + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
                         + "_flagfalse",
                 "drawable", context.getPackageName());
-        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
+        Drawable drawable = ResourcesCompat.getDrawable(context.getResources() ,drawableId, context.getTheme());
 
         if (drawable != null) {
             drawable.setBounds(0,0,getWidth(),getHeight());
@@ -304,7 +299,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
                         + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
                         + "_question",
                 "drawable", context.getPackageName());
-        Drawable drawable = getResources().getDrawable(drawableId, context.getTheme());
+        Drawable drawable = ResourcesCompat.getDrawable(context.getResources() ,drawableId, context.getTheme());
         if (drawable != null) {
             drawable.setBounds(0,0,getWidth(),getHeight());
             drawable.draw(canvas);
@@ -322,7 +317,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
      */
     private void drawNumber( Canvas canvas ){
         Drawable drawable = null;
-        int drawableId = 0;
+        int drawableId;
 
         switch (getFieldValue() ){
             case 0:
@@ -331,7 +326,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
                                 + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
                                 + "_empty",
                         "drawable", context.getPackageName());
-                drawable = getResources().getDrawable(drawableId, context.getTheme());
+                drawable = ResourcesCompat.getDrawable(context.getResources() ,drawableId, context.getTheme());
                 break;
             case 1:
                 drawableId = context.getResources().getIdentifier(
@@ -339,7 +334,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
                                 + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
                                 + "_num1",
                         "drawable", context.getPackageName());
-                drawable = getResources().getDrawable(drawableId, context.getTheme());
+                drawable = ResourcesCompat.getDrawable(context.getResources() ,drawableId, context.getTheme());
                 break;
             case 2:
                 drawableId = context.getResources().getIdentifier(
@@ -347,7 +342,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
                                 + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
                                 + "_num2",
                         "drawable", context.getPackageName());
-                drawable = getResources().getDrawable(drawableId, context.getTheme());
+                drawable = ResourcesCompat.getDrawable(context.getResources() ,drawableId, context.getTheme());
                 break;
             case 3:
                 drawableId = context.getResources().getIdentifier(
@@ -355,7 +350,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
                                 + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
                                 + "_num3",
                         "drawable", context.getPackageName());
-                drawable = getResources().getDrawable(drawableId, context.getTheme());
+                drawable = ResourcesCompat.getDrawable(context.getResources() ,drawableId, context.getTheme());
                 break;
             case 4:
                 drawableId = context.getResources().getIdentifier(
@@ -363,7 +358,8 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
                                 + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
                                 + "_num4",
                         "drawable", context.getPackageName());
-                drawable = getResources().getDrawable(drawableId, context.getTheme());
+                drawable = ResourcesCompat.getDrawable(context.getResources() ,drawableId, context.getTheme());
+
                 break;
             case 5:
                 drawableId = context.getResources().getIdentifier(
@@ -371,7 +367,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
                                 + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
                                 + "_num5",
                         "drawable", context.getPackageName());
-                drawable = getResources().getDrawable(drawableId, context.getTheme());
+                drawable = ResourcesCompat.getDrawable(context.getResources() ,drawableId, context.getTheme());
                 break;
             case 6:
                 drawableId = context.getResources().getIdentifier(
@@ -379,7 +375,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
                                 + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
                                 + "_num6",
                         "drawable", context.getPackageName());
-                drawable = getResources().getDrawable(drawableId, context.getTheme());
+                drawable = ResourcesCompat.getDrawable(context.getResources() ,drawableId, context.getTheme());
                 break;
             case 7:
                 drawableId = context.getResources().getIdentifier(
@@ -387,7 +383,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
                                 + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
                                 + "_num7",
                         "drawable", context.getPackageName());
-                drawable = getResources().getDrawable(drawableId, context.getTheme());
+                drawable = ResourcesCompat.getDrawable(context.getResources() ,drawableId, context.getTheme());
                 break;
             case 8:
                 drawableId = context.getResources().getIdentifier(
@@ -395,7 +391,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
                                 + MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT)
                                 + "_num8",
                         "drawable", context.getPackageName());
-                drawable = getResources().getDrawable(drawableId, context.getTheme());
+                drawable = ResourcesCompat.getDrawable(context.getResources() ,drawableId, context.getTheme());
                 break;
         }
         if (drawable != null) {

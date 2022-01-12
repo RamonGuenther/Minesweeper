@@ -122,8 +122,18 @@ public class SettingsActivity extends AppCompatActivity {
         useFlagsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             MinesweeperGame.getInstance().getGameSettings().setFlagsPossible(isChecked);
             settings.setUseFlags(isChecked);
+            if(!useFlagsSwitch.isChecked()){
+                modeChangeSwitch.setChecked(false);
+                modeChangeSwitch.setEnabled(false);
+            } else{
+                modeChangeSwitch.setEnabled(true);
+            }
         });
 
+        if(!useFlagsSwitch.isChecked()){
+            modeChangeSwitch.setChecked(false);
+            modeChangeSwitch.setEnabled(false);
+        }
 
         SwitchMaterial showHintsSwitch = findViewById(R.id.showHintsSwitch);
         showHintsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {

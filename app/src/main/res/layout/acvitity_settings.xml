@@ -235,7 +235,7 @@
 
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/useFlagsSwitch"
+        android:id="@+id/showHintsSwitch"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginTop="20dp"
@@ -246,7 +246,7 @@
         android:textColorHighlight="#1E1F20"
         android:textColorLink="#1E1F20"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/showHintsSwitch"
+        app:layout_constraintTop_toBottomOf="@+id/useFlagsSwitch"
         app:switchMinWidth="90dp"
         app:useMaterialThemeColors="false" />
 
@@ -265,7 +265,7 @@
         app:layout_constraintTop_toBottomOf="@+id/useFlagsLabel" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/showHintsSwitch"
+        android:id="@+id/useFlagsSwitch"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginTop="20dp"

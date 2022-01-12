@@ -22,8 +22,8 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.Field;
  */
 public class MinesweeperGame {
 
-    private static final String GAME_LOST = "Du hast verloren!";
-    private static final String GAME_WON = "Du hast gewonnen!";
+    public static final String GAME_LOST = "Du hast verloren!";
+    public static final String GAME_WON = "Du hast gewonnen!";
 
     @SuppressLint("StaticFieldLeak")
     private static MinesweeperGame instance;
@@ -374,9 +374,10 @@ public class MinesweeperGame {
     }
 
     /**
-     * Zeichnet das Spielfeld neu, wenn der Spieler während des laufenden Spiels das Theme wechselt.
+     * Zeichnet das Spielfeld neu, wenn der Spieler während des laufenden Spiels das Theme wechselt
+     * oder das der Bildschrim vom Portrait- in den Landscape-Modus wechselt und umgekehrt.
      */
-    public void changeTheme(){
+    public void invalidateBoard(){
         for(int x = 0; x < getColumnsX(); x++ ){
             for(int y = 0; y < getRowsY(); y++ ){
                 minesweeperBoard[x][y].invalidate();

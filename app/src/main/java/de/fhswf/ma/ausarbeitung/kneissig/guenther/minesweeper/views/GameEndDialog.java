@@ -1,5 +1,8 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views;
 
+import static de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame.GAME_LOST;
+import static de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame.GAME_WON;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +13,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperCallback;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities.MainActivity;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
@@ -38,7 +40,16 @@ public class GameEndDialog extends AlertDialog {
         level.setText(MinesweeperGame.getInstance().getGameSettings().getLevel().label);
 
         TextView minesLeft = alertLayout.findViewById(R.id.dialog_minesLeft);
-        int minesfound = MinesweeperGame.getInstance().getGameSettings().getNumberOfMines() - MinesweeperGame.getInstance().getMineCounter().getMineCount();
+        int minesfound = 0;
+        switch (message){
+            case GAME_WON:
+                minesfound = MinesweeperGame.getInstance().getGameSettings().getNumberOfMines();
+                break;
+            case GAME_LOST:
+                minesfound = MinesweeperGame.getInstance().getGameSettings().getNumberOfMines()
+                        - MinesweeperGame.getInstance().getMineCounter().getMineCount();
+                break;
+        }
         String mines = minesfound + " / " + MinesweeperGame.getInstance().getGameSettings().getNumberOfMines();
         minesLeft.setText(mines);
 
