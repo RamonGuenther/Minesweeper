@@ -11,12 +11,8 @@
 
     <ImageView
         android:id="@+id/gameTitle"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="22dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo1" />
@@ -26,35 +22,35 @@
         android:id="@+id/horizontalStringPicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="56dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="217dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gameTitle"
         app:layout_constraintTop_toBottomOf="@+id/playButton" />
 
     <Button
         android:id="@+id/playButton"
         android:layout_width="250dp"
         android:layout_height="75dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="81dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="242dp"
         android:backgroundTint="#D66060"
         android:text="Spielen"
         android:textSize="14dp"
         android:tooltipText="Startet ein neues Spiel"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gameTitle" />
+        app:layout_constraintStart_toEndOf="@+id/gameTitle"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/createGameButton"
         android:layout_width="250dp"
-        android:layout_height="75dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="81dp"
         android:backgroundTint="#00897B"
         android:text="Spiel erstellen"
@@ -71,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="158dp"
 
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="159dp"
         android:backgroundTint="#FFFA96"
         android:text="Spielanleitung"
@@ -80,6 +76,7 @@
         android:tooltipText="Öffnet die Spielanleitung"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createGameButton" />
 
@@ -117,7 +114,7 @@
         android:layout_width="244dp"
         android:layout_height="36dp"
         android:layout_marginStart="83dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="84dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

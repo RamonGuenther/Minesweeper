@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton highScoreButton = findViewById(R.id.highScoreButton);
         highScoreButton.setOnClickListener(e -> {
-            startActivity(new Intent(this, HighScoreActivity.class));
+            startActivity(new Intent(this, GameHistoryActivity.class));
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         });
 
@@ -141,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
                     VibrationEffect effect = VibrationEffect.createWaveform(vibrationPattern, vibrationAmplitudes, -1);
                     vibrator.vibrate(effect);
                 }
+            }
+            if(MinesweeperGame.getInstance().isFirstClick()){
+                MinesweeperGame.getInstance().newGame();
             }
             startActivity(new Intent(this, GameActivity.class));
 

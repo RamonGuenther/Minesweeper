@@ -8,7 +8,7 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameRe
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 
 @Entity
-public class HighScore {
+public class GameSummary {
 
     @PrimaryKey(autoGenerate = true)
     private Long id;
@@ -30,10 +30,10 @@ public class HighScore {
     @ColumnInfo(name = "field_size")
     private String fieldSize;
 
-    public HighScore(){
+    public GameSummary(){
 
     }
-    public HighScore(String gamePlayedOn, int playedTime, Level level, GameResult gameResult, String minesFound, String fieldSize) {
+    public GameSummary(String gamePlayedOn, int playedTime, Level level, GameResult gameResult, String minesFound, String fieldSize) {
         this.gamePlayedOn = gamePlayedOn;
         this.playedTime = playedTime;
         this.level = level.label;

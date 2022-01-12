@@ -32,6 +32,7 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
  * TODO: - Wahrscheinlich nochmal in ein Constraintlayout (oder relative) packen damit alles richtig liegt
  * -oben die % immer aktualisieren wenn sich in mine was ändert
  * - unter minen feld steht die maximale Menge (70-80%)
+ * - Vllt anderes extends wie Ivonne Alertdialog
  */
 public class CustomGameDialog extends AppCompatDialogFragment {
     private EditText numberOfMinesInput;
@@ -50,6 +51,10 @@ public class CustomGameDialog extends AppCompatDialogFragment {
     private CustomGame customGame;
     private HorizontalStringPicker horizontalStringPicker;
 
+
+    public CustomGameDialog(){
+
+    }
 
     public CustomGameDialog(HorizontalStringPicker horizontalStringPicker) {
         this.horizontalStringPicker = horizontalStringPicker;

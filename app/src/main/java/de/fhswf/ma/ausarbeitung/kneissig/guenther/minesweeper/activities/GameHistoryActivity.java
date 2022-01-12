@@ -1,14 +1,15 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -21,19 +22,22 @@ import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrConfig;
 import com.r0adkll.slidr.model.SlidrPosition;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.MinesweeperDatabase;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.HighScore;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.GameSummary;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameResult;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.adapter.HighScoreCardAdapter;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.HorizontalStringPicker;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.adapter.GameHistoryAdapter;
 
 /**
  * Swipen geht nur auf dem wirklichen Hintergrund
  */
-public class HighScoreActivity extends AppCompatActivity {
+public class GameHistoryActivity extends AppCompatActivity {
 
     //Highscore_item
     private RecyclerView recyclerView;
@@ -43,7 +47,7 @@ public class HighScoreActivity extends AppCompatActivity {
 
     //
     private RecyclerView.LayoutManager layoutManager;
-    private List<HighScore> highScoreList;
+    private List<GameSummary> gameSummaryList;
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private MinesweeperDatabase db;
@@ -53,7 +57,7 @@ public class HighScoreActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_highscore);
+        setContentView(R.layout.activity_game_history);
 
         View view = findViewById(R.id.apfel);
 
@@ -79,39 +83,39 @@ public class HighScoreActivity extends AppCompatActivity {
             finish();
         });
 
-        radioGroup = findViewById(R.id.RadioGroup);
 
-        radioGroup.setOnClickListener(e -> {
-            Toast.makeText(this, "Test", Toast.LENGTH_SHORT).show();
+        List<String> items = new ArrayList<>();
+        Arrays.asList(Level.values()).forEach(e -> items.add(e.label));
+        items.remove(items.size() - 1);
+
+        HorizontalStringPicker horizontalStringPicker = findViewById(R.id.horizontalStringPicker2);
+        horizontalStringPicker.setItems(items);
+        horizontalStringPicker.setValue(Level.BEGINNER.label);
+        horizontalStringPicker.getTextView().addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String level = horizontalStringPicker.getValue();
+                refreshData(level);
+            }
         });
-
-
-        radioButton = findViewById(R.id.radioButton1);
-        radioButton.setChecked(true); //Nur für das erste mal des Betreten der Activity
-
-        radioButton.setOnClickListener(e -> {
-            radioButtonEvent(Level.BEGINNER);
-        });
-
-        radioButton1 = findViewById(R.id.radioButton2);
-        radioButton1.setOnClickListener(e -> {
-            radioButtonEvent(Level.ADVANCED);
-        });
-
-        radioButton2 = findViewById(R.id.radioButton3);
-        radioButton2.setOnClickListener(e -> {
-            radioButtonEvent(Level.PROFESSIONAL);
-        });
-
 
 
         db = MinesweeperDatabase.createDatabase(this);
-        highScoreList = db.highscoreDao().getHighScoresByGameMode(GameResult.WON.label, Level.BEGINNER.label);
+        gameSummaryList = db.highscoreDao().getHighScoresByGameMode(GameResult.WON.label, Level.BEGINNER.label);
 
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true); //wenn die Größe sich nicht ändern steigert performance aber nochmal googeln
         layoutManager = new LinearLayoutManager(this);
-        adapter = new HighScoreCardAdapter(highScoreList);
+        adapter = new GameHistoryAdapter(gameSummaryList);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -124,29 +128,29 @@ public class HighScoreActivity extends AppCompatActivity {
 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                List<HighScore> highScoreListtemp;
+                List<GameSummary> gameSummaryListtemp;
 
                 if (tabLayout.getSelectedTabPosition() == 0) {
-                    radioGroup.setVisibility(View.VISIBLE);
-
-                    if (radioButton.isChecked()) {
-                        radioButtonEvent(Level.BEGINNER);
-                    } else if (radioButton1.isChecked()) {
-                        radioButtonEvent(Level.ADVANCED);
-                    } else if (radioButton2.isChecked()) {
-                        radioButtonEvent(Level.PROFESSIONAL);
+                    ImageView logo = findViewById(R.id.gameTitleHighscore);
+                    if(logo != null) {
+                        logo.setVisibility(View.GONE);
                     }
-                    textView.setText("High Scores"); //TODO AUch solche String ressourcen einbinden wenn nicht schon vorhanden (getString(R.string.app_name))
+                    horizontalStringPicker.setVisibility(View.VISIBLE);
+                    refreshData(horizontalStringPicker.getValue());
+                    textView.setText("Highscores"); //TODO AUch solche String ressourcen einbinden wenn nicht schon vorhanden (getString(R.string.app_name))
 
                 } else if (tabLayout.getSelectedTabPosition() == 1) {
+                    ImageView logo = findViewById(R.id.gameTitleHighscore);
+                    if(logo != null) {
+                        logo.setVisibility(View.VISIBLE);
+                    }
                     textView.setText("Spielverlauf");
-                    radioGroup.setVisibility(View.GONE); //TODO Ivonne nach Meinung fragen
-//                    radioGroup.setVisibility(View.INVISIBLE);
-                    highScoreListtemp = db.highscoreDao().getMatchHistory();
-                    highScoreList.clear();
-                    highScoreList.addAll(highScoreListtemp);
+                    horizontalStringPicker.setVisibility(View.GONE); //TODO Ivonne nach Meinung fragen
+//                    horizontalStringPicker.setVisibility(View.INVISIBLE);
+                    gameSummaryListtemp = db.highscoreDao().getMatchHistory();
+                    gameSummaryList.clear();
+                    gameSummaryList.addAll(gameSummaryListtemp);
                     adapter.notifyDataSetChanged();
-
                 }
             }
 
@@ -161,10 +165,10 @@ public class HighScoreActivity extends AppCompatActivity {
     }
 
 
-    private void radioButtonEvent(Level level) {
-        List<HighScore> test = db.highscoreDao().getHighScoresByGameMode(GameResult.WON.label, level.label);
-        highScoreList.clear();
-        highScoreList.addAll(test);
+    private void refreshData(String level) {
+        List<GameSummary> test = db.highscoreDao().getHighScoresByGameMode(GameResult.WON.label, level);
+        gameSummaryList.clear();
+        gameSummaryList.addAll(test);
         adapter.notifyDataSetChanged();
     }
 

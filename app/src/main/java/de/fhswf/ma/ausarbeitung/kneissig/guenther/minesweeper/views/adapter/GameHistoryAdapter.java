@@ -1,6 +1,5 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +10,16 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.r0adkll.slidr.Slidr;
-
 import java.util.List;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.HighScore;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.GameSummary;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameResult;
 
-public class HighScoreCardAdapter extends RecyclerView.Adapter<HighScoreCardAdapter.HighScoreViewHolder> {
-    private List<HighScore> highScoreItemList;
+public class GameHistoryAdapter extends RecyclerView.Adapter<GameHistoryAdapter.GameHistoryViewHolder> {
+    private List<GameSummary> gameSummaryItemList;
 
-    public static class HighScoreViewHolder extends RecyclerView.ViewHolder {
+    public static class GameHistoryViewHolder extends RecyclerView.ViewHolder {
         public TextView gamePlayedOn;
         public TextView playedTime;
         public TextView level;
@@ -31,7 +28,7 @@ public class HighScoreCardAdapter extends RecyclerView.Adapter<HighScoreCardAdap
         public TextView fieldSize;
         private CardView cardView;
 
-        public HighScoreViewHolder(@NonNull View itemView) {
+        public GameHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.highScoreCard);
             gamePlayedOn = itemView.findViewById(R.id.gamePlayedOn);
@@ -44,21 +41,21 @@ public class HighScoreCardAdapter extends RecyclerView.Adapter<HighScoreCardAdap
     }
 
 
-    public HighScoreCardAdapter(List<HighScore> highScoreItemList) {
-        this.highScoreItemList = highScoreItemList;
+    public GameHistoryAdapter(List<GameSummary> gameSummaryItemList) {
+        this.gameSummaryItemList = gameSummaryItemList;
     }
 
     @NonNull
     @Override
-    public HighScoreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.highscore_item, parent, false);
-        return new HighScoreViewHolder(view);
+    public GameHistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.game_summary_item, parent, false);
+        return new GameHistoryViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HighScoreViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GameHistoryViewHolder holder, int position) {
 
-        HighScore currentItem = highScoreItemList.get(position);
+        GameSummary currentItem = gameSummaryItemList.get(position);
 
 
 //        holder.cardView.setOnClickListener(v -> {
@@ -84,7 +81,7 @@ public class HighScoreCardAdapter extends RecyclerView.Adapter<HighScoreCardAdap
 
     @Override
     public int getItemCount() {
-        return highScoreItemList.size();
+        return gameSummaryItemList.size();
     }
 
 }

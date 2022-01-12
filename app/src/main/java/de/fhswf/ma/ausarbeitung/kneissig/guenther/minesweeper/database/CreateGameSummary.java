@@ -7,16 +7,16 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Locale;
 
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.HighScore;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.GameSummary;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameResult;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 
 /**
  * Überarbeiten !!???
  */
-public class CreateHighScore {
+public class CreateGameSummary {
 
-    CreateHighScore(){
+    CreateGameSummary(){
 
     }
 
@@ -25,8 +25,8 @@ public class CreateHighScore {
         MinesweeperDatabase db = MinesweeperDatabase.createDatabase(context);
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(new Locale("de"));
         String gamePlayedOn = LocalDateTime.now().format(formatter);
-        HighScore highScore = new HighScore(gamePlayedOn,playedTime,level, gameResult,  minesLeft,fieldSize);
-        db.highscoreDao().insert(highScore);
+        GameSummary gameSummary = new GameSummary(gamePlayedOn,playedTime,level, gameResult,  minesLeft,fieldSize);
+        db.highscoreDao().insert(gameSummary);
         db.close();
     }
 

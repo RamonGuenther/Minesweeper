@@ -2,46 +2,34 @@ package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
 
 import android.os.Bundle;
 import android.transition.AutoTransition;
-import android.transition.Explode;
-import android.transition.Fade;
-import android.transition.Slide;
-import android.transition.Transition;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
-import androidx.room.Room;
 
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.google.android.material.transition.platform.MaterialFade;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrConfig;
 import com.r0adkll.slidr.model.SlidrPosition;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.MinesweeperDatabase;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.HighScore;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.Settings;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameResult;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Theme;
 
 /**
@@ -147,7 +135,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         items = new ArrayList<>();
         Arrays.asList(Theme.values()).forEach(e -> items.add(e.label));
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.select_list_item, items);
         Spinner spinner = findViewById(R.id.spinner);
         spinner.setAdapter(adapter);
 
@@ -165,6 +153,22 @@ public class SettingsActivity extends AppCompatActivity {
         ImageButton button = findViewById(R.id.backButton);
         button.setOnClickListener(e -> finish());
 
+
+        ImageButton deleteStatisticsButton = findViewById(R.id.deleteStatisticsButton);
+
+        deleteStatisticsButton.setOnClickListener(e->{
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Spielstatistiken wirklich löschen?");
+            builder.setPositiveButton("Ja", (dialog, id) -> {
+                db.highscoreDao().deleteAll(db.highscoreDao().getMatchHistory());
+            });
+
+            builder.setNegativeButton("Nein", null);
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.getWindow().setGravity(Gravity.CENTER);
+            alertDialog.show();
+        });
 
         spinner.setSelection(getThemeIndex(settings.getTheme()));
         darkModeSwitch.setChecked(settings.isDarkMode());

@@ -20,7 +20,7 @@ public class HorizontalStringPicker extends ConstraintLayout {
 
     private final TextView textView;
     private int counter;
-    private List<String> stringList;
+    private List<String> itemList;
     private final ImageButton imageButtonRight;
     private final ImageButton imageButtonLeft;
 
@@ -37,7 +37,7 @@ public class HorizontalStringPicker extends ConstraintLayout {
         counter = 0;
 
         imageButtonLeft.setOnClickListener(e -> {
-            if (counter <= 0 || stringList.isEmpty()) {
+            if (counter <= 0 || itemList.isEmpty()) {
                 return;
             }
             if (imageButtonRight.getVisibility() == INVISIBLE) {
@@ -45,7 +45,7 @@ public class HorizontalStringPicker extends ConstraintLayout {
             }
             counter--;
             RunAnimationRight();
-            textView.setText(stringList.get(counter));
+            textView.setText(itemList.get(counter));
             RunAnimationRight();
             if (counter <= 0) {
                 imageButtonLeft.setVisibility(INVISIBLE);
@@ -54,7 +54,7 @@ public class HorizontalStringPicker extends ConstraintLayout {
 
 
         imageButtonRight.setOnClickListener(e -> {
-            if (counter == stringList.size() - 1 || stringList.isEmpty()) {
+            if (counter == itemList.size() - 1 || itemList.isEmpty()) {
                 return;
             }
             if (imageButtonLeft.getVisibility() == INVISIBLE) {
@@ -62,9 +62,9 @@ public class HorizontalStringPicker extends ConstraintLayout {
             }
             counter++;
             RunAnimationLeft();
-            textView.setText(stringList.get(counter));
+            textView.setText(itemList.get(counter));
             RunAnimationLeft();
-            if (counter == stringList.size() - 1) {
+            if (counter == itemList.size() - 1) {
                 imageButtonRight.setVisibility(INVISIBLE);
             }
         });
@@ -85,8 +85,8 @@ public class HorizontalStringPicker extends ConstraintLayout {
         textView.startAnimation(a);
     }
 
-    public List<String> getStringList() {
-        return stringList;
+    public List<String> getItemList() {
+        return itemList;
     }
 
     public void setCounter(int counter) {
@@ -94,32 +94,32 @@ public class HorizontalStringPicker extends ConstraintLayout {
     }
 
     public void setItems(List<String> stringList) {
-        this.stringList = stringList;
+        this.itemList = stringList;
     }
 
     public String getValue() {
         return textView.getText().toString();
     }
 
-    public void setValue(String level) {
-        counter = findIdByLevel(level);
+    public void setValue(String item) {
+        counter = findIdByLevel(item);
 
         if (counter <= 0) {
             imageButtonLeft.setVisibility(INVISIBLE);
         } else {
             imageButtonLeft.setVisibility(VISIBLE);
         }
-        if (counter == stringList.size() - 1) {
+        if (counter == itemList.size() - 1) {
             imageButtonRight.setVisibility(INVISIBLE);
         } else {
             imageButtonRight.setVisibility(VISIBLE);
         }
-        textView.setText(stringList.get(counter));
+        textView.setText(itemList.get(counter));
     }
 
-    public int findIdByLevel(String level) {
-        for (int i = 0; i < stringList.size(); i++) {
-            if (stringList.get(i).contains(level)) {
+    public int findIdByLevel(String item) {
+        for (int i = 0; i < itemList.size(); i++) {
+            if (itemList.get(i).contains(item)) {
                 return i;
             }
         }

@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.callback.GameVibrationsCallback;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.callback.MinesweeperCallback;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.CreateHighScore;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.CreateGameSummary;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameResult;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gamecomponents.GameBoardBuilder;
@@ -286,7 +286,7 @@ public class MinesweeperGame {
             minesweeperCallback.updateTimer(0);
 
             //Ramonnilein
-            CreateHighScore.createHighScore(
+            CreateGameSummary.createHighScore(
                     context,
                     timer.getSecondsPassed(),
                     gameSettings.getLevel(),
@@ -311,7 +311,7 @@ public class MinesweeperGame {
         timer.stopTimer();
 
         //Ramonnilein
-        CreateHighScore.createHighScore(
+        CreateGameSummary.createHighScore(
                 context,
                 timer.getSecondsPassed(),
                 gameSettings.getLevel(),
