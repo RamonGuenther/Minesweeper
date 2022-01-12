@@ -141,12 +141,47 @@
             android:id="@+id/widthImage"
             android:layout_width="27dp"
             android:layout_height="27dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="4dp"
+            android:padding="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_field_width_black" />
+
+        <ImageView
+            android:id="@+id/mineImage"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="4dp"
             android:padding="1dp"
             app:layout_constraintStart_toEndOf="@+id/heightTextView"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_field_width_black" />
+            app:srcCompat="@drawable/icon_mine" />
+
+        <TextView
+            android:id="@+id/widthTextView"
+            android:layout_width="40dp"
+            android:layout_height="27dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="16"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/widthImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/heightImage"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="4dp"
+            android:padding="1dp"
+            app:layout_constraintStart_toEndOf="@+id/widthTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_field_height_black" />
 
         <TextView
             android:id="@+id/heightTextView"
@@ -160,41 +195,6 @@
             android:textSize="16sp"
             android:tooltipText="Minenanzahl!"
             app:layout_constraintStart_toEndOf="@+id/heightImage"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/mineImage"
-            android:layout_width="27dp"
-            android:layout_height="27dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="4dp"
-            android:padding="1dp"
-            app:layout_constraintStart_toEndOf="@+id/widthTextView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icon_mine" />
-
-        <ImageView
-            android:id="@+id/heightImage"
-            android:layout_width="27dp"
-            android:layout_height="27dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="4dp"
-            android:padding="1dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_field_height_black" />
-
-        <TextView
-            android:id="@+id/widthTextView"
-            android:layout_width="40dp"
-            android:layout_height="27dp"
-            android:layout_marginTop="4dp"
-            android:gravity="center"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:text="16"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@+id/widthImage"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

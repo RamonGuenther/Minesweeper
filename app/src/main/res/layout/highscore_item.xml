@@ -2,11 +2,12 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/highScoreCard"
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:layout_margin="4dp"
-    app:cardCornerRadius="4dp"
-    android:id="@+id/highScoreCard">
+    app:cardBackgroundColor="#B6B1B1"
+    app:cardCornerRadius="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -69,7 +70,7 @@
             app:layout_constraintTop_toBottomOf="@+id/gamePlayedOn" />
 
         <TextView
-            android:id="@+id/minesLeft"
+            android:id="@+id/minesFound"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/level"
@@ -81,8 +82,7 @@
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/dialog_image_mine"
-            app:layout_constraintTop_toBottomOf="@+id/level"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/level" />
 
         <TextView
             android:id="@+id/fieldSize"
@@ -107,7 +107,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/minesLeft"
+            app:layout_constraintStart_toEndOf="@+id/minesFound"
             app:layout_constraintTop_toBottomOf="@+id/dialog_imgae_timer"
             app:srcCompat="@drawable/ic_field" />
 

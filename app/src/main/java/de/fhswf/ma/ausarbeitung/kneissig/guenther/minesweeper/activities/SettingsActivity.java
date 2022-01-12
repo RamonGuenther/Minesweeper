@@ -44,6 +44,11 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameRe
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Theme;
 
+/**
+ * TODO:    - Button einfügen um die Einstellungen zurück zu setzen (Settings löschen und neues leeres anlegen) ??
+ *          - Button einfügen um alle Daten zu löschen ??
+ *          - Select statt ? RadioButton
+ */
 public class SettingsActivity extends AppCompatActivity {
 
     private Settings settings;
@@ -54,11 +59,9 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acvitity_settings);
-
         getWindow().setEnterTransition(new AutoTransition());
         getWindow().setExitTransition(new AutoTransition());
-
+        setContentView(R.layout.acvitity_settings);
         db = MinesweeperDatabase.createDatabase(this);
         settings = db.settingsDao().getSettings();
 

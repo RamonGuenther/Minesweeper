@@ -17,15 +17,15 @@ public class HighScore {
     private String gamePlayedOn;
 
     @ColumnInfo(name = "played_time")
-    private String playedTime;
+    private int playedTime;
 
     private String level;
 
     @ColumnInfo(name = "game_result")
     private String gameResult;
 
-    @ColumnInfo(name = "mines_left")
-    private String minesLeft;
+    @ColumnInfo(name = "mines_found")
+    private String minesFound;
 
     @ColumnInfo(name = "field_size")
     private String fieldSize;
@@ -33,12 +33,12 @@ public class HighScore {
     public HighScore(){
 
     }
-    public HighScore(String gamePlayedOn, String playedTime, Level level, GameResult gameResult, String minesLeft, String fieldSize) {
+    public HighScore(String gamePlayedOn, int playedTime, Level level, GameResult gameResult, String minesFound, String fieldSize) {
         this.gamePlayedOn = gamePlayedOn;
         this.playedTime = playedTime;
         this.level = level.label;
         this.gameResult = gameResult.label;
-        this.minesLeft = minesLeft;
+        this.minesFound = minesFound;
         this.fieldSize = fieldSize;
     }
 
@@ -50,7 +50,7 @@ public class HighScore {
         this.gamePlayedOn = gamePlayedOn;
     }
 
-    public void setPlayedTime(String playedTime) {
+    public void setPlayedTime(int playedTime) {
         this.playedTime = playedTime;
     }
 
@@ -62,8 +62,8 @@ public class HighScore {
         this.gameResult = gameResult;
     }
 
-    public void setMinesLeft(String minesLeft) {
-        this.minesLeft = minesLeft;
+    public void setMinesFound(String minesFound) {
+        this.minesFound = minesFound;
     }
 
     public void setFieldSize(String fieldSize) {
@@ -78,7 +78,7 @@ public class HighScore {
         return gamePlayedOn;
     }
 
-    public String getPlayedTime() {
+    public int getPlayedTime() {
         return playedTime;
     }
 
@@ -90,8 +90,8 @@ public class HighScore {
         return gameResult;
     }
 
-    public String getMinesLeft() {
-        return minesLeft;
+    public String getMinesFound() {
+        return minesFound;
     }
 
     public String getFieldSize() {

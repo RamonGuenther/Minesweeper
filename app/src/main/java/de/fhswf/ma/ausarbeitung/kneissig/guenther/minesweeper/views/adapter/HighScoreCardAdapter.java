@@ -11,6 +11,8 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.r0adkll.slidr.Slidr;
+
 import java.util.List;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
@@ -25,7 +27,7 @@ public class HighScoreCardAdapter extends RecyclerView.Adapter<HighScoreCardAdap
         public TextView playedTime;
         public TextView level;
         public TextView gameResult;
-        public TextView minesLeft;
+        public TextView minesFound;
         public TextView fieldSize;
         private CardView cardView;
 
@@ -36,10 +38,11 @@ public class HighScoreCardAdapter extends RecyclerView.Adapter<HighScoreCardAdap
             playedTime = itemView.findViewById(R.id.playedTime);
             level = itemView.findViewById(R.id.level);
             gameResult = itemView.findViewById(R.id.gameResult);
-            minesLeft = itemView.findViewById(R.id.minesLeft);
+            minesFound = itemView.findViewById(R.id.minesFound);
             fieldSize = itemView.findViewById(R.id.fieldSize);
         }
     }
+
 
     public HighScoreCardAdapter(List<HighScore> highScoreItemList) {
         this.highScoreItemList = highScoreItemList;
@@ -58,10 +61,11 @@ public class HighScoreCardAdapter extends RecyclerView.Adapter<HighScoreCardAdap
         HighScore currentItem = highScoreItemList.get(position);
 
 
-        holder.cardView.setOnClickListener(v -> {
-            //implement onClick
-            Log.e("CLICK", "ID: " + currentItem.getId());
-        });
+//        holder.cardView.setOnClickListener(v -> {
+//            //implement onClick
+//            Log.e("CLICK", "ID: " + currentItem.getId());
+//        });
+
 
         if (currentItem.getGameResult().equals(GameResult.WON.label)) {
             holder.gameResult.setTextColor(ContextCompat.getColor(holder.gameResult.getContext(), android.R.color.holo_green_dark));
@@ -71,9 +75,9 @@ public class HighScoreCardAdapter extends RecyclerView.Adapter<HighScoreCardAdap
         holder.gameResult.setText(currentItem.getGameResult());
 
         holder.gamePlayedOn.setText(currentItem.getGamePlayedOn());
-        holder.playedTime.setText(String.valueOf(currentItem.getPlayedTime()));
+        holder.playedTime.setText(currentItem.getPlayedTime() + " Sekunden");
         holder.level.setText(currentItem.getLevel());
-        holder.minesLeft.setText(currentItem.getMinesLeft());
+        holder.minesFound.setText(currentItem.getMinesFound());
         holder.fieldSize.setText(currentItem.getFieldSize());
     }
 
@@ -82,4 +86,5 @@ public class HighScoreCardAdapter extends RecyclerView.Adapter<HighScoreCardAdap
     public int getItemCount() {
         return highScoreItemList.size();
     }
+
 }
