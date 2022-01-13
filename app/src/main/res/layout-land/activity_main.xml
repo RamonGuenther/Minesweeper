@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity"
-    android:tooltipText="BOOO!"
     >
 
 
@@ -15,7 +14,8 @@
         android:layout_height="175dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo1" />
+        app:srcCompat="@drawable/logo1"
+        android:contentDescription="@null" />
 
 
     <de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.HorizontalStringPicker
@@ -37,7 +37,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="242dp"
         android:backgroundTint="#D66060"
-        android:text="Spielen"
+        android:text="@string/spielen"
         android:textSize="14dp"
         android:tooltipText="Startet ein neues Spiel"
         app:cornerRadius="10dp"
@@ -53,7 +53,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="81dp"
         android:backgroundTint="#00897B"
-        android:text="Spiel erstellen"
+        android:text="@string/spiel_erstellen"
         android:textSize="14dp"
         android:tooltipText="Startet ein neues Spiel"
         app:cornerRadius="10dp"
@@ -70,7 +70,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="159dp"
         android:backgroundTint="#FFFA96"
-        android:text="Spielanleitung"
+        android:text="@string/spielanleitung"
         android:textColor="@color/black"
         android:textSize="14dp"
         android:tooltipText="Öffnet die Spielanleitung"
@@ -93,7 +93,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_baseline_emoji_events_24"
-        app:tint="#FFEB3B" />
+        app:tint="#FFEB3B"
+        android:contentDescription="@null" />
 
     <ImageButton
         android:id="@+id/settingsButton"
@@ -107,7 +108,8 @@
         android:tooltipText="Einstellungen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_settings_24" />
+        app:srcCompat="@drawable/ic_baseline_settings_24"
+        android:contentDescription="@null" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -128,7 +130,6 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="100"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/mineImage"
             app:layout_constraintTop_toTopOf="parent" />
@@ -142,7 +143,8 @@
             android:padding="1dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_field_width_black" />
+            app:srcCompat="@drawable/ic_field_width_black"
+            android:contentDescription="@null" />
 
         <ImageView
             android:id="@+id/mineImage"
@@ -153,7 +155,8 @@
             android:padding="1dp"
             app:layout_constraintStart_toEndOf="@+id/heightTextView"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icon_mine" />
+            app:srcCompat="@drawable/icon_mine"
+            android:contentDescription="@null" />
 
         <TextView
             android:id="@+id/widthTextView"
@@ -163,7 +166,6 @@
             android:gravity="center"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:text="16"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/widthImage"
             app:layout_constraintTop_toTopOf="parent" />
@@ -177,7 +179,8 @@
             android:padding="1dp"
             app:layout_constraintStart_toEndOf="@+id/widthTextView"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_field_height_black" />
+            app:srcCompat="@drawable/ic_field_height_black"
+            android:contentDescription="@null" />
 
         <TextView
             android:id="@+id/heightTextView"
@@ -187,7 +190,6 @@
             android:gravity="center"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:text="40"
             android:textSize="16sp"
             android:tooltipText="Minenanzahl!"
             app:layout_constraintStart_toEndOf="@+id/heightImage"

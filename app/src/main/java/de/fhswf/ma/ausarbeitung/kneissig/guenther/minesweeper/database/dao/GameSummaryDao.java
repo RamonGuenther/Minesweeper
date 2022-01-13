@@ -12,13 +12,13 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.
 
 @Dao
 public interface GameSummaryDao {
-    @Query("SELECT * FROM GameSummary")
+    @Query("select * from GameSummary order by id desc")
     List<GameSummary> getMatchHistory();
 
-    @Query("SELECT * FROM GameSummary h WHERE h.game_result = (:gameResult) order by h.played_time asc")
+    @Query("select * from GameSummary  where game_result = (:gameResult) order by played_time asc")
     List<GameSummary> getHighscores(String gameResult);
 
-    @Query("SELECT * FROM GameSummary h WHERE h.game_result = (:gameResult) and h.level = (:level) order by h.played_time asc")
+    @Query("select * from GameSummary where game_result = (:gameResult) and level = (:level) order by played_time asc")
     List<GameSummary> getHighScoresByGameMode(String gameResult, String level);
 
     @Insert()

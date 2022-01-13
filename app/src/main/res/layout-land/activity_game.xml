@@ -11,8 +11,8 @@
         android:id="@+id/gameView_backToMenue"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
         android:background="@null"
         android:contentDescription="@string/zurueck_button"
         android:foreground="?android:attr/selectableItemBackground"
@@ -20,43 +20,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="?attr/actionModeCloseDrawable"
-        tools:ignore="TouchTargetSizeCheck" />
+        tools:ignore="TouchTargetSizeCheck,RedundantDescriptionCheck" />
 
     <ImageButton
         android:id="@+id/gameView_gameSettings"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
         android:background="@null"
         android:contentDescription="@string/einstellungen"
         android:foreground="?android:attr/selectableItemBackground"
         android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@id/gameView_iconTimer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/ic_baseline_settings_24" />
+        app:srcCompat="@drawable/ic_baseline_settings_24"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <ImageButton
         android:id="@+id/gameView_resetGame"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="181dp"
-        android:adjustViewBounds="false"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/custom_shape_refresh_button"
-        android:backgroundTint="?android:attr/textColorSecondary"
+        android:backgroundTint="#7A7A7A"
         android:contentDescription="@string/reset_game"
-        android:rotation="-99"
-        android:rotationX="-145"
-        android:rotationY="33"
         android:tooltipText="Spiel neu starten"
+        app:layout_constraintBottom_toTopOf="@+id/gameView_GridContainerLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_popup_sync" />
+        app:srcCompat="@android:drawable/ic_popup_sync"
+        android:rotation="-99"
+        android:rotationX="-145"
+        android:rotationY="33"/>
 
     <com.polyak.iconswitch.IconSwitch
         android:id="@+id/gameView_iconSwitch"
@@ -77,56 +75,54 @@
         android:id="@+id/gameView_mineCounter"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
         android:fontFamily="monospace"
-        android:gravity="center"
         android:text="@string/_0"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/gameView_resetGame"
-        app:layout_constraintStart_toEndOf="@id/gameView_iconMine"
+        app:layout_constraintStart_toEndOf="@+id/gameView_iconMine"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/gameView_timer"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
         android:fontFamily="monospace"
-        android:gravity="center"
         android:text="@string/_0"
-        android:textAlignment="center"
+        android:textAlignment="textEnd"
         android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/gameView_iconTimer"
-        app:layout_constraintStart_toEndOf="@id/gameView_resetGame"
+        app:layout_constraintStart_toEndOf="@+id/gameView_resetGame"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/gameView_iconMine"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="5dp"
         android:contentDescription="@string/icon_mine"
-        app:layout_constraintEnd_toStartOf="@+id/gameView_mineCounter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/gameView_backToMenue"
+        app:layout_constraintStart_toEndOf="@+id/gameView_backToMenue"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_mine" />
 
     <ImageView
         android:id="@+id/gameView_iconTimer"
         android:layout_width="50dp"
         android:layout_height="48dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="100dp"
         android:contentDescription="@string/icon_timer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/gameView_timer"
-        app:layout_constraintTop_toBottomOf="@+id/gameView_gameSettings"
+        app:layout_constraintEnd_toStartOf="@+id/gameView_gameSettings"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_timer" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -134,36 +130,29 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/gameView_iconSwitch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gameView_resetGame"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/gameView_resetGame">
 
         <de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.GameBoard
             android:id="@+id/gameView_minesweeperGridView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
             android:drawSelectorOnTop="false"
             android:gravity="center"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--    app:isw_active_tint_icon_right="?android:attr/textColorSecondary"-->
-<!--    app:isw_active_tint_icon_left="?android:attr/textColorSecondary"-->

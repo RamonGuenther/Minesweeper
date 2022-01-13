@@ -7,4 +7,9 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="YOURSTYLE.PopupMenu" parent="Widget.AppCompat.PopupMenu">
+
+    </style>
+
+
 </resources>

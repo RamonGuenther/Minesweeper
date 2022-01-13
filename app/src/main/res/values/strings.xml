@@ -37,17 +37,35 @@
     <string name="felder">Felder</string>
     <string name="instructions_part10">Immernoch nicht genug? Schalte die Flaggen-Funktion komplett ab und gewinne das Spiel, ohne die Flaggen markieren zu können.</string>
 
-    <string-array name="level_select">
-        <item>Leicht</item>
-        <item>Mittel</item>
-        <item>Schwer</item>
-        <item>Benutzerdefiniert</item>
-    </string-array>
+    <!--Hauptmenü-->
+    <string name="spielen">Spielen</string>
+    <string name="spiel_erstellen">Spiel erstellen</string>
+    <string name="spieltitel">Spieltitel</string>
+    <string name="spielanleitung">Spielanleitung</string>
+    <string name="minenanzahl_im_spiel">Anzahl der Minen im Spiel</string>
 
-    <string-array name="theme_select">
-        <item>Bordeaux</item>
-        <item>Blau</item>
-        <item>Classic</item>
-    </string-array>
+    <!--Spiel erstellen-->
+    <string name="hoehe">Höhe</string>
+    <string name="breite">Breite</string>
+    <string name="minenanzahl">Minenanzahl</string>
+
+    <string name="height_helper_text_1">Mindestens 4 | Maximal 100</string>
+    <string name="height_error_text">Die Höhe muss zwichen 4 \– 100 liegen!</string>
+
+    <string name="width_helper_text_1">Mindestens 4 | Maximal 16</string>
+    <string name="width_error_text">Die Breite muss zwichen 4 \– 16 liegen!</string>
+
+
+    <string name="mine_helper_text_1">Bitte zuerst Höhe und Breite angeben!</string>
+    <string name="mine_helper_text_2">Mindestens 1 | Maximal </string>
+    <string name="mine_error_text_1_1">Die Anzahl der Minen muss zwischen 1 \- </string>
+    <string name="mine_error_text_1_2"> liegen!</string>
+
+    <string name="spiel_starten">Spiel starten</string>
+
+    <string name="abbrechen">Abbrechen</string>
+
+
+
 
 </resources>

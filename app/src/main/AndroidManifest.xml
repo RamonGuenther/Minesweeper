@@ -33,7 +33,11 @@
         <activity
             android:name=".activities.GameActivity"
             android:exported="false"
-            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
+            android:configChanges="orientation|screenSize|keyboardHidden">
+            </activity>
     </application>
 
 </manifest>
+
+
+<!--    android:theme="@style/Theme.AppCompat.GameActivityTheme">-->

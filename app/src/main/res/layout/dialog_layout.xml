@@ -52,7 +52,7 @@
         app:layout_constraintEnd_toStartOf="@+id/dialog_playedTime"
         app:layout_constraintStart_toEndOf="@+id/dialog_level"
         app:layout_constraintTop_toBottomOf="@+id/dialog_messageTop"
-        app:srcCompat="@drawable/icon_timer"
+        app:srcCompat="@drawable/ic_timer"
         android:contentDescription="@string/zeit" />
 
     <TextView
@@ -87,7 +87,7 @@
         android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_image_difficulty"
-        app:srcCompat="@drawable/icon_mine"
+        app:srcCompat="@drawable/ic_mine"
         android:contentDescription="@string/gefundene_minen" />
 
     <ImageView

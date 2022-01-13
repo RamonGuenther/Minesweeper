@@ -1,5 +1,6 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -14,7 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.polyak.iconswitch.IconSwitch;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.callback.MinesweeperCallback;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
@@ -22,14 +23,15 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.callback.GameVibra
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
 
+
 /**
  * Die Klasse GameActivity bildet die Aktivität für das Minesweeper-Spiel.
  *
  * @author Ivonne Kneißig
  */
-public class GameActivity extends AppCompatActivity implements MinesweeperCallback, GameVibrationsCallback {
-
-    SwitchMaterial gameMode;
+public class GameActivity extends AppCompatActivity implements MinesweeperCallback, GameVibrationsCallback
+{
+    IconSwitch gameMode;
     TextView flagMode;
     TextView mineMode;
 
@@ -51,21 +53,27 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-        //Switch zum Wechseln zwischen Minen-Modus und Flaggen-Modus
-        gameMode = findViewById(R.id.gameView_gameMode);
-        gameMode.setOnClickListener(e -> {
-            if (gameMode.isChecked()) {
-                MinesweeperGame.getInstance().setGameMode(GameMode.FLAG_MODE);
-            } else {
-                MinesweeperGame.getInstance().setGameMode(GameMode.MINE_MODE);
+        gameMode = findViewById(R.id.gameView_iconSwitch);
+        gameMode.setCheckedChangeListener(current -> {
+            switch (current){
+                case LEFT:
+                    MinesweeperGame.getInstance().setGameMode(GameMode.MINE_MODE);
+                    break;
+                case RIGHT:
+                    MinesweeperGame.getInstance().setGameMode(GameMode.FLAG_MODE);
+                    break;
             }
         });
+
         mineMode = findViewById(R.id.gameView_mineMode);
         flagMode = findViewById(R.id.gameView_flagMode);
 
         // Button zum Zurücksetzen des Spiels
         ImageButton resetButton = findViewById(R.id.gameView_resetGame);
-        resetButton.setOnClickListener(e -> MinesweeperGame.getInstance().resetGame());
+        resetButton.setOnClickListener(e -> {
+            MinesweeperGame.getInstance().resetGame();
+            resetButton.animate().rotation(resetButton.getRotation() + 360).start();
+        });
 
         //Minen-Zähler
         mineCounter = findViewById(R.id.gameView_mineCounter);
@@ -92,7 +100,6 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
         // Zurück zum Hauptmenü
         ImageButton backToMenue = findViewById(R.id.gameView_backToMenue);
         backToMenue.setOnClickListener(event -> {
-//            startActivity(new Intent(this, MainActivity.class));
             MinesweeperGame.getInstance().resetFields();
             finish();
         });
@@ -160,12 +167,8 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
     private void updateView() {
         if (MinesweeperGame.getInstance().getGameSettings().isGameModeVisible()) {
             gameMode.setVisibility(View.VISIBLE);
-            mineMode.setVisibility(View.VISIBLE);
-            flagMode.setVisibility(View.VISIBLE);
         } else {
             gameMode.setVisibility(View.INVISIBLE);
-            mineMode.setVisibility(View.INVISIBLE);
-            flagMode.setVisibility(View.INVISIBLE);
         }
 
         if (MinesweeperGame.getInstance().getGameSettings().isMineCounterVisible()) {
@@ -187,34 +190,38 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
         Log.d("Mode Visible", Boolean.toString(MinesweeperGame.getInstance().getGameSettings().isGameModeVisible()));
         if (MinesweeperGame.getInstance().getGameSettings().isGameModeVisible()) {
             gameMode.setVisibility(View.VISIBLE);
-            mineMode.setVisibility(View.VISIBLE);
-            flagMode.setVisibility(View.VISIBLE);
         } else {
             gameMode.setVisibility(View.GONE);
-            mineMode.setVisibility(View.GONE);
-            flagMode.setVisibility(View.GONE);
         }
-
         MinesweeperGame.getInstance().invalidateBoard();
     }
 
     /**
      * Die Methode onConfiguationChanged sorgt dafür, dass das aktuelle Spielfeld beim Drehen
-     * des Bildschirms vorhanden bleibt.
+     * des Bildschirms vorhanden bleibt und das Layout der Activity an die Orientation angepasst
+     * wird.
      *
      * @param newConfig             Aktuelle Einstellung (hier Bildschirm-Orientierung)
      */
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            recreate();
             MinesweeperGame.getInstance().invalidateBoard();
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            recreate();
             MinesweeperGame.getInstance().invalidateBoard();
         }
     }
 
+    /**
+     * Die Methode bombExplosionVibration erzeugt ein Vibrationspattern für den Fall, dass
+     * der Spieler eine Mine aufgedeckt hat. Der Spieler soll so den Eindruck erhalten,
+     * dass durch das Aufdecken der Mine eine Kettenreaktion ausgelöst wurde und viele Minen
+     * explodieren.
+     */
     @Override
     public void bombExlposionVibration() {
 
@@ -228,6 +235,11 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
         }
     }
 
+    /**
+     * Die Methode onLongClickVibration dient dazu, dem Spieler bei einem langen Click auf ein
+     * Feld zum Platzieren einer Flagge ein haptisches Feedback zu geben. Dadurch soll besser
+     * erkennbar sein, ob man lange genug geklickt hat, um die Flagge zu platzieren.
+     */
     @Override
     public void onLongClickVibration() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {

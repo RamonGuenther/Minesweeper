@@ -89,7 +89,7 @@ public class CustomGameDialog extends AppCompatDialogFragment {
 
 
         numberOfMinesInput.setEnabled(false);
-        mineQuantityTextInputLayout.setHelperText("Bitte zuerst Höhe und Breite angeben!");
+        mineQuantityTextInputLayout.setHelperText(getString(R.string.mine_helper_text_1));
 
 
         heightTextInput.addTextChangedListener(new TextWatcher() {
@@ -104,7 +104,7 @@ public class CustomGameDialog extends AppCompatDialogFragment {
                 if (widthTextInput.getText().toString().isEmpty() || heightTextInput.getText().toString().isEmpty()) {
                     numberOfMinesInput.setEnabled(false);
                     numberOfMinesInput.setText("");
-                    mineQuantityTextInputLayout.setHelperText("Bitte zuerst Höhe und Breite angeben!"); //mit jedem machen
+                    mineQuantityTextInputLayout.setHelperText(getString(R.string.mine_helper_text_1)); //mit jedem machen
                 }
 
                 if (heightTextInput.getText().toString().isEmpty()) {
@@ -115,7 +115,7 @@ public class CustomGameDialog extends AppCompatDialogFragment {
 
                 int heightValue = Integer.parseInt(heightTextInput.getText().toString());
                 if (heightValue < 4 || heightValue > 100) {
-                    heightTextInputLayout.setError("Die Höhe muss zwichen 4 - 100 liegen!)");
+                    heightTextInputLayout.setError(getString(R.string.height_error_text));
                     checkHeight = false;
                     return;
                 } else {
@@ -147,7 +147,7 @@ public class CustomGameDialog extends AppCompatDialogFragment {
                 if (widthTextInput.getText().toString().isEmpty() || heightTextInput.getText().toString().isEmpty()) {
                     numberOfMinesInput.setEnabled(false);
                     numberOfMinesInput.setText("");
-                    mineQuantityTextInputLayout.setHelperText("Bitte zuerst Höhe und Breite angeben!"); //mit jedem machen
+                    mineQuantityTextInputLayout.setHelperText(getString(R.string.mine_helper_text_1)); //mit jedem machen
                 }
 
                 if (widthTextInput.getText().toString().isEmpty()) {
@@ -159,7 +159,7 @@ public class CustomGameDialog extends AppCompatDialogFragment {
                 int widthValue = Integer.parseInt(widthTextInput.getText().toString());
 
                 if (widthValue < 4 || widthValue > 16) {
-                    widthTextInputLayout.setError("Die Breite muss zwichen 4 - 16 liegen!");
+                    widthTextInputLayout.setError(getString(R.string.width_error_text));
                     checkWidth = false;
                     return;
                 } else {
@@ -196,7 +196,7 @@ public class CustomGameDialog extends AppCompatDialogFragment {
 
                 int minesInputValue = Integer.parseInt(numberOfMinesInput.getText().toString());
                 if (minesInputValue < 1 || minesInputValue > maxMines) {
-                    mineQuantityTextInputLayout.setError("Die Anzahl der Minen muss zwischen 1-" + maxMines + " liegen!");
+                    mineQuantityTextInputLayout.setError(getString(R.string.mine_error_text_1_1) + " " + maxMines + getString(R.string.mine_error_text_1_2));
                     checkNumberOfMines = false;
                     return;
                 }
@@ -252,8 +252,8 @@ public class CustomGameDialog extends AppCompatDialogFragment {
 
 
         builder.setView(view)
-                .setTitle("Spiel erstellen")
-                .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                .setTitle(getString(R.string.spiel_erstellen))
+                .setNegativeButton(getString(R.string.abbrechen), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                     }
@@ -267,7 +267,7 @@ public class CustomGameDialog extends AppCompatDialogFragment {
         int height = Integer.parseInt(heightTextInput.getText().toString());
         fields = width * height;
         maxMines = (int) (fields * 0.6);
-        mineQuantityTextInputLayout.setHelperText("Mindestens 1 | Maximal " + maxMines); //mit jedem machen
+        mineQuantityTextInputLayout.setHelperText(getString(R.string.mine_helper_text_2) + " " + maxMines); //mit jedem machen
     }
 
 

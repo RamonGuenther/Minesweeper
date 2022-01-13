@@ -40,18 +40,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
+        
         //checken was es ist und dann die andere xml nehmen
         setContentView(R.layout.activity_main);
-
-//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            MinesweeperGame.getInstance().changeTheme();
-//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-//            MinesweeperGame.getInstance().changeTheme();
-//        }
-//
 
         ImageButton settingsButton = findViewById(R.id.settingsButton);
 

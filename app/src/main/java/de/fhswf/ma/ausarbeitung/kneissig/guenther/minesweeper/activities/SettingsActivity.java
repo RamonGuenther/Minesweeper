@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
@@ -15,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -23,7 +23,6 @@ import com.r0adkll.slidr.model.SlidrConfig;
 import com.r0adkll.slidr.model.SlidrPosition;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
@@ -31,6 +30,8 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.Minesweep
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.Settings;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Theme;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.adapter.ThemeItemAdapter;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.adapter.ThemeItem;
 
 /**
  * TODO:    - Button einfügen um die Einstellungen zurück zu setzen (Settings löschen und neues leeres anlegen) ??
@@ -39,10 +40,15 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Theme;
  */
 public class SettingsActivity extends AppCompatActivity {
 
+    private List<ThemeItem> themeItemList;
+    private ThemeItemAdapter adapter;
+
+
     private Settings settings;
     private MinesweeperDatabase db;
 
     private List<String> items;
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,23 +59,11 @@ public class SettingsActivity extends AppCompatActivity {
         db = MinesweeperDatabase.createDatabase(this);
         settings = db.settingsDao().getSettings();
 
-        View view = findViewById(R.id.settingsLayout);
 
         Slidr.attach(this, new SlidrConfig.Builder()
                 .position(SlidrPosition.LEFT)
                 .build());
 
-
-        switch (AppCompatDelegate.getDefaultNightMode()) {
-            case AppCompatDelegate.MODE_NIGHT_NO:
-                view.setBackgroundResource(R.color.white);
-                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.grey));//status muss noch angepasst werden
-                break;
-            case AppCompatDelegate.MODE_NIGHT_YES:
-                view.setBackgroundResource(R.color.main_theme_dark_mode);
-                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.grey)); //Status
-                break;
-        }
 
 
         SwitchMaterial darkModeSwitch = findViewById(R.id.darkModeSwitch);
@@ -133,17 +127,15 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
-        items = new ArrayList<>();
-        Arrays.asList(Theme.values()).forEach(e -> items.add(e.label));
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.select_list_item, items);
-        Spinner spinner = findViewById(R.id.spinner);
+        spinner = findViewById(R.id.spinner);
+        initThemeList();
+        adapter = new ThemeItemAdapter(this, themeItemList);
         spinner.setAdapter(adapter);
-
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String theme = parent.getItemAtPosition(position).toString();
-                settings.setTheme(theme);
-                MinesweeperGame.getInstance().getGameSettings().setTheme(theme);
+                ThemeItem theme = (ThemeItem) parent.getItemAtPosition(position);
+                settings.setTheme(theme.getThemeName());
+                MinesweeperGame.getInstance().getGameSettings().setTheme(theme.getThemeName());
             }
 
             public void onNothingSelected(AdapterView<?> parent) {}
@@ -158,7 +150,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         deleteStatisticsButton.setOnClickListener(e->{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Spielstatistiken wirklich löschen?");
+            builder.setTitle("Achtung!");
+            builder.setMessage("Die Daten können danach nicht mehr wiederhergestellt werden. Fortfahren?");
             builder.setPositiveButton("Ja", (dialog, id) -> {
                 db.highscoreDao().deleteAll(db.highscoreDao().getMatchHistory());
             });
@@ -178,11 +171,26 @@ public class SettingsActivity extends AppCompatActivity {
         modeChangeSwitch.setChecked(settings.isShowModeSwitch());
         useFlagsSwitch.setChecked(settings.isUseFlags());
         showHintsSwitch.setChecked(settings.isShowHints());
+
+        View view = findViewById(R.id.settingsLayout);
+
+        switch (AppCompatDelegate.getDefaultNightMode()) {
+            case AppCompatDelegate.MODE_NIGHT_NO:
+                view.setBackgroundResource(R.color.white);
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.grey));//status muss noch angepasst werden
+                spinner.setBackground(ContextCompat.getDrawable(this,R.drawable.style_spinner));
+                break;
+            case AppCompatDelegate.MODE_NIGHT_YES:
+                view.setBackgroundResource(R.color.main_theme_dark_mode);
+                spinner.setBackground(ContextCompat.getDrawable(this,R.drawable.style_spinner_night));
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.grey)); //Status
+                break;
+        }
     }
 
     private int getThemeIndex(String theme) {
-        for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).contains(theme)) {
+        for (int i = 0; i < themeItemList.size(); i++) {
+            if (themeItemList.get(i).getThemeName().contains(theme)) {
                 return i;
             }
         }
@@ -210,6 +218,15 @@ public class SettingsActivity extends AppCompatActivity {
         super.onDestroy();
         Log.e("DESTROY SETIINGS", "Settings wurden GELÖSCHT");
         db.close();
+    }
+
+    public void initThemeList(){
+        themeItemList = new ArrayList<>();
+        themeItemList.add(new ThemeItem(Theme.BORDEAUX.label, R.drawable.theme_bordeaux_empty));
+        themeItemList.add(new ThemeItem(Theme.BLUE.label, R.drawable.theme_blau_empty));
+        themeItemList.add(new ThemeItem(Theme.GREEN.label, R.drawable.theme_gruen_empty));
+        themeItemList.add(new ThemeItem(Theme.GREY.label, R.drawable.theme_grau_empty));
+        themeItemList.add(new ThemeItem(Theme.CLASSIC.label, R.drawable.theme_classic_empty));
     }
 
 }
