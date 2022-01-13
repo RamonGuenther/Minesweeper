@@ -22,10 +22,10 @@
             android:layout_width="52dp"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="390dp"
+            android:layout_marginEnd="395dp"
             android:gravity="center_vertical"
-            android:paddingLeft="5dp"
-            android:text="20.50%"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,8 +34,9 @@
             android:id="@+id/imageView"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginStart="260dp"
+            android:layout_marginStart="248dp"
             android:layout_marginTop="10dp"
+            android:contentDescription="@null"
             app:layout_constraintEnd_toStartOf="@+id/minesPercentTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -44,7 +45,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/heightTextInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="200dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="100dp"
             android:layout_marginTop="13dp"
@@ -53,7 +54,7 @@
             app:endIconMode="custom"
             app:endIconTint="#388E3C"
             app:errorEnabled="true"
-            app:helperText="Mindestens 4 | Maximal 100"
+            app:helperText="@string/height_helper_text_1"
             app:helperTextEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +64,7 @@
                 android:id="@+id/heightTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Höhe"
+                android:hint="@string/hoehe"
                 tools:layout_editor_absoluteX="105dp"
                 tools:layout_editor_absoluteY="85dp" />
 
@@ -72,7 +73,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/widthTextInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="200dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="103dp"
             android:layout_marginTop="13dp"
@@ -81,7 +82,7 @@
             app:endIconMode="custom"
             app:endIconTint="#388E3C"
             app:errorEnabled="true"
-            app:helperText="Mindestens 4 | Maximal 16"
+            app:helperText="@string/width_helper_text_1"
             app:helperTextEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +92,7 @@
                 android:id="@+id/widthTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Breite"
+                android:hint="@string/breite"
                 tools:layout_editor_absoluteX="80dp"
                 tools:layout_editor_absoluteY="57dp" />
 
@@ -100,7 +101,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/mineQuantityTextInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="200dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="103dp"
             android:layout_marginTop="13dp"
@@ -118,7 +119,7 @@
                 android:id="@+id/mineQuantityTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Minenanzahl" />
+                android:hint="@string/minenanzahl" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -130,7 +131,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="120dp"
             android:backgroundTint="#00897B"
-            android:text="Spiel starten"
+            android:text="@string/spiel_starten"
             android:textSize="14dp"
             android:tooltipText="Startet ein neues Spiel"
             app:cornerRadius="10dp"

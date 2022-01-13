@@ -37,17 +37,31 @@
     <string name="felder">fields</string>
     <string name="instructions_part10">Still not enough? Deactivate the flag function completely and win the game without being able to mark the flags.</string>
 
-    <string-array name="level_select">
-        <item>Leicht</item>
-        <item>Mittel</item>
-        <item>Schwer</item>
-        <item>Benutzerdefiniert</item>
-    </string-array>
+    <!--Hauptmenü-->
+    <string name="spielen">Play</string>
+    <string name="spiel_erstellen">Create Game</string>
+    <string name="spieltitel">Game title</string>
+    <string name="spielanleitung">How to Play</string>
+    <string name="minenanzahl_im_spiel">Number of mines in the game</string>
 
-    <string-array name="theme_select">
-        <item>Bordeaux</item>
-        <item>Blau</item>
-        <item>Classic</item>
-    </string-array>
+    <!--Spiel erstellen-->
+    <string name="hoehe">Height</string>
+    <string name="breite">Width</string>
+    <string name="minenanzahl">Mine count</string>
+
+    <string name="height_helper_text_1">Minimum 4 | Maximum 100</string>
+    <string name="height_error_text">The height must be between 4 \– 100!</string>
+
+    <string name="width_helper_text_1">Minimum 4 | Maximum 16</string>
+    <string name="width_error_text">The width must be between 4 \- 16!</string>
+
+    <string name="mine_helper_text_1">Please state height and width first!</string>
+    <string name="mine_helper_text_2">Minimum 1 | Maximum  </string>
+    <string name="mine_error_text_1_1">The number of mines must be between 1 \- </string>
+    <string name="mine_error_text_1_2" />
+
+    <string name="spiel_starten">Start Game</string>
+    <string name="abbrechen">Cancel</string>
+
 
 </resources>
