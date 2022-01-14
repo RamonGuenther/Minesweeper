@@ -1,6 +1,5 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums;
 
-
 /**
  * Das Enum GameMode enthält die möglichen Modi für das
  * Minesweeper Spiel. Der Spieler kann während des laufenden

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.Toast;
 
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.callback.GameVibrationsCallback;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.callback.MinesweeperCallback;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.CreateGameSummary;
@@ -24,8 +25,8 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.Field;
  */
 public class MinesweeperGame {
 
-    public static final String GAME_LOST = "Du hast verloren!";
-    public static final String GAME_WON = "Du hast gewonnen!";
+    public static final int GAME_LOST = 0;
+    public static final int GAME_WON = 1;
 
     @SuppressLint("StaticFieldLeak")
     private static MinesweeperGame instance;
@@ -280,7 +281,7 @@ public class MinesweeperGame {
             }
         }
         if(mineNotFound == 0 && notDiscovered == 0){
-            GameEndDialog.show(context, GAME_WON);
+            GameEndDialog.show(context, context.getString(R.string.message_spiel_gewonnen), GAME_WON);
             timer.stopTimer();
 
             minesweeperCallback.updateTimer(0);
@@ -298,7 +299,6 @@ public class MinesweeperGame {
         }
     }
 
-
     /**
      * Die Methode gameLost deckt in dem Fall, dass der Spiele das Spiel verloren
      * hat alle bisher nicht aufgedeckten Felder auf. Der Spieler hat das Spiel
@@ -307,7 +307,7 @@ public class MinesweeperGame {
      * Die aktuellen Spielwerte werden in der Highscore-Datenbank gespeichert?!?!?
      */
     public void gameLost(){
-        GameEndDialog.show(context, GAME_LOST);
+        GameEndDialog.show(context, context.getString(R.string.message_spiel_verloren), GAME_LOST);
         timer.stopTimer();
 
         //Ramonnilein

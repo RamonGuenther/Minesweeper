@@ -73,11 +73,12 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
         resetButton.setOnClickListener(e -> {
             MinesweeperGame.getInstance().resetGame();
             resetButton.animate().rotation(resetButton.getRotation() + 360).start();
+            onResetGameVibration();
         });
 
         //Minen-Zähler
         mineCounter = findViewById(R.id.gameView_mineCounter);
-        mineCounter.setText(Integer.toString(MinesweeperGame.getInstance().getMineCounter().getMineCount()));
+        mineCounter.setText(String.valueOf(MinesweeperGame.getInstance().getMineCounter().getMineCount()));
         mine = findViewById(R.id.gameView_iconMine);
 
         // Timer
@@ -146,7 +147,7 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
      */
     @Override
     public void updateMineCounter(int mineCount) {
-        mineCounter.setText(Integer.toString(mineCount));
+        mineCounter.setText(String.valueOf(mineCount));
     }
 
     /**
@@ -157,7 +158,7 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
      */
     @Override
     public void updateTimer(int time) {
-        timer.setText(Integer.toString(time));
+        timer.setText(String.valueOf(time));
     }
 
     /**
@@ -225,7 +226,7 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
     @Override
     public void bombExlposionVibration() {
 
-        long[] vibrationPattern = new long[]{0, 300, 100, 100, 200, 300, 200, 500};
+        long[] vibrationPattern = new long[]{50, 300, 100, 100, 200, 300, 200, 500};
         int[] vibrationAmplitudes = new int[]{255, 100, 255, 100, 255, 100, 255, 100};
 
         // repeat: -1 führt das Pattern genau einmal aus
@@ -248,5 +249,14 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
         else{
             vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
         }
+    }
+
+    /**
+     * Die Methode onResetGameVibration erzeugt ein haptisches Feedback, wenn der Spieler
+     * über den Reset-Button ein neues Spiel startet.
+     */
+    @Override
+    public void onResetGameVibration() {
+        vibrator.vibrate(VibrationEffect.createOneShot(200, 50));
     }
 }

@@ -155,7 +155,7 @@
             android:padding="1dp"
             app:layout_constraintStart_toEndOf="@+id/heightTextView"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icon_mine"
+            app:srcCompat="@drawable/ic_mine"
             android:contentDescription="@null" />
 
         <TextView

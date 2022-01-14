@@ -30,7 +30,7 @@
     <string name="icon_mine">Icon mine</string>
     <string name="icon_timer">Icon timer</string>
     <string name="noch_einmal_versuchen">"Try again? "</string>
-    <string name="du_hast_gewonnen">You won!</string>
+    <string name="message_spiel_gewonnen">You won!</string>
     <string name="schwierigkeitsgrad">"Level of difficulty "</string>
     <string name="zeit">Time</string>
     <string name="gefundene_minen">Mines found</string>
@@ -62,6 +62,14 @@
 
     <string name="spiel_starten">Start Game</string>
     <string name="abbrechen">Cancel</string>
+    <string name="message_spiel_verloren">You lost!</string>
+    <string name="level_anfänger">Beginner</string>
+    <string name="level_fortgeschritten">Advanced</string>
+    <string name="level_profi">Professional</string>
+    <string name="level_benutzedefiniert">Custom</string>
+    <string name="neues_spiel_ja">Yes</string>
+    <string name="neues_spiel_nein">No</string>
+    <string name="sekunden">seconds</string>
 
 
 </resources>

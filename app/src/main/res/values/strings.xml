@@ -30,12 +30,23 @@
     <string name="icon_mine">Icon Mine</string>
     <string name="icon_timer">Icon Timer</string>
     <string name="noch_einmal_versuchen">Noch einmal versuchen?</string>
-    <string name="du_hast_gewonnen">Du hast gewonnen!</string>
+
     <string name="schwierigkeitsgrad">Schwierigkeitsgrad</string>
     <string name="zeit">Zeit</string>
     <string name="gefundene_minen">Gefundene Minen</string>
     <string name="felder">Felder</string>
     <string name="instructions_part10">Immernoch nicht genug? Schalte die Flaggen-Funktion komplett ab und gewinne das Spiel, ohne die Flaggen markieren zu können.</string>
+
+    <!--Dialog Spielende (Gewonnen oder Verloren)-->
+    <string name="message_spiel_gewonnen">Du hast gewonnen!</string>
+    <string name="message_spiel_verloren">Du hast verloren!</string>
+    <string name="level_anfänger">Anfänger</string>
+    <string name="level_fortgeschritten">Fortgeschritten</string>
+    <string name="level_profi">Profi</string>
+    <string name="level_benutzedefiniert">Benutzerdefiniert</string>
+    <string name="neues_spiel_ja">Ja</string>
+    <string name="neues_spiel_nein">Nein</string>
+    <string name="sekunden">Sekunden</string>
 
     <!--Hauptmenü-->
     <string name="spielen">Spielen</string>
