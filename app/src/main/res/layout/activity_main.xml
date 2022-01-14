@@ -207,7 +207,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/gameTitle"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_sun" />
-
+        app:srcCompat="@drawable/ic_sun"
+        android:tooltipText="Light- / Darkmode"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
