@@ -18,12 +18,16 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
  */
 public class MinesweeperApplication extends Application {
 
+    Settings settings;
+    private MinesweeperDatabase db;
+
+
     @Override
     public void onCreate() {
         super.onCreate();
-        MinesweeperDatabase db = MinesweeperDatabase.createDatabase(this);
+        db = MinesweeperDatabase.createDatabase(this);
 
-        Settings settings = db.settingsDao().getSettings();
+        settings = db.settingsDao().getSettings();
 
         //Damit immer ein Settingsobjekt in der Datenbank gespeichert ist
         if (settings == null) {
@@ -36,6 +40,7 @@ public class MinesweeperApplication extends Application {
         CreateGameSummary.createHighScore(this, (int) Math.floor(Math.random()*(999-1+1)+1), Level.ADVANCED, GameResult.WON, "20/20", "16 x 16" );
         CreateGameSummary.createHighScore(this, (int) Math.floor(Math.random()*(999-1+1)+1), Level.PROFESSIONAL, GameResult.WON, "99/99", "16 x 30");
 
+        MinesweeperGame.getInstance().getGameSettings().setTheme(settings.getTheme());
         MinesweeperGame.getInstance().getGameSettings().setVibration(settings.isVibration());
         MinesweeperGame.getInstance().getGameSettings().setTimerVisible(settings.isShowTimer());
         MinesweeperGame.getInstance().getGameSettings().setMineCounterVisible(settings.isShowMineCounter());
@@ -61,5 +66,21 @@ public class MinesweeperApplication extends Application {
         db.close();
 
         Log.i("Minesweeper Applikation", "Einstellungen wurden übernommen");
+
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        db.close();
+        Log.e("APFEL", "STELL MICH NICHT EIN");
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
     }
 }

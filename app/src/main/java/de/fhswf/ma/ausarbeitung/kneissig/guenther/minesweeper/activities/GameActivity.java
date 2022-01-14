@@ -22,6 +22,7 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.callback.GameVibrationsCallback;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.Field;
 
 
 /**
@@ -207,14 +208,7 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            recreate();
-            MinesweeperGame.getInstance().invalidateBoard();
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            recreate();
-            MinesweeperGame.getInstance().invalidateBoard();
-        }
+        MinesweeperGame.getInstance().invalidateBoard();
     }
 
     /**

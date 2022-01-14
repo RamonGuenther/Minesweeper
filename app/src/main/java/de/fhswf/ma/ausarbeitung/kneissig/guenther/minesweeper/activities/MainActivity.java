@@ -1,10 +1,13 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperApplication;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.MinesweeperDatabase;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.CustomGame;
@@ -37,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private CustomGame customGame;
     private MinesweeperDatabase db;
 
+    private MinesweeperApplication minesweeperApplication;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,26 +50,43 @@ public class MainActivity extends AppCompatActivity {
         //checken was es ist und dann die andere xml nehmen
         setContentView(R.layout.activity_main);
 
+        minesweeperApplication = (MinesweeperApplication)getApplicationContext();
+
+        ImageButton lightDarkMode = findViewById(R.id.LightDarkModeButton);
+        if (!minesweeperApplication.getSettings().isDarkMode()) {
+            lightDarkMode.setImageResource(R.drawable.ic_sun);
+        } else {
+            lightDarkMode.setImageResource(R.drawable.ic_moon);
+        }
+
+        lightDarkMode.setOnClickListener(event -> {
+            if (!minesweeperApplication.getSettings().isDarkMode()) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                minesweeperApplication.getSettings().setDarkMode(true);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                minesweeperApplication.getSettings().setDarkMode(false);
+            }
+        });
+
         ImageButton settingsButton = findViewById(R.id.settingsButton);
 
         settingsButton.setOnClickListener(e -> {
 //            startActivity(new Intent(this, SettingsActivity.class));
-//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             startActivity(new Intent(this, SettingsActivity.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            settingsButton.animate().rotation(settingsButton.getRotation() + 360).start();
         });
-
 
         ImageButton highScoreButton = findViewById(R.id.highScoreButton);
         highScoreButton.setOnClickListener(e -> {
             startActivity(new Intent(this, GameHistoryActivity.class));
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            highScoreButton.animate().rotation(highScoreButton.getRotation() - 360).start();
         });
 
         Button createGameButton = findViewById(R.id.createGameButton);
-        createGameButton.setOnClickListener(e -> {
-            openDialog();
-        });
-
+        createGameButton.setOnClickListener(e -> openDialog());
 
         heightTextView = findViewById(R.id.heightTextView);
         widthTextView = findViewById(R.id.widthTextView);
@@ -111,12 +134,8 @@ public class MainActivity extends AppCompatActivity {
 
         horizontalStringPicker.setValue(settings.getLastLevel());
 
-
         Button gameInstructionButton = findViewById(R.id.gameInstructionButton);
-        gameInstructionButton.setOnClickListener(e -> {
-            startActivity(new Intent(this, GameInstructionActivity.class));
-        });
-
+        gameInstructionButton.setOnClickListener(e -> startActivity(new Intent(this, GameInstructionActivity.class)));
 
         Button playButton = findViewById(R.id.playButton);
         playButton.setOnClickListener(e -> {
@@ -136,16 +155,13 @@ public class MainActivity extends AppCompatActivity {
                 MinesweeperGame.getInstance().newGame();
             }
             startActivity(new Intent(this, GameActivity.class));
-
         });
-
     }
 
     public void openDialog() {
         CustomGameDialog customGameDialog = new CustomGameDialog(horizontalStringPicker);
         customGameDialog.show(getSupportFragmentManager(), "Create Custom Game Dialog");
     }
-
 
     @Override
     protected void onResume() {
@@ -156,6 +172,12 @@ public class MainActivity extends AppCompatActivity {
             widthTextView.setText(customGame.getWidth());
             minesTextView.setText(customGame.getMines());
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
     }
 
 }

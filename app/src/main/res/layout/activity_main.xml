@@ -89,7 +89,6 @@
         android:layout_marginBottom="26dp"
         android:background="@null"
         android:contentDescription="@null"
-        android:foreground="?android:attr/selectableItemBackground"
         android:scaleType="fitXY"
         android:tooltipText="Zu den Spielstatistiken"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -105,7 +104,6 @@
         android:layout_marginBottom="26dp"
         android:background="@null"
         android:contentDescription="@null"
-        android:foreground="?android:attr/selectableItemBackground"
         android:scaleType="fitXY"
         android:tooltipText="Einstellungen"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -196,6 +194,20 @@
             app:layout_constraintStart_toEndOf="@+id/heightImage"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/LightDarkModeButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="25dp"
+        android:background="@null"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gameTitle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_sun" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
