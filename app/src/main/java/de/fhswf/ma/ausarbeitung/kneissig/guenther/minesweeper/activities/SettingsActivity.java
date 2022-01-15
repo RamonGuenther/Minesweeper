@@ -27,7 +27,6 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperApplica
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.Settings;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Theme;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.adapter.ThemeItemAdapter;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.adapter.ThemeItem;
 
@@ -80,7 +79,6 @@ public class SettingsActivity extends AppCompatActivity {
             settings.setShowModeSwitch(isChecked);
         });
 
-
         SwitchMaterial useFlagsSwitch = findViewById(R.id.useFlagsSwitch);
         useFlagsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             MinesweeperGame.getInstance().getGameSettings().setFlagsPossible(isChecked);
@@ -103,7 +101,6 @@ public class SettingsActivity extends AppCompatActivity {
             MinesweeperGame.getInstance().getGameSettings().setHints(isChecked);
             settings.setShowHints(isChecked);
         });
-
 
         Spinner spinner = findViewById(R.id.spinner);
         initThemeList();
@@ -176,11 +173,13 @@ public class SettingsActivity extends AppCompatActivity {
         return 0;
     }
 
-
     @Override
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_down, R.anim.slide_out_right);
+        if(!settings.isUseFlags()){
+            MinesweeperGame.getInstance().removeFlagsAndQuestionMarks();
+        }
     }
 
     /**

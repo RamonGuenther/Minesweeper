@@ -393,6 +393,18 @@ public class MinesweeperGame {
         }
     }
 
+    public void removeFlagsAndQuestionMarks(){
+        if(!getGameSettings().isFlagsPossible()){
+            for(int x = 0; x < getColumnsX(); x++ ){
+                for(int y = 0; y < getRowsY(); y++ ){
+                    minesweeperBoard[x][y].setFlagged(false);
+                    minesweeperBoard[x][y].setMarked(false);
+                    minesweeperBoard[x][y].invalidate();
+                }
+            }
+        }
+    }
+
     /*----------------------------------------------------------------------------------------------
                                          GETTER & SETTER
     ----------------------------------------------------------------------------------------------*/
