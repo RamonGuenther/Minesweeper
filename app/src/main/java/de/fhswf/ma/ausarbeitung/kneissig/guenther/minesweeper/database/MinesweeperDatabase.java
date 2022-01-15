@@ -14,7 +14,7 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.GameSummary;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.Settings;
 
-@Database(entities = {Settings.class, GameSummary.class, CustomGame.class}, version = 1, exportSchema = true)
+@Database(entities = {Settings.class, GameSummary.class, CustomGame.class}, version = 1, exportSchema = false)
 public abstract class MinesweeperDatabase extends RoomDatabase {
     private static final String DB_NAME = "MinesweeperDatabase";
 

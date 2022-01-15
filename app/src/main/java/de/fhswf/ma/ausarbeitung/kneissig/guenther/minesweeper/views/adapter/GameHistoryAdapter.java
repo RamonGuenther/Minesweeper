@@ -31,7 +31,7 @@ public class GameHistoryAdapter extends RecyclerView.Adapter<GameHistoryAdapter.
         public TextView gameResult;
         public TextView minesFound;
         public TextView fieldSize;
-        private CardView cardView;
+        private CardView cardView; //??????
 
         public GameHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -92,23 +92,6 @@ public class GameHistoryAdapter extends RecyclerView.Adapter<GameHistoryAdapter.
     }
 
 
-    private String getGameResult(String gameResult){
-        String result = null;
-
-        switch (gameResult) {
-            case "Gewonnen":
-            case "Won":
-                result = context.getString(R.string.gewonnen);
-                break;
-            case "Verloren":
-            case "Lost":
-                result = context.getString(R.string.verloren);
-                break;
-        }
-        return result;
-
-    }
-
     private String getLevel(String level) {
         String result = null;
 
@@ -131,6 +114,23 @@ public class GameHistoryAdapter extends RecyclerView.Adapter<GameHistoryAdapter.
                 break;
         }
         return result;
+    }
+
+    private String getGameResult(String gameResult) {
+        String result = null;
+
+        switch (gameResult) {
+            case "Gewonnen":
+            case "Won":
+                result = context.getString(R.string.gewonnen);
+                break;
+            case "Verloren":
+            case "Lost":
+                result = context.getString(R.string.verloren);
+                break;
+        }
+        return result;
+
     }
 
 

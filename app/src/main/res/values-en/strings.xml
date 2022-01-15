@@ -4,7 +4,7 @@
     <string name="instruction_part1">"The aim of the game is to uncover all fields that do not contain a mine within a time limit of 999 seconds. As soon as a mine is uncovered, the game is lost. The number on a revealed space indicates how many mines are adjacent to this space. This also includes diagonally adjacent fields. "</string>
     <string name="laufendes_spiel">Current game</string>
     <string name="intructions_image_text1">Current game with marked mines</string>
-    <string name="spielregeln">Game Instructions</string>
+    <string name="spielregeln">Game rules</string>
     <string name="zurueck_button">Back button</string>
     <string name="spiel_verloren">Game lost</string>
     <string name="instructions_image_text2">"A mine was uncovered and the game was lost "</string>
@@ -58,7 +58,6 @@
     <string name="oeffnet_spielanleitung">Opens the game manual</string>
     <string name="zu_spielstatistiken">To the game statistics</string>
     <string name="zu_einstellungen"> To the settings</string>
-
 
 
     <!--Spiel erstellen-->

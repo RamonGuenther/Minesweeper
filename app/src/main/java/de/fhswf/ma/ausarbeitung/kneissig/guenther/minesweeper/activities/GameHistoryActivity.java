@@ -62,14 +62,13 @@ public class GameHistoryActivity extends AppCompatActivity {
                 .build());
 
 
+        //Sonst bleibt der Hintergrund transparent wegen slidr
         switch (AppCompatDelegate.getDefaultNightMode()) {
             case AppCompatDelegate.MODE_NIGHT_NO:
                 view.setBackgroundResource(R.color.white);
-                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.grey));//status muss noch angepasst werden
                 break;
             case AppCompatDelegate.MODE_NIGHT_YES:
                 view.setBackgroundResource(R.color.main_theme_dark_mode);
-                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.grey)); //Status
                 break;
         }
 
@@ -104,7 +103,7 @@ public class GameHistoryActivity extends AppCompatActivity {
         application = (MinesweeperApplication) getApplication();
         noGameDataTextview = findViewById(R.id.noGameDataTextview);
 
-        gameSummaryItemList = application.getMatchHistory();
+        gameSummaryItemList = application.getHighScoreListByLevel(Level.BEGINNER.label);
         noGameDataTextview.setVisibility(gameSummaryItemList.isEmpty() ? View.VISIBLE : View.GONE);
 
         //Highscore_item

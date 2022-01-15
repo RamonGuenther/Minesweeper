@@ -150,16 +150,15 @@ public class SettingsActivity extends AppCompatActivity {
 
         View view = findViewById(R.id.settingsLayout);
 
+        //Sonst bleibt der Hintergrund transparent wegen slidr
         switch (AppCompatDelegate.getDefaultNightMode()) {
             case AppCompatDelegate.MODE_NIGHT_NO:
                 view.setBackgroundResource(R.color.white);
-                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.grey));//status muss noch angepasst werden
                 spinner.setBackground(ContextCompat.getDrawable(this, R.drawable.style_spinner));
                 break;
             case AppCompatDelegate.MODE_NIGHT_YES:
                 view.setBackgroundResource(R.color.main_theme_dark_mode);
                 spinner.setBackground(ContextCompat.getDrawable(this, R.drawable.style_spinner_night));
-                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.grey)); //Status
                 break;
         }
     }

@@ -23,13 +23,12 @@
         </activity> <!-- android:theme="@style/CustomTheme" -->
         <activity
             android:name=".activities.SettingsActivity"
-            android:theme="@style/Theme.AppCompat.SlidrActivityTheme" />
+            android:theme="@style/Theme.Minesweeper.SlidrActivityTheme" />
         <activity
             android:name=".activities.GameHistoryActivity"
-            android:theme="@style/Theme.AppCompat.SlidrActivityTheme" />
+            android:theme="@style/Theme.Minesweeper.SlidrActivityTheme" />
         <activity
-            android:name=".activities.GameInstructionActivity"
-            android:theme="@style/Theme.AppCompat.SlidrActivityTheme" />
+            android:name=".activities.GameInstructionActivity" />
         <activity
             android:name=".activities.GameActivity"
             android:exported="false"

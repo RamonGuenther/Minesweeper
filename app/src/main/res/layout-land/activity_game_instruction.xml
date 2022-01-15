@@ -10,8 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/instructions"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/background_material_light">
+        android:layout_height="wrap_content">
 
         <ImageButton
             android:id="@+id/instructions_backButton"
@@ -35,9 +34,9 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="120dp"
             android:background="@null"
-            android:fontFamily="casual"
+            android:fontFamily="monospace"
             android:text="@string/spielregeln"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +48,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"
             android:fontFamily="sans-serif"
             android:text="@string/instruction_part1"
