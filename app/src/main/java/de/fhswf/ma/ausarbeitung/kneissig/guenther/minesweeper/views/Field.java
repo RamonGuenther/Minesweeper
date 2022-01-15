@@ -11,6 +11,7 @@ import androidx.core.content.res.ResourcesCompat;
 
 import java.util.Locale;
 
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
 
@@ -76,7 +77,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
         if(!MinesweeperGame.getInstance().isFirstClick()){
             if(MinesweeperGame.getInstance().getGameMode().equals(GameMode.FLAG_MODE)){             // damit keine Flagge gesetzt werden kann, solange das erste Feld nicht angeklickt wurde
                 if(MinesweeperGame.getInstance().getGameSettings().isHints()){
-                    Toast.makeText(context,"Es mus erst ein Feld aufgedeckt werden",
+                    Toast.makeText(context,context.getString(R.string.erst_feld_aufdecken),
                             Toast.LENGTH_SHORT).show();
                 }
                 return;
@@ -89,7 +90,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
             case MINE_MODE:
                 if(isFlagged() || isMarked()){                                                      // damit ein Feld nicht aufdeckbar ist, solange dort eine Flagge oder ein Fragezeichen platziert ist
                    if(MinesweeperGame.getInstance().getGameSettings().isHints()){
-                       Toast.makeText(context,"Kann nicht aufgdeckt werden, wenn markiert",
+                       Toast.makeText(context,context.getString(R.string.nicht_aufdecken_wenn_makiert),
                                Toast.LENGTH_SHORT).show();
                    }
                 }
@@ -123,7 +124,7 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
         if(MinesweeperGame.getInstance().getGameSettings().isFlagsPossible()){
             if(!MinesweeperGame.getInstance().isFirstClick()){
                 if(MinesweeperGame.getInstance().getGameSettings().isHints()){
-                    Toast.makeText(context,"Es mus erst ein Feld aufgedeckt werden",
+                    Toast.makeText(context,context.getString(R.string.erst_feld_aufdecken),
                             Toast.LENGTH_SHORT).show();
                 }
                 return true;

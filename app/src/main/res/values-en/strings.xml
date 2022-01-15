@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Minesweeper</string>
-    <string name="settings">Settings</string>
-
     <!--String für Spielregeln und Game-->
     <string name="instruction_part1">"The aim of the game is to uncover all fields that do not contain a mine within a time limit of 999 seconds. As soon as a mine is uncovered, the game is lost. The number on a revealed space indicates how many mines are adjacent to this space. This also includes diagonally adjacent fields. "</string>
     <string name="laufendes_spiel">Current game</string>
@@ -22,7 +20,6 @@
     <string name="instruction_image_text3">Flags and question marks were set</string>
     <string name="instruction_part8">"Do you want more challenges? "</string>
     <string name="instruction_part9">In the settings you can switch off the flag mode, the mine counter, the timer or just everything as you wish.</string>
-    <string name="einstellungen">Settings</string>
     <string name="reset_game">Reset game</string>
     <string name="_0">0</string>
     <string name="minen_modus_game">Mine mode</string>
@@ -37,12 +34,32 @@
     <string name="felder">fields</string>
     <string name="instructions_part10">Still not enough? Deactivate the flag function completely and win the game without being able to mark the flags.</string>
 
+    <!--Dialog Spielende (Gewonnen oder Verloren)-->
+    <string name="message_spiel_verloren">You lost!</string>
+    <string name="level_anfänger">Beginner</string>
+    <string name="level_fortgeschritten">Advanced</string>
+    <string name="level_profi">Professional</string>
+    <string name="level_benutzedefiniert">Custom</string>
+    <string name="neues_spiel_ja">Yes</string>
+    <string name="neues_spiel_nein">No</string>
+    <string name="sekunden">seconds</string>
+    <string name="keine_spieldaten_vorhanden">No Game Data found</string>
+
+
     <!--Hauptmenü-->
     <string name="spielen">Play</string>
     <string name="spiel_erstellen">Create Game</string>
     <string name="spieltitel">Game title</string>
     <string name="spielanleitung">How to Play</string>
     <string name="minenanzahl_im_spiel">Number of mines in the game</string>
+
+    <string name="startet_neues_spiel">Starting a new game</string>
+    <string name="eigenes_spiel_erstellen">Create your own game</string>
+    <string name="oeffnet_spielanleitung">Opens the game manual</string>
+    <string name="zu_spielstatistiken">To the game statistics</string>
+    <string name="zu_einstellungen"> To the settings</string>
+
+
 
     <!--Spiel erstellen-->
     <string name="hoehe">Height</string>
@@ -62,14 +79,44 @@
 
     <string name="spiel_starten">Start Game</string>
     <string name="abbrechen">Cancel</string>
-    <string name="message_spiel_verloren">You lost!</string>
-    <string name="level_anfänger">Beginner</string>
-    <string name="level_fortgeschritten">Advanced</string>
-    <string name="level_profi">Professional</string>
-    <string name="level_benutzedefiniert">Custom</string>
-    <string name="neues_spiel_ja">Yes</string>
-    <string name="neues_spiel_nein">No</string>
-    <string name="sekunden">seconds</string>
+
+
+    <!--Spielstatistiken-->
+    <string name="spielverlauf">Match History</string>
+
+    <!-- GameSummaryCard -->
+    <string name="gewonnen">Won</string>
+    <string name="verloren">Lost</string>
+
+
+    <!-- Einstellungen -->
+    <string name="einstellungen">Settings</string>
+    <string name="vibration">Vibration</string>
+    <string name="spieldesign_auswaehlen">Select game theme</string>
+    <string name="timer_anzeigen">Show timer</string>
+    <string name="minenanzahl_anzeigen">Show mine count </string>
+    <string name="modiwechsel_anzeigen">Show mode change</string>
+    <string name="flaggen_aktivieren">Show flags</string>
+    <string name="hilfe_anzeigen">Show game hints</string>
+
+    <string name="spielstatistiken_loeschen">Clear game statistics</string>
+    <string name="achtung">Attention!</string>
+    <string name="daten_koennen_nicht_wiederhergestellt">The data can no longer be restored afterwards. Continue?</string>
+    <string name="spieldaten_geloescht">The game data has been deleted</string>
+
+    <!-- Themes -->
+    <string name="bordeaux">Bordeaux</string>
+    <string name="blau">Blue</string>
+    <string name="gruen">Green</string>
+    <string name="grau">Grey</string>
+    <string name="classic">Classic</string>
+
+    <!-- Spielhinweise -->
+    <string name="erst_feld_aufdecken">A field must first be uncovered</string>
+    <string name="nicht_aufdecken_wenn_makiert">Cannot be revealed when marked</string>
+    <string name="maximale_minen_makiert">The maximum number of mines has been marked</string>
+    <string name="keine_flagge_aufgedeckt_feld">No flag possible on revealed space</string>
+    <string name="kein_fragezeiche_aufgedeckt_feld">No question mark possible on an uncovered field</string>
 
 
 </resources>

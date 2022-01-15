@@ -4,22 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/apfel">
+    android:id="@+id/gameHistoryLayout">
 
 
     <!--   TODO: Vllt gar kein Hintergrund setzen mal Ivonne fragen-->
 
     <TextView
         android:id="@+id/titleHighscore"
-        android:layout_width="wrap_content"
+        android:layout_width="220dp"
         android:layout_height="46dp"
-        android:layout_marginStart="432dp"
+        android:layout_marginStart="420dp"
         android:layout_marginTop="16dp"
         android:background="@null"
         android:fontFamily="monospace"
-        android:text="Highscores"
+        android:gravity="center"
+        android:text="@string/highscores"
         android:textSize="25dp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,18 +29,16 @@
         android:id="@+id/button2"
         android:layout_width="46dp"
         android:layout_height="46dp"
-        android:layout_marginStart="30dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginEnd="15dp"
         android:background="@null"
         android:foreground="?android:attr/selectableItemBackground"
         android:scaleType="fitXY"
         android:tooltipText="Zurück zum Hauptmenü"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.997"
-        app:layout_constraintStart_toEndOf="@+id/titleHighscore"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_east_24" />
+        app:srcCompat="@drawable/ic_baseline_east_24"
+        android:contentDescription="@null" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
@@ -66,18 +66,18 @@
             android:id="@+id/gameHistoryTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Highscores" />
+            android:text="@string/highscores" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/highScoresTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Spielverlauf" />
+            android:text="@string/spielverlauf" />
 
 
     </com.google.android.material.tabs.TabLayout>
 
-    <de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.HorizontalStringPicker
+    <de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.LevelHorizontalStringPicker
         android:id="@+id/horizontalStringPicker2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,12 +86,11 @@
         android:layout_marginEnd="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recyclerview"
-        app:layout_constraintTop_toBottomOf="@+id/titleHighscore">
+        app:layout_constraintTop_toBottomOf="@+id/titleHighscore"/>
 
-    </de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.HorizontalStringPicker>
 
     <ImageView
-        android:id="@+id/gameTitleHighscore"
+        android:id="@+id/gameLogoGameHistory"
         android:layout_width="175dp"
         android:layout_height="0dp"
         android:layout_marginStart="69dp"
@@ -101,7 +100,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recyclerview"
         app:layout_constraintTop_toBottomOf="@+id/horizontalStringPicker2"
-        app:srcCompat="@drawable/logo1" />
+        app:srcCompat="@drawable/logo1"
+        tools:visibility="visible"
+        android:contentDescription="@null" />
+
+    <TextView
+        android:id="@+id/noGameDataTextview"
+        android:layout_width="350dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="320dp"
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        android:text="@string/keine_spieldaten_vorhanden"
+        android:textSize="25sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

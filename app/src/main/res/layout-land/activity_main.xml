@@ -4,21 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity"
-    >
+    tools:context=".activities.MainActivity">
 
 
     <ImageView
         android:id="@+id/gameTitle"
         android:layout_width="175dp"
         android:layout_height="175dp"
+        android:contentDescription="@null"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo1"
-        android:contentDescription="@null" />
+        app:srcCompat="@drawable/logo1" />
 
 
-    <de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.HorizontalStringPicker
+    <ImageButton
+        android:id="@+id/LightDarkModeButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="450dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="25dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:scaleType="fitXY"
+        android:tooltipText="@string/light_darkmode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.609"
+        app:layout_constraintStart_toEndOf="@+id/gameTitle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_sun" />
+
+    <de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.LevelHorizontalStringPicker
         android:id="@+id/horizontalStringPicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,13 +49,13 @@
         android:id="@+id/playButton"
         android:layout_width="250dp"
         android:layout_height="75dp"
-        android:layout_marginStart="66dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="242dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="241dp"
         android:backgroundTint="#D66060"
         android:text="@string/spielen"
-        android:textSize="14dp"
-        android:tooltipText="Startet ein neues Spiel"
+        android:textSize="14sp"
+        android:tooltipText="@string/startet_neues_spiel"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/gameTitle"
@@ -54,8 +70,8 @@
         android:layout_marginEnd="81dp"
         android:backgroundTint="#00897B"
         android:text="@string/spiel_erstellen"
-        android:textSize="14dp"
-        android:tooltipText="Startet ein neues Spiel"
+        android:textSize="14sp"
+        android:tooltipText="@string/eigenes_spiel_erstellen"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,8 +88,8 @@
         android:backgroundTint="#FFFA96"
         android:text="@string/spielanleitung"
         android:textColor="@color/black"
-        android:textSize="14dp"
-        android:tooltipText="Öffnet die Spielanleitung"
+        android:textSize="14sp"
+        android:tooltipText="@string/oeffnet_spielanleitung"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
@@ -87,14 +103,14 @@
         android:layout_marginStart="25dp"
         android:layout_marginBottom="26dp"
         android:background="@null"
+        android:contentDescription="@null"
         android:foreground="?android:attr/selectableItemBackground"
         android:scaleType="fitXY"
-        android:tooltipText="Spielhistorie"
+        android:tooltipText="@string/zu_spielstatistiken"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_baseline_emoji_events_24"
-        app:tint="#FFEB3B"
-        android:contentDescription="@null" />
+        app:tint="#FFEB3B" />
 
     <ImageButton
         android:id="@+id/settingsButton"
@@ -103,13 +119,13 @@
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="26dp"
         android:background="@null"
+        android:contentDescription="@null"
         android:foreground="?android:attr/selectableItemBackground"
         android:scaleType="fitXY"
-        android:tooltipText="Einstellungen"
+        android:tooltipText="@string/zu_einstellungen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_settings_24"
-        android:contentDescription="@null" />
+        app:srcCompat="@drawable/ic_baseline_settings_24" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -140,11 +156,11 @@
             android:layout_height="27dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="4dp"
+            android:contentDescription="@null"
             android:padding="1dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_field_width_black"
-            android:contentDescription="@null" />
+            app:srcCompat="@drawable/ic_field_width_black" />
 
         <ImageView
             android:id="@+id/mineImage"
@@ -152,11 +168,11 @@
             android:layout_height="27dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="4dp"
+            android:contentDescription="@null"
             android:padding="1dp"
             app:layout_constraintStart_toEndOf="@+id/heightTextView"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_mine"
-            android:contentDescription="@null" />
+            app:srcCompat="@drawable/ic_mine" />
 
         <TextView
             android:id="@+id/widthTextView"
@@ -176,11 +192,11 @@
             android:layout_height="27dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="4dp"
+            android:contentDescription="@null"
             android:padding="1dp"
             app:layout_constraintStart_toEndOf="@+id/widthTextView"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_field_height_black"
-            android:contentDescription="@null" />
+            app:srcCompat="@drawable/ic_field_height_black" />
 
         <TextView
             android:id="@+id/heightTextView"
@@ -191,7 +207,6 @@
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             android:textSize="16sp"
-            android:tooltipText="Minenanzahl!"
             app:layout_constraintStart_toEndOf="@+id/heightImage"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

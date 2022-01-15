@@ -1,5 +1,6 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,14 @@ import java.util.List;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.GameSummary;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameResult;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 
 public class GameHistoryAdapter extends RecyclerView.Adapter<GameHistoryAdapter.GameHistoryViewHolder> {
     private List<GameSummary> gameSummaryItemList;
+    private View view;
+    private Context context;
 
     public static class GameHistoryViewHolder extends RecyclerView.ViewHolder {
         public TextView gamePlayedOn;
@@ -48,7 +53,8 @@ public class GameHistoryAdapter extends RecyclerView.Adapter<GameHistoryAdapter.
     @NonNull
     @Override
     public GameHistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.game_summary_item, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.game_summary_item, parent, false);
+        context = view.getContext();
         return new GameHistoryViewHolder(view);
     }
 
@@ -69,11 +75,12 @@ public class GameHistoryAdapter extends RecyclerView.Adapter<GameHistoryAdapter.
         } else {
             holder.gameResult.setTextColor(ContextCompat.getColor(holder.gameResult.getContext(), android.R.color.holo_red_dark));
         }
-        holder.gameResult.setText(currentItem.getGameResult());
 
+        holder.gameResult.setText(getGameResult(currentItem.getGameResult()));
         holder.gamePlayedOn.setText(currentItem.getGamePlayedOn());
-        holder.playedTime.setText(currentItem.getPlayedTime() + " Sekunden");
-        holder.level.setText(currentItem.getLevel());
+        String playTime = currentItem.getPlayedTime() + " " + context.getString(R.string.sekunden);
+        holder.playedTime.setText(playTime);
+        holder.level.setText(getLevel(currentItem.getLevel()));
         holder.minesFound.setText(currentItem.getMinesFound());
         holder.fieldSize.setText(currentItem.getFieldSize());
     }
@@ -83,5 +90,48 @@ public class GameHistoryAdapter extends RecyclerView.Adapter<GameHistoryAdapter.
     public int getItemCount() {
         return gameSummaryItemList.size();
     }
+
+
+    private String getGameResult(String gameResult){
+        String result = null;
+
+        switch (gameResult) {
+            case "Gewonnen":
+            case "Won":
+                result = context.getString(R.string.gewonnen);
+                break;
+            case "Verloren":
+            case "Lost":
+                result = context.getString(R.string.verloren);
+                break;
+        }
+        return result;
+
+    }
+
+    private String getLevel(String level) {
+        String result = null;
+
+        switch (level) {
+            case "Anfänger":
+            case "Beginner":
+                result = context.getString(R.string.level_anfänger);
+                break;
+            case "Fortgeschritten":
+            case "Advanced":
+                result = context.getString(R.string.level_fortgeschritten);
+                break;
+            case "Profi":
+            case "Professional":
+                result = context.getString(R.string.level_profi);
+                break;
+            case "Benutzerdefiniert":
+            case "Custom":
+                result = context.getString(R.string.level_benutzedefiniert);
+                break;
+        }
+        return result;
+    }
+
 
 }

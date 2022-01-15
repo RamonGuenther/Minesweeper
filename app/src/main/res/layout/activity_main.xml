@@ -19,8 +19,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo1" />
 
+    <ImageButton
+        android:id="@+id/LightDarkModeButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="25dp"
+        android:background="@null"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gameTitle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_sun"
+        android:tooltipText="@string/light_darkmode"
+        android:contentDescription="@null" />
 
-    <de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.HorizontalStringPicker
+
+    <de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.LevelHorizontalStringPicker
         android:id="@+id/horizontalStringPicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,8 +56,8 @@
         android:layout_marginEnd="81dp"
         android:backgroundTint="#D66060"
         android:text="@string/spielen"
-        android:textSize="14dp"
-        android:tooltipText="Startet ein neues Spiel"
+        android:textSize="14sp"
+        android:tooltipText="@string/startet_neues_spiel"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,8 +72,8 @@
         android:layout_marginEnd="81dp"
         android:backgroundTint="#00897B"
         android:text="@string/spiel_erstellen"
-        android:textSize="14dp"
-        android:tooltipText="Startet ein neues Spiel"
+        android:textSize="14sp"
+        android:tooltipText="@string/eigenes_spiel_erstellen"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,8 +90,8 @@
         android:backgroundTint="#FFFA96"
         android:text="@string/spielanleitung"
         android:textColor="@color/black"
-        android:textSize="14dp"
-        android:tooltipText="Öffnet die Spielanleitung"
+        android:textSize="14sp"
+        android:tooltipText="@string/oeffnet_spielanleitung"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +106,7 @@
         android:background="@null"
         android:contentDescription="@null"
         android:scaleType="fitXY"
-        android:tooltipText="Zu den Spielstatistiken"
+        android:tooltipText="@string/zu_spielstatistiken"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_baseline_emoji_events_24"
@@ -105,7 +121,7 @@
         android:background="@null"
         android:contentDescription="@null"
         android:scaleType="fitXY"
-        android:tooltipText="Einstellungen"
+        android:tooltipText="@string/zu_einstellungen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_settings_24" />
@@ -195,20 +211,5 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageButton
-        android:id="@+id/LightDarkModeButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="25dp"
-        android:background="@null"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/gameTitle"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_sun"
-        android:tooltipText="Light- / Darkmode"
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

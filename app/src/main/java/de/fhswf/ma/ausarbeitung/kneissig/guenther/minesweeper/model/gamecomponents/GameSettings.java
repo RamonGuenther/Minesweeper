@@ -10,7 +10,7 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Theme;
  *
  * @author Ivonne Kneißig
  */
-public class GameSettings  {
+public class GameSettings {
 
     private boolean timerVisible;
     private boolean mineCounterVisible;
@@ -31,7 +31,7 @@ public class GameSettings  {
      * Standardwerte eingegeben. Diese können vom Spieler jederzeit
      * geändert werden.
      */
-    public GameSettings(){
+    public GameSettings() {
         timerVisible = true;
         mineCounterVisible = true;
         gameModeVisible = true;
@@ -52,8 +52,8 @@ public class GameSettings  {
      * Die Methode setBoardValuesByLevel legt die Spielfeldgröße und die Minenanzahl für alle
      * Schwierigkeitsgrade, außer dem Benutzerdediniferten Schwierigkeitsgrad fest.
      */
-    private void setBoardValuesByLevel(){
-        switch (level){
+    private void setBoardValuesByLevel() {
+        switch (level) {
             case BEGINNER:
                 numberOfMines = 10;
                 columnsX = 8;
@@ -76,11 +76,11 @@ public class GameSettings  {
      * Die Methode setCustomBoardValues setzt die Spielfeldgröße und die Anzahl der Minen auf die
      * vom Spieler gewünschte Anzahl fest.
      *
-     * @param numberOfMines         Vom Spieler gewählte Anzahl von Minen auf dem Spielfeld
-     * @param columnsX              Vom Spieler gewählte Breite des Spielfeldes
-     * @param rowsY                 Vom Spieler gewählte Höhe des Spielfeldes
+     * @param numberOfMines Vom Spieler gewählte Anzahl von Minen auf dem Spielfeld
+     * @param columnsX      Vom Spieler gewählte Breite des Spielfeldes
+     * @param rowsY         Vom Spieler gewählte Höhe des Spielfeldes
      */
-    public void setCustomBoardValues(int numberOfMines, int columnsX, int rowsY){
+    public void setCustomBoardValues(int numberOfMines, int columnsX, int rowsY) {
 
         this.numberOfMines = numberOfMines;
         this.columnsX = columnsX;
@@ -102,20 +102,24 @@ public class GameSettings  {
      * alle Schwierigkeitsgrade, außer dem Benutzerdefinierten Schwierigkeitsgrad, wird auch direkt
      * die Spielfeldgröße und die Minenanzahl angepasst.
      *
-     * @param level                 Vom Spieler gewählter Schwierigkeitsgrad
+     * @param level Vom Spieler gewählter Schwierigkeitsgrad
      */
     public void setLevel(String level) {
-        switch (level){
+        switch (level) {
             case "Anfänger":
+            case "Beginner":
                 this.level = Level.BEGINNER;
                 break;
             case "Fortgeschritten":
+            case "Advanced":
                 this.level = Level.ADVANCED;
                 break;
             case "Profi":
+            case "Professional":
                 this.level = Level.PROFESSIONAL;
                 break;
             case "Benutzerdefiniert":
+            case "Custom":
                 this.level = Level.CUSTOM;
                 return;
         }
@@ -135,22 +139,26 @@ public class GameSettings  {
     /**
      * Setzt das Theme für das Aussehen des Spielfeldes anhand eines gegebenen Theme-Namens.
      *
-     * @param theme                 Name des gewählten Themes
+     * @param theme Name des gewählten Themes
      */
     public void setTheme(String theme) {
-        switch (theme){
+        switch (theme) {
             case "Bordeaux":
                 this.theme = Theme.BORDEAUX;
                 break;
             case "Blau":
+            case "Blue":
                 this.theme = Theme.BLUE;
                 break;
-            case "Gruen":
+            case "Grün":
+            case "Green":
                 this.theme = Theme.GREEN;
                 break;
             case "Grau":
+            case "Grey":
                 this.theme = Theme.GREY;
                 break;
+            case "Klassisch":
             case "Classic":
                 this.theme = Theme.CLASSIC;
                 break;

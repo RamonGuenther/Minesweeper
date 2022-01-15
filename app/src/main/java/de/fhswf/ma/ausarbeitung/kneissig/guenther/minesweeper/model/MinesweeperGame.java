@@ -4,10 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.Toast;
 
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperApplication;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.callback.GameVibrationsCallback;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.callback.MinesweeperCallback;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.CreateGameSummary;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameResult;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.gamecomponents.GameBoardBuilder;
@@ -205,13 +205,13 @@ public class MinesweeperGame {
 
         if(mineCounter.getMineCount() == 0){
             if(gameSettings.isHints()){
-                Toast.makeText(context,"Die maximale Anzahl an Minen wurde markiert", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,context.getString(R.string.maximale_minen_makiert), Toast.LENGTH_SHORT).show();
             }
             return;
         }
         if(getFieldAt(xPos, yPos).isDiscovered()){
             if(gameSettings.isHints()){
-                Toast.makeText(context,"Keine Flagge auf aufgedecktem Feld möglich", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,context.getString(R.string.keine_flagge_aufgedeckt_feld), Toast.LENGTH_SHORT).show();
             }
             return;
         }
@@ -241,7 +241,7 @@ public class MinesweeperGame {
 
         if(getFieldAt(xPos, yPos).isDiscovered()){
             if(gameSettings.isHints()){
-                Toast.makeText(context,"Kein Fragezeichen auf aufgedecktem Feld möglich", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,context.getString(R.string.kein_fragezeiche_aufgedeckt_feld), Toast.LENGTH_SHORT).show();
             }
             return;
         }
@@ -287,8 +287,9 @@ public class MinesweeperGame {
             minesweeperCallback.updateTimer(0);
 
             //Ramonnilein
-            CreateGameSummary.createHighScore(
-                    context,
+            MinesweeperApplication application = (MinesweeperApplication) context.getApplicationContext();
+
+            application.createGameSummaryItem(
                     timer.getSecondsPassed(),
                     gameSettings.getLevel(),
                     GameResult.WON,
@@ -311,8 +312,9 @@ public class MinesweeperGame {
         timer.stopTimer();
 
         //Ramonnilein
-        CreateGameSummary.createHighScore(
-                context,
+        MinesweeperApplication application = (MinesweeperApplication) context.getApplicationContext();
+
+        application.createGameSummaryItem(
                 timer.getSecondsPassed(),
                 gameSettings.getLevel(),
                 GameResult.LOST,

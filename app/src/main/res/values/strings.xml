@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Minesweeper</string>
-    <string name="settings">Einstellungen</string>
 
     <!--String für Spielregeln und Game-->
     <string name="instruction_part1">Ziel des Spiels ist es, innerhalb eines Zeitlimits von 999 Sekunden alle Felder aufzudecken, die keine Mine enthalten. Sobald eine Mine aufgedeckt wurde, ist das Spiel verloren. Die Zahl auf einem aufgedeckten Feld gibt an, wie viele Minen an dieses Feld angrenzen. Dabei sind auch diagonal angrenzende Felder gemeint.</string>
@@ -22,7 +21,6 @@
     <string name="instruction_image_text3">Es wurden Flaggen und Fragezeichen gesetzt</string>
     <string name="instruction_part8">Möchtest du noch weitere Herausforderungen?</string>
     <string name="instruction_part9">Du kannst in den Einstellungen den Flaggen-Modus, den Minenzähler, den Timer oder auch einfach alles nach belieben ausschalten.</string>
-    <string name="einstellungen">Einstellungen</string>
     <string name="reset_game">Reset Game</string>
     <string name="_0">0</string>
     <string name="minen_modus_game">Minen - Modus</string>
@@ -49,11 +47,20 @@
     <string name="sekunden">Sekunden</string>
 
     <!--Hauptmenü-->
+    <string name="light_darkmode" translatable="false">Light- / Darkmode</string>
     <string name="spielen">Spielen</string>
     <string name="spiel_erstellen">Spiel erstellen</string>
     <string name="spieltitel">Spieltitel</string>
     <string name="spielanleitung">Spielanleitung</string>
     <string name="minenanzahl_im_spiel">Anzahl der Minen im Spiel</string>
+
+    <string name="startet_neues_spiel">Startet ein neues Spiel</string>
+    <string name="eigenes_spiel_erstellen">Ein eigenes Spiel erstellen</string>
+    <string name="oeffnet_spielanleitung">Öffnet die Spielanleitung</string>
+    <string name="zu_spielstatistiken">Zu den Spielstatistiken</string>
+    <string name="zu_einstellungen"> Zu den Einstellungen</string>
+
+
 
     <!--Spiel erstellen-->
     <string name="hoehe">Höhe</string>
@@ -75,8 +82,46 @@
     <string name="spiel_starten">Spiel starten</string>
 
     <string name="abbrechen">Abbrechen</string>
+    <string name="keine_spieldaten_vorhanden">Keine Spieldaten vorhanden.</string>
+
+
+    <!--Spielstatistiken-->
+    <string name="highscores" translatable="false">Highscores</string>
+    <string name="spielverlauf">Spielverlauf</string>
+
+    <!-- GameSummaryCard -->
+    <string name="gewonnen">Gewonnen</string>
+    <string name="verloren">Verloren</string>
+
+    <!-- Einstellungen -->
+    <string name="einstellungen">Einstellungen</string>
+    <string name="vibration">Vibration</string>
+    <string name="spieldesign_auswaehlen">Spieldesign auswählen</string>
+    <string name="timer_anzeigen">Timer anzeigen</string>
+    <string name="minenanzahl_anzeigen">Minenanzahl anzeigen</string>
+    <string name="modiwechsel_anzeigen">Modiwechsel anzeigen</string>
+    <string name="flaggen_aktivieren">Flaggen aktivieren</string>
+    <string name="hilfe_anzeigen">Spielhinweise anzeigen</string>
+
+    <string name="spielstatistiken_loeschen">Spielstatistiken löschen</string>
+    <string name="achtung">Achtung!</string>
+    <string name="daten_koennen_nicht_wiederhergestellt">Die Daten können danach nicht mehr wiederhergestellt werden. Fortfahren?</string>
+    <string name="spieldaten_geloescht">Die Spieldaten wurden gelöscht</string>
 
 
 
+    <!-- Themes -->
+    <string name="bordeaux">Bordeaux</string>
+    <string name="blau">Blau</string>
+    <string name="gruen">Grün</string>
+    <string name="grau">Grau</string>
+    <string name="classic">Klassisch</string>
+
+    <!-- Spielhinweise -->
+    <string name="erst_feld_aufdecken">Es muss erst ein Feld aufgedeckt werden</string>
+    <string name="nicht_aufdecken_wenn_makiert">Kann nicht aufgdeckt werden, wenn markiert</string>
+    <string name="maximale_minen_makiert">"Die maximale Anzahl an Minen wurde markiert"</string>
+    <string name="keine_flagge_aufgedeckt_feld">"Keine Flagge auf aufgedecktem Feld möglich"</string>
+    <string name="kein_fragezeiche_aufgedeckt_feld">Kein Fragezeichen auf aufgedecktem Feld möglich</string>
 
 </resources>

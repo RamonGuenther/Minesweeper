@@ -17,14 +17,14 @@
         android:id="@+id/backButton"
         android:layout_width="46dp"
         android:layout_height="46dp"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="40dp"
         android:background="@null"
         android:foreground="?android:attr/selectableItemBackground"
         android:scaleType="fitXY"
         android:tooltipText="Zurück zum Hauptmenü"
-        app:layout_constraintEnd_toStartOf="@+id/title"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerLabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_west_24" />
@@ -33,14 +33,17 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="46dp"
+        android:layout_marginStart="27dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="86dp"
+        android:layout_marginBottom="40dp"
         android:background="@null"
         android:fontFamily="monospace"
         android:gravity="center_vertical"
-        android:text="Einstellungen"
-        android:textSize="30dp"
+        android:text="@string/einstellungen"
+        android:textSize="25dp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/backButton"
         app:layout_constraintTop_toTopOf="parent" />
@@ -52,7 +55,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="40dp"
         android:labelFor="@id/spinner"
-        android:text="Spieldesign auswählen"
+        android:text="@string/spieldesign_auswaehlen"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title">
@@ -70,27 +73,29 @@
         android:dropDownVerticalOffset="50dp"
         android:spinnerMode="dropdown"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerLabel"
+        tools:ignore="TouchTargetSizeCheck" />
+
 
     <TextView
-        android:id="@+id/darkModeLabel"
+        android:id="@+id/vibrationLabel"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="20dp"
         android:background="@null"
         android:fontFamily="sans-serif"
         android:gravity="center_vertical"
-        android:text="Dunkler Modus"
+        android:text="@string/vibration"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/darkModeSwitch"
+        android:id="@+id/vibrationSwitch"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="51dp"
         android:checked="false"
         android:splitTrack="false"
@@ -104,37 +109,6 @@
 
 
     <TextView
-        android:id="@+id/vibrationLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="15dp"
-        android:background="@null"
-        android:fontFamily="sans-serif"
-        android:gravity="center_vertical"
-        android:text="Vibration"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/darkModeLabel" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/vibrationSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="51dp"
-        android:checked="false"
-        android:splitTrack="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColorHighlight="#1E1F20"
-        android:textColorLink="#1E1F20"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/darkModeSwitch"
-        app:switchMinWidth="90dp"
-        app:useMaterialThemeColors="false" />
-
-
-    <TextView
         android:id="@+id/showTimerLabel"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
@@ -143,7 +117,7 @@
         android:background="@null"
         android:fontFamily="sans-serif"
         android:gravity="center_vertical"
-        android:text="Timer anzeigen"
+        android:text="@string/timer_anzeigen"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vibrationLabel" />
@@ -173,7 +147,7 @@
         android:background="@null"
         android:fontFamily="sans-serif"
         android:gravity="center_vertical"
-        android:text="Minenanzahl anzeigen"
+        android:text="@string/minenanzahl_anzeigen"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/showTimerLabel" />
@@ -204,7 +178,7 @@
         android:background="@null"
         android:fontFamily="sans-serif"
         android:gravity="center_vertical"
-        android:text="Modiwechsel anzeigen"
+        android:text="@string/modiwechsel_anzeigen"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/showMineCountLabel" />
@@ -235,7 +209,7 @@
         android:background="@null"
         android:fontFamily="sans-serif"
         android:gravity="center_vertical"
-        android:text="Flaggen aktivieren"
+        android:text="@string/flaggen_aktivieren"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/modeChangeShowLabel" />
@@ -266,7 +240,7 @@
         android:background="@null"
         android:fontFamily="sans-serif"
         android:gravity="center_vertical"
-        android:text="Hilfe anzeigen"
+        android:text="@string/hilfe_anzeigen"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/useFlagsLabel" />
@@ -290,7 +264,7 @@
 
     <View
         android:id="@+id/divider"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="11dp"
@@ -311,7 +285,7 @@
         android:background="@null"
         android:fontFamily="sans-serif"
         android:gravity="center_vertical"
-        android:text="Spielstatistiken löschen"
+        android:text="@string/spielstatistiken_loeschen"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider" />
@@ -321,7 +295,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginEnd="51dp"
         android:background="@drawable/layout_select_difficulty"
         android:backgroundTint="#F64C4C"
         android:src="@drawable/ic_baseline_delete_24"

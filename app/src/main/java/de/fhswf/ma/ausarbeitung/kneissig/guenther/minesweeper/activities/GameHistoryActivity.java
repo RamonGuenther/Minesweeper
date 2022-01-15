@@ -1,5 +1,6 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -7,8 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,12 +25,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperApplication;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.MinesweeperDatabase;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.GameSummary;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameResult;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.HorizontalStringPicker;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.LevelHorizontalStringPicker;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.adapter.GameHistoryAdapter;
 
 /**
@@ -39,27 +40,22 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.adapter.Game
  */
 public class GameHistoryActivity extends AppCompatActivity {
 
-    //Highscore_item
-    private RecyclerView recyclerView;
-
     //Brücke Highscore und der Recyclerview
-    private RecyclerView.Adapter adapter;
+    private RecyclerView.Adapter<GameHistoryAdapter.GameHistoryViewHolder> adapter;
 
-    //
-    private RecyclerView.LayoutManager layoutManager;
-    private List<GameSummary> gameSummaryList;
-    private RadioGroup radioGroup;
-    private RadioButton radioButton;
+    private List<GameSummary> gameSummaryItemList;
     private MinesweeperDatabase db;
-    private RadioButton radioButton1;
-    private RadioButton radioButton2;
+    private TextView noGameDataTextview;
+    private TextView titleHighscoreTextView;
+    private MinesweeperApplication application;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_history);
 
-        View view = findViewById(R.id.apfel);
+        View view = findViewById(R.id.gameHistoryLayout);
 
         Slidr.attach(this, new SlidrConfig.Builder()
                 .position(SlidrPosition.RIGHT)
@@ -84,13 +80,9 @@ public class GameHistoryActivity extends AppCompatActivity {
         });
 
 
-        List<String> items = new ArrayList<>();
-        Arrays.asList(Level.values()).forEach(e -> items.add(e.label));
-        items.remove(items.size() - 1);
-
-        HorizontalStringPicker horizontalStringPicker = findViewById(R.id.horizontalStringPicker2);
-        horizontalStringPicker.setItems(items);
-        horizontalStringPicker.setValue(Level.BEGINNER.label);
+        LevelHorizontalStringPicker horizontalStringPicker = findViewById(R.id.horizontalStringPicker2);
+        horizontalStringPicker.getItemList().remove(horizontalStringPicker.getItemList().size() - 1);
+        horizontalStringPicker.setValue(getString(R.string.level_anfänger));
         horizontalStringPicker.getTextView().addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -109,47 +101,50 @@ public class GameHistoryActivity extends AppCompatActivity {
         });
 
 
-        db = MinesweeperDatabase.createDatabase(this);
-        gameSummaryList = db.highscoreDao().getHighScoresByGameMode(GameResult.WON.label, Level.BEGINNER.label);
+        application = (MinesweeperApplication) getApplication();
+        noGameDataTextview = findViewById(R.id.noGameDataTextview);
 
-        recyclerView = findViewById(R.id.recyclerview);
+        gameSummaryItemList = application.getMatchHistory();
+        noGameDataTextview.setVisibility(gameSummaryItemList.isEmpty() ? View.VISIBLE : View.GONE);
+
+        //Highscore_item
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true); //wenn die Größe sich nicht ändern steigert performance aber nochmal googeln
-        layoutManager = new LinearLayoutManager(this);
-        adapter = new GameHistoryAdapter(gameSummaryList);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        adapter = new GameHistoryAdapter(gameSummaryItemList);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
 
+        titleHighscoreTextView = findViewById(R.id.titleHighscore);
 
-        TextView textView = findViewById(R.id.titleHighscore);
+        ImageView logo = findViewById(R.id.gameLogoGameHistory);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                List<GameSummary> gameSummaryListtemp;
-
                 if (tabLayout.getSelectedTabPosition() == 0) {
-                    ImageView logo = findViewById(R.id.gameTitleHighscore);
-                    if(logo != null) {
+                    if (logo != null) {
                         logo.setVisibility(View.GONE);
                     }
                     horizontalStringPicker.setVisibility(View.VISIBLE);
                     refreshData(horizontalStringPicker.getValue());
-                    textView.setText("Highscores"); //TODO AUch solche String ressourcen einbinden wenn nicht schon vorhanden (getString(R.string.app_name))
+                    titleHighscoreTextView.setText(getString(R.string.highscores));
 
                 } else if (tabLayout.getSelectedTabPosition() == 1) {
-                    ImageView logo = findViewById(R.id.gameTitleHighscore);
-                    if(logo != null) {
+                    if (logo != null) {
                         logo.setVisibility(View.VISIBLE);
                     }
-                    textView.setText("Spielverlauf");
-                    horizontalStringPicker.setVisibility(View.GONE); //TODO Ivonne nach Meinung fragen
-//                    horizontalStringPicker.setVisibility(View.INVISIBLE);
-                    gameSummaryListtemp = db.highscoreDao().getMatchHistory();
-                    gameSummaryList.clear();
-                    gameSummaryList.addAll(gameSummaryListtemp);
+                    titleHighscoreTextView.setText(getString(R.string.spielverlauf));
+                    horizontalStringPicker.setVisibility(View.GONE);
+                    List<GameSummary> newGameSummaryItemList = application.getMatchHistory();
+                    noGameDataTextview.setVisibility(newGameSummaryItemList.isEmpty() ? View.VISIBLE : View.GONE);
+                    gameSummaryItemList.clear();
+                    gameSummaryItemList.addAll(newGameSummaryItemList);
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -165,20 +160,33 @@ public class GameHistoryActivity extends AppCompatActivity {
     }
 
 
-    private void refreshData(String level) {
-        List<GameSummary> test = db.highscoreDao().getHighScoresByGameMode(GameResult.WON.label, level);
-        gameSummaryList.clear();
-        gameSummaryList.addAll(test);
+    @SuppressLint("NotifyDataSetChanged")
+    private void refreshData(String value) {
+        String level = null;
+        switch (value) {
+            case "Anfänger":
+            case "Beginner":
+                level = Level.BEGINNER.label;
+                break;
+            case "Fortgeschritten":
+            case "Advanced":
+                level = Level.ADVANCED.label;
+                break;
+            case "Profi":
+            case "Professional":
+                level = Level.PROFESSIONAL.label;
+                break;
+        }
+        List<GameSummary> newGameSummaryItemList = application.getHighScoreListByLevel(level);
+        noGameDataTextview.setVisibility(newGameSummaryItemList.isEmpty() ? View.VISIBLE : View.GONE);
+        gameSummaryItemList.clear();
+        gameSummaryItemList.addAll(newGameSummaryItemList);
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void finish() {
-        try {
-            super.finish();
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        } catch (Exception e) {
-            Log.e("TEST", e.getMessage());
-        }
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

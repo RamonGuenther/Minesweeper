@@ -13,6 +13,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -30,51 +31,55 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperG
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.CustomGameDialog;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.HorizontalStringPicker;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.LevelHorizontalStringPicker;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private HorizontalStringPicker horizontalStringPicker;
+    private LevelHorizontalStringPicker horizontalStringPicker;
     private TextView heightTextView;
     private TextView widthTextView;
     private TextView minesTextView;
     private CustomGame customGame;
-    private MinesweeperDatabase db;
 
-    private MinesweeperApplication minesweeperApplication;
+    private MinesweeperApplication application;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         //checken was es ist und dann die andere xml nehmen
         setContentView(R.layout.activity_main);
 
-        minesweeperApplication = (MinesweeperApplication)getApplicationContext();
+        application = (MinesweeperApplication) getApplication();
+        Settings settings = application.getSettings();
 
         ImageButton lightDarkMode = findViewById(R.id.LightDarkModeButton);
-        if (!minesweeperApplication.getSettings().isDarkMode()) {
+
+        if (!settings.isDarkMode()) {
             lightDarkMode.setImageResource(R.drawable.ic_sun);
         } else {
             lightDarkMode.setImageResource(R.drawable.ic_moon);
         }
 
         lightDarkMode.setOnClickListener(event -> {
-            if (!minesweeperApplication.getSettings().isDarkMode()) {
+            if (!settings.isDarkMode()) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                minesweeperApplication.getSettings().setDarkMode(true);
+                settings.setDarkMode(true);
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                minesweeperApplication.getSettings().setDarkMode(false);
+                settings.setDarkMode(false);
             }
+            application.setSettings(settings);
+            Log.e("APFEL", "DB Instanz erstellt");
+
         });
 
         ImageButton settingsButton = findViewById(R.id.settingsButton);
 
         settingsButton.setOnClickListener(e -> {
-//            startActivity(new Intent(this, SettingsActivity.class));
+            startActivity(new Intent(this, SettingsActivity.class));
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            startActivity(new Intent(this, SettingsActivity.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
             settingsButton.animate().rotation(settingsButton.getRotation() + 360).start();
         });
 
@@ -92,16 +97,11 @@ public class MainActivity extends AppCompatActivity {
         widthTextView = findViewById(R.id.widthTextView);
         minesTextView = findViewById(R.id.minesTextView);
 
-        db = MinesweeperDatabase.createDatabase(this);
-        Settings settings = db.settingsDao().getSettings();
-        customGame = db.customGameDao().getCustomGame();
+
+        customGame = application.getCustomGame();
 
 
-        List<String> items = new ArrayList<>();
-        Arrays.asList(Level.values()).forEach(e -> items.add(e.label));
-
-        horizontalStringPicker = findViewById(R.id.horizontalStringPicker);
-        horizontalStringPicker.setItems(items);
+        horizontalStringPicker = (LevelHorizontalStringPicker) findViewById(R.id.horizontalStringPicker);
         horizontalStringPicker.getTextView().addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -117,9 +117,9 @@ public class MainActivity extends AppCompatActivity {
                 String level = horizontalStringPicker.getValue();
                 MinesweeperGame.getInstance().getGameSettings().setLevel(level);
                 settings.setLastLevel(level);
-                db.settingsDao().update(settings);
+                application.setSettings(settings);
 
-                if (level.equals(Level.CUSTOM.label)) {
+                if (level.equals(getString(R.string.level_benutzedefiniert))){
                     MinesweeperGame.getInstance().getGameSettings().setCustomBoardValues(
                             Integer.parseInt(customGame.getMines()),
                             Integer.parseInt(customGame.getWidth()),
@@ -143,15 +143,15 @@ public class MainActivity extends AppCompatActivity {
 
                 Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-                long[] vibrationPattern = new long[]{200, 50, 200 };
-                int[] vibrationAmplitudes = new int[]{255, 0, 255 };
+                long[] vibrationPattern = new long[]{200, 50, 200};
+                int[] vibrationAmplitudes = new int[]{255, 0, 255};
 
                 if (vibrator.hasAmplitudeControl()) {
                     VibrationEffect effect = VibrationEffect.createWaveform(vibrationPattern, vibrationAmplitudes, -1);
                     vibrator.vibrate(effect);
                 }
             }
-            if(MinesweeperGame.getInstance().isFirstClick()){
+            if (MinesweeperGame.getInstance().isFirstClick()) {
                 MinesweeperGame.getInstance().newGame();
             }
             startActivity(new Intent(this, GameActivity.class));
@@ -163,11 +163,13 @@ public class MainActivity extends AppCompatActivity {
         customGameDialog.show(getSupportFragmentManager(), "Create Custom Game Dialog");
     }
 
+    /**
+     * Um den Picker zu aktualisieren nach der Dialog erstellung
+     */
     @Override
     protected void onResume() {
         super.onResume();
         if (horizontalStringPicker.getValue().equals(Level.CUSTOM.label)) {
-            customGame = db.customGameDao().getCustomGame();
             heightTextView.setText(customGame.getHeight());
             widthTextView.setText(customGame.getWidth());
             minesTextView.setText(customGame.getMines());
@@ -179,5 +181,4 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
 
     }
-
 }

@@ -19,7 +19,7 @@ public abstract class MinesweeperDatabase extends RoomDatabase {
     private static final String DB_NAME = "MinesweeperDatabase";
 
     public static MinesweeperDatabase createDatabase(Context context) {
-        Log.e("DB", "DB Instanz erstellt");
+        Log.e("DB", "DB Instanz erstellt´lel");
 
         return Room.databaseBuilder(
                 context,
@@ -31,7 +31,7 @@ public abstract class MinesweeperDatabase extends RoomDatabase {
 
     public abstract SettingsDao settingsDao();
 
-    public abstract GameSummaryDao highscoreDao();
+    public abstract GameSummaryDao gameSummaryDao();
 
     public abstract CustomGameDao customGameDao();
 

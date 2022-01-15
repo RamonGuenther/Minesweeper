@@ -20,7 +20,9 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Objects;
 
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperApplication;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities.GameActivity;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.MinesweeperDatabase;
@@ -28,12 +30,7 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 
-/**
- * TODO: - Wahrscheinlich nochmal in ein Constraintlayout (oder relative) packen damit alles richtig liegt
- * -oben die % immer aktualisieren wenn sich in mine was ändert
- * - unter minen feld steht die maximale Menge (70-80%)
- * - Vllt anderes extends wie Ivonne Alertdialog
- */
+
 public class CustomGameDialog extends AppCompatDialogFragment {
     private EditText numberOfMinesInput;
     private EditText widthTextInput;
@@ -52,7 +49,7 @@ public class CustomGameDialog extends AppCompatDialogFragment {
     private HorizontalStringPicker horizontalStringPicker;
 
 
-    public CustomGameDialog(){
+    public CustomGameDialog() {
 
     }
 
@@ -85,7 +82,7 @@ public class CustomGameDialog extends AppCompatDialogFragment {
         mineQuantityTextInputLayout.setEndIconVisible(false);
 
         minesPercentTextView = view.findViewById(R.id.minesPercentTextView);
-        minesPercentTextView.setText("0%"); //mit jedem machen
+        minesPercentTextView.setText("0%");
 
 
         numberOfMinesInput.setEnabled(false);
@@ -104,7 +101,7 @@ public class CustomGameDialog extends AppCompatDialogFragment {
                 if (widthTextInput.getText().toString().isEmpty() || heightTextInput.getText().toString().isEmpty()) {
                     numberOfMinesInput.setEnabled(false);
                     numberOfMinesInput.setText("");
-                    mineQuantityTextInputLayout.setHelperText(getString(R.string.mine_helper_text_1)); //mit jedem machen
+                    mineQuantityTextInputLayout.setHelperText(getString(R.string.mine_helper_text_1));
                 }
 
                 if (heightTextInput.getText().toString().isEmpty()) {
@@ -124,11 +121,7 @@ public class CustomGameDialog extends AppCompatDialogFragment {
                     heightTextInputLayout.setEndIconVisible(true);
                 }
 
-
-                if (checkHeight && checkWidth) {
-                    numberOfMinesInput.setEnabled(true);
-                    apfel();
-                }
+                activateNumberOfMinesInput();
             }
         });
 
@@ -140,6 +133,7 @@ public class CustomGameDialog extends AppCompatDialogFragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                activateNumberOfMinesInput();
             }
 
             @Override
@@ -147,7 +141,7 @@ public class CustomGameDialog extends AppCompatDialogFragment {
                 if (widthTextInput.getText().toString().isEmpty() || heightTextInput.getText().toString().isEmpty()) {
                     numberOfMinesInput.setEnabled(false);
                     numberOfMinesInput.setText("");
-                    mineQuantityTextInputLayout.setHelperText(getString(R.string.mine_helper_text_1)); //mit jedem machen
+                    mineQuantityTextInputLayout.setHelperText(getString(R.string.mine_helper_text_1));
                 }
 
                 if (widthTextInput.getText().toString().isEmpty()) {
@@ -171,7 +165,7 @@ public class CustomGameDialog extends AppCompatDialogFragment {
 
                 if (checkHeight && checkWidth) {
                     numberOfMinesInput.setEnabled(true);
-                    apfel();
+                    activateNumberOfMinesInput();
                 }
             }
         });
@@ -183,12 +177,13 @@ public class CustomGameDialog extends AppCompatDialogFragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 if (numberOfMinesInput.getText().toString().isEmpty()) {
-                    minesPercentTextView.setText("0.0%"); //mit jedem machen
+                    minesPercentTextView.setText("0.0%");
                     mineQuantityTextInputLayout.setEndIconVisible(false);
                     checkNumberOfMines = false;
                     return;
@@ -212,13 +207,13 @@ public class CustomGameDialog extends AppCompatDialogFragment {
                 int mines = Integer.parseInt(numberOfMinesInput.getText().toString());
                 double minesPercent = (double) mines / fields * 100;
 
-                Double rounded = new BigDecimal(minesPercent).setScale(2, RoundingMode.HALF_UP).doubleValue();
-                minesPercentTextView.setText(rounded + "%"); //mit jedem machen
+                Double rounded = new BigDecimal(minesPercent).setScale(2, RoundingMode.HALF_UP).doubleValue(); //TODO Nochmal überarbeiten vllt
+                minesPercentTextView.setText(rounded + "%");
             }
         });
 
-        MinesweeperDatabase db = MinesweeperDatabase.createDatabase(this.getContext());
-        customGame = db.customGameDao().getCustomGame();
+        MinesweeperApplication application = (MinesweeperApplication) requireActivity().getApplication();
+        customGame = application.getCustomGame();
 
         widthTextInput.setText(customGame.getWidth());
         heightTextInput.setText(customGame.getHeight());
@@ -233,9 +228,10 @@ public class CustomGameDialog extends AppCompatDialogFragment {
                 customGame.setWidth(widthTextInput.getText().toString());
                 customGame.setMines(numberOfMinesInput.getText().toString());
 
-                db.customGameDao().update(customGame);
+                application.setCustomGame(customGame);
 
-                horizontalStringPicker.setValue(Level.CUSTOM.label);
+                //dadurch wird das Level auch in der Datenbank gespeichert, da der Listener greift
+                horizontalStringPicker.setValue(getString(R.string.level_benutzedefiniert));
 
                 MinesweeperGame.getInstance().getGameSettings().setCustomBoardValues(
                         Integer.parseInt(numberOfMinesInput.getText().toString()),
@@ -253,21 +249,22 @@ public class CustomGameDialog extends AppCompatDialogFragment {
 
         builder.setView(view)
                 .setTitle(getString(R.string.spiel_erstellen))
-                .setNegativeButton(getString(R.string.abbrechen), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
+                .setNegativeButton(getString(R.string.abbrechen), (dialogInterface, i) -> {
                 });
 
         return builder.create();
     }
 
-    private void apfel() {
-        int width = Integer.parseInt(widthTextInput.getText().toString());
-        int height = Integer.parseInt(heightTextInput.getText().toString());
-        fields = width * height;
-        maxMines = (int) (fields * 0.6);
-        mineQuantityTextInputLayout.setHelperText(getString(R.string.mine_helper_text_2) + " " + maxMines); //mit jedem machen
+    private void activateNumberOfMinesInput() {
+        if(checkHeight && checkWidth) {
+            numberOfMinesInput.setEnabled(true);
+            numberOfMinesInput.setText("");
+            int width = Integer.parseInt(widthTextInput.getText().toString());
+            int height = Integer.parseInt(heightTextInput.getText().toString());
+            fields = width * height;
+            maxMines = (int) (fields * 0.6);
+            mineQuantityTextInputLayout.setHelperText(getString(R.string.mine_helper_text_2) + " " + maxMines); //mit jedem machen
+        }
     }
 
 

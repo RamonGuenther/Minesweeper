@@ -11,7 +11,7 @@ public enum Theme {
 
     BORDEAUX("Bordeaux"),
     BLUE("Blau"),
-    GREEN("Gruen"),
+    GREEN("Grün"),
     GREY("Grau"),
     CLASSIC("Classic");
 
