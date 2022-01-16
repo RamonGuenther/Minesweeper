@@ -52,7 +52,7 @@
         android:layout_marginStart="65dp"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="241dp"
-        android:backgroundTint="#D66060"
+        android:backgroundTint="@color/salmonRed"
         android:text="@string/spielen"
         android:textSize="14sp"
         android:tooltipText="@string/startet_neues_spiel"
@@ -68,7 +68,7 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="81dp"
-        android:backgroundTint="#00897B"
+        android:backgroundTint="@color/smaragdGreen"
         android:text="@string/spiel_erstellen"
         android:textSize="14sp"
         android:tooltipText="@string/eigenes_spiel_erstellen"
@@ -85,7 +85,7 @@
 
         android:layout_marginTop="15dp"
         android:layout_marginEnd="159dp"
-        android:backgroundTint="#FFFA96"
+        android:backgroundTint="@color/lightYellow"
         android:text="@string/spielanleitung"
         android:textColor="@color/black"
         android:textSize="14sp"
@@ -109,7 +109,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_baseline_emoji_events_24"
-        app:tint="#FFEB3B" />
+        app:tint="@color/yellow" />
 
     <ImageButton
         android:id="@+id/settingsButton"

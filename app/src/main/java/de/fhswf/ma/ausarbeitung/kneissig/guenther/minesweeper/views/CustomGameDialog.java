@@ -2,7 +2,6 @@ package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,15 +19,12 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Objects;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperApplication;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities.GameActivity;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.MinesweeperDatabase;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.CustomGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 
 
 public class CustomGameDialog extends AppCompatDialogFragment {
@@ -228,7 +224,7 @@ public class CustomGameDialog extends AppCompatDialogFragment {
                 customGame.setWidth(widthTextInput.getText().toString());
                 customGame.setMines(numberOfMinesInput.getText().toString());
 
-                application.setCustomGame(customGame);
+                application.updateCustomGame(customGame);
 
                 //dadurch wird das Level auch in der Datenbank gespeichert, da der Listener greift
                 horizontalStringPicker.setValue(getString(R.string.level_benutzedefiniert));

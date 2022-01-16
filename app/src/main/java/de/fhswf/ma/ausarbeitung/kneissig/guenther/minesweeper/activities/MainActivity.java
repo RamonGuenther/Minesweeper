@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -18,19 +17,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.MinesweeperApplication;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.MinesweeperDatabase;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.CustomGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.Settings;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.CustomGameDialog;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.HorizontalStringPicker;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.LevelHorizontalStringPicker;
 
 
@@ -70,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 settings.setDarkMode(false);
             }
-            application.setSettings(settings);
+            application.updateSettings(settings);
             Log.e("APFEL", "DB Instanz erstellt");
 
         });
@@ -101,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         customGame = application.getCustomGame();
 
 
-        horizontalStringPicker = (LevelHorizontalStringPicker) findViewById(R.id.horizontalStringPicker);
+        horizontalStringPicker = findViewById(R.id.horizontalStringPicker);
         horizontalStringPicker.getTextView().addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -117,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 String level = horizontalStringPicker.getValue();
                 MinesweeperGame.getInstance().getGameSettings().setLevel(level);
                 settings.setLastLevel(level);
-                application.setSettings(settings);
+                application.updateSettings(settings);
 
                 if (level.equals(getString(R.string.level_benutzedefiniert))){
                     MinesweeperGame.getInstance().getGameSettings().setCustomBoardValues(

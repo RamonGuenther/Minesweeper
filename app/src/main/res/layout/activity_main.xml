@@ -54,7 +54,7 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="81dp"
-        android:backgroundTint="#D66060"
+        android:backgroundTint="@color/salmonRed"
         android:text="@string/spielen"
         android:textSize="14sp"
         android:tooltipText="@string/startet_neues_spiel"
@@ -68,14 +68,15 @@
         android:layout_width="250dp"
         android:layout_height="75dp"
         android:layout_marginStart="80dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="81dp"
-        android:backgroundTint="#00897B"
+        android:backgroundTint="@color/smaragdGreen"
         android:text="@string/spiel_erstellen"
         android:textSize="14sp"
         android:tooltipText="@string/eigenes_spiel_erstellen"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
@@ -87,7 +88,7 @@
 
         android:layout_marginTop="20dp"
         android:layout_marginEnd="159dp"
-        android:backgroundTint="#FFFA96"
+        android:backgroundTint="@color/lightYellow"
         android:text="@string/spielanleitung"
         android:textColor="@color/black"
         android:textSize="14sp"
@@ -110,7 +111,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_baseline_emoji_events_24"
-        app:tint="#FFEB3B" />
+        app:tint="@color/yellow" />
 
     <ImageButton
         android:id="@+id/settingsButton"

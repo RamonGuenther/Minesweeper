@@ -20,7 +20,11 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameRe
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 
 /**
- * TODO HIGHSCORE INSERT LÖSCHEN
+ * Die Klasse MinesweeperApplication überschreibt die Methode onCreate um beim Starten
+ * der Applikation die Spieleinstellungen aus der Datenbank zu laden. Außerdem wird sie benutzt
+ * um die Datenbank mithilfe zugehöriger Methoden global verfügbar zu machen.
+ *
+ * @author Ramon Günther
  */
 public class MinesweeperApplication extends Application {
 
@@ -30,7 +34,6 @@ public class MinesweeperApplication extends Application {
     private CustomGame customGame;
 
     private MinesweeperDatabase db;
-
 
     @Override
     public void onCreate() {
@@ -82,27 +85,61 @@ public class MinesweeperApplication extends Application {
 
     }
 
+
+    /**
+     * Holt das aktuelle Einstellungsobjekt aus der Datenbank, und
+     * gibt dieses zurück.
+     *
+     * @return  Die gespeicherten Einstellungen des Nutzers
+     */
     public Settings getSettings() {
         return settings;
     }
 
-    public CustomGame getCustomGame() {
-        return customGame;
-    }
-
-    public void setSettings(Settings settings) {
+    /**
+     * Aktualisiert die Einstellungen in der Datenbank.
+     *
+     * @param settings Aktualisierte Einstellungen
+     */
+    public void updateSettings(Settings settings) {
         this.settings = settings;
         db.settingsDao().update(settings);
         Log.i(TAG, "Einstellungen wurden gespeichert");
     }
 
-    public void setCustomGame(CustomGame customGame) {
+
+    /**
+     * Holt die zuletzt definierten Einstellungen für ein benutzerdefiniertes Spiel
+     * aus der Datenbank, und gibt diese zurück.
+     *
+     * @return  CustomGame Objekt
+     */
+    public CustomGame getCustomGame() {
+        return customGame;
+    }
+
+    /**
+     * Aktualisiert die Einstellungen des benutzerdefinierten Spiels
+     * des Nutzers.
+     *
+     * @param customGame Aktualisierte Einstellungen
+     */
+    public void updateCustomGame(CustomGame customGame) {
         this.customGame = customGame;
         db.customGameDao().update(customGame);
         Log.i(TAG, "Benutzerdefiniertes Spiel wurde gespeichert");
     }
 
 
+    /**
+     *
+     *
+     * @param playedTime
+     * @param level
+     * @param gameResult
+     * @param minesLeft
+     * @param fieldSize
+     */
     public void createGameSummaryItem(int playedTime, Level level, GameResult gameResult, String minesLeft, String fieldSize) {
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(new Locale("de"));
         String gamePlayedOn = LocalDateTime.now().format(formatter);
@@ -111,6 +148,10 @@ public class MinesweeperApplication extends Application {
         Log.i(TAG, "Spielzusammenfassung wurde gespeichert");
     }
 
+    /**
+     *
+     * @return
+     */
     public List<GameSummary> getMatchHistory() {
         long startTime = System.currentTimeMillis();
         List<GameSummary> gameSummaryList = db.gameSummaryDao().getAllGameSummariesDesc();
@@ -120,6 +161,11 @@ public class MinesweeperApplication extends Application {
         return gameSummaryList;
     }
 
+    /**
+     *
+     * @param level
+     * @return
+     */
     public List<GameSummary> getHighScoreListByLevel(String level) {
         long startTime = System.currentTimeMillis();
         List<GameSummary> gameSummaryList = db.gameSummaryDao().getGameSummaryByGameResultAndLevel(GameResult.WON.label, level);
@@ -129,6 +175,9 @@ public class MinesweeperApplication extends Application {
         return gameSummaryList;
     }
 
+    /**
+     *
+     */
     public void deleteAllGameSummaries() {
         db.gameSummaryDao().deleteAll(db.gameSummaryDao().getAllGameSummariesDesc());
         Log.i(TAG, "Spielzusammenfassungen wurden gelöscht");

@@ -187,7 +187,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        application.setSettings(settings);
+        application.updateSettings(settings);
     }
 
     public void initThemeList() {
