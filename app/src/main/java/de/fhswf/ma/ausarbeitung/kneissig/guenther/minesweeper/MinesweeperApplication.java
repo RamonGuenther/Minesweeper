@@ -132,13 +132,14 @@ public class MinesweeperApplication extends Application {
 
 
     /**
+     * Speichert die Informationen eines abgeschlossenen Spiels (Gewonnen/Veloren) in der
+     * Datenbank, um sie in den Spielstatistiken zur Verfügung zu stellen.
      *
-     *
-     * @param playedTime
-     * @param level
-     * @param gameResult
-     * @param minesLeft
-     * @param fieldSize
+     * @param playedTime      Zeit die vergangen ist bis zum Beenden des Spiels
+     * @param level           Eingestellter Schwierigkeitsgrad
+     * @param gameResult      Spielergebnis
+     * @param minesLeft       Offen gebliebene Minen
+     * @param fieldSize       Spielfeldgröße
      */
     public void createGameSummaryItem(int playedTime, Level level, GameResult gameResult, String minesLeft, String fieldSize) {
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(new Locale("de"));
@@ -149,8 +150,10 @@ public class MinesweeperApplication extends Application {
     }
 
     /**
+     * Holt alle gespeicherten Spiele, unabhägig vom Schwierigkeitsgrad und Spielresultat, aus der
+     * Datenbank und gibt diese als Liste zurück.
      *
-     * @return
+     * @return Liste aller gespielten Spiele in absteigender Sortierung
      */
     public List<GameSummary> getMatchHistory() {
         long startTime = System.currentTimeMillis();
@@ -162,9 +165,12 @@ public class MinesweeperApplication extends Application {
     }
 
     /**
+     * Holt alle gewonnenen Spiele mit dem gesuchten Schwierigkeitsgrad aus der Datenbank und
+     * gibt diese als Liste zurück.
      *
-     * @param level
-     * @return
+     * @param level Schwierigkeitsgrad der Spiele
+     *
+     * @return Liste aller gewonnenen Spiele mit angegebenen Schwierigekeitsgrad
      */
     public List<GameSummary> getHighScoreListByLevel(String level) {
         long startTime = System.currentTimeMillis();
@@ -176,7 +182,7 @@ public class MinesweeperApplication extends Application {
     }
 
     /**
-     *
+     * Löscht alle gesammelten Spielstatistiken des Nutzers.
      */
     public void deleteAllGameSummaries() {
         db.gameSummaryDao().deleteAll(db.gameSummaryDao().getAllGameSummariesDesc());

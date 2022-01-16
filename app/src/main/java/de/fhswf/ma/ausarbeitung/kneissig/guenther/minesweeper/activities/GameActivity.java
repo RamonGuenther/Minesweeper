@@ -33,8 +33,6 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.Field;
 public class GameActivity extends AppCompatActivity implements MinesweeperCallback, GameVibrationsCallback
 {
     IconSwitch gameMode;
-    TextView flagMode;
-    TextView mineMode;
 
     TextView mineCounter;
     TextView timer;
@@ -65,9 +63,6 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
                     break;
             }
         });
-
-        mineMode = findViewById(R.id.gameView_mineMode);
-        flagMode = findViewById(R.id.gameView_flagMode);
 
         // Button zum Zurücksetzen des Spiels
         ImageButton resetButton = findViewById(R.id.gameView_resetGame);
