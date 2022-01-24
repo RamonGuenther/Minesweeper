@@ -15,7 +15,12 @@ import java.util.List;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 
-//Statt counter , nur mit Index machen
+/**
+ * Die Klasse HorizontalStringPicker ist eine selbstgeschriebene Komponente, die ein
+ * horizontales Select mit Strings als Elemente, implementiert.
+ *
+ * @author Ramon Günther
+ */
 public class HorizontalStringPicker extends ConstraintLayout {
 
     private final TextView textView;
@@ -24,6 +29,12 @@ public class HorizontalStringPicker extends ConstraintLayout {
     private final ImageButton imageButtonRight;
     private final ImageButton imageButtonLeft;
 
+    /**
+     * Der Konstruktor erzeugt die Click-Listener für die Buttons der Komponente.
+     *
+     * @param context Context
+     * @param attrs AttributeSet
+     */
     public HorizontalStringPicker(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         inflate(context, R.layout.horizontal_string_picker, this);
@@ -44,9 +55,11 @@ public class HorizontalStringPicker extends ConstraintLayout {
                 imageButtonRight.setVisibility(VISIBLE);
             }
             counter--;
-            RunAnimationRight();
             textView.setText(itemList.get(counter));
-            RunAnimationRight();
+
+            Animation a = AnimationUtils.loadAnimation(this.getContext(), R.anim.slide_in_left);
+            textView.startAnimation(a);
+
             if (counter <= 0) {
                 imageButtonLeft.setVisibility(INVISIBLE);
             }
@@ -61,9 +74,12 @@ public class HorizontalStringPicker extends ConstraintLayout {
                 imageButtonLeft.setVisibility(VISIBLE);
             }
             counter++;
-            RunAnimationLeft();
+
             textView.setText(itemList.get(counter));
-            RunAnimationLeft();
+
+            Animation a = AnimationUtils.loadAnimation(this.getContext(), R.anim.slide_in_right);
+            textView.startAnimation(a);
+
             if (counter == itemList.size() - 1) {
                 imageButtonRight.setVisibility(INVISIBLE);
             }
@@ -71,37 +87,13 @@ public class HorizontalStringPicker extends ConstraintLayout {
 
     }
 
-    private void RunAnimationRight() {
-        Animation a = AnimationUtils.loadAnimation(this.getContext(), R.anim.slide_in_left);
-        a.reset();
-        textView.clearAnimation();
-        textView.startAnimation(a);
-    }
-
-    private void RunAnimationLeft() {
-        Animation a = AnimationUtils.loadAnimation(this.getContext(), R.anim.slide_in_right);
-        a.reset();
-        textView.clearAnimation();
-        textView.startAnimation(a);
-    }
-
-    public List<String> getItemList() {
-        return itemList;
-    }
-
-    public void setCounter(int counter) {
-        this.counter = counter;
-    }
-
-    public void setItems(List<String> stringList) {
-        this.itemList = stringList;
-    }
-
-    public String getValue() {
-        return textView.getText().toString();
-    }
-
+    /**
+     * Methode, um den angezeigten Wert des StringPicker manuell zu setzen.
+     *
+     * @param item String den der StringPicker setzen soll
+     */
     public void setValue(String item) {
+
         counter = findIdByLevel(item);
 
         if (counter <= 0) {
@@ -117,7 +109,14 @@ public class HorizontalStringPicker extends ConstraintLayout {
         textView.setText(itemList.get(counter));
     }
 
-    public int findIdByLevel(String item) {
+    /**
+     * Findet den Index eines gesuchten Strings in der Item Liste des
+     * StringPickers.
+     *
+     * @param item gesuchter String
+     * @return Index des gesuchten Items
+     */
+    private int findIdByLevel(String item) {
         for (int i = 0; i < itemList.size(); i++) {
             if (itemList.get(i).contains(item)) {
                 return i;
@@ -126,15 +125,22 @@ public class HorizontalStringPicker extends ConstraintLayout {
         return 0;
     }
 
-    public ImageButton getImageButtonRight() {
-        return imageButtonRight;
+    public List<String> getItemList() {
+        return itemList;
     }
 
-    public ImageButton getImageButtonLeft() {
-        return imageButtonLeft;
+    public void setItems(List<String> stringList) {
+        this.itemList = stringList;
     }
+
 
     public TextView getTextView() {
         return textView;
     }
+
+
+    public String getValue() {
+        return textView.getText().toString();
+    }
+
 }

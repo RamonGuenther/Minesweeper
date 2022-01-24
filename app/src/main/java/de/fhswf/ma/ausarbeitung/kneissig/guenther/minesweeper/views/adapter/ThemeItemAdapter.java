@@ -1,7 +1,6 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.adapter;
 
 import android.content.Context;
-import android.hardware.lights.LightState;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +12,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 
 /**
- * Noch verstehen und nachvollziehen
+ * Die Klasse ThemeItemAdapter implementiert den Adapter für den Spinner
+ * aus der SettingsActivity.
+ *
+ * @author Ramon Günther
  */
 public class ThemeItemAdapter extends ArrayAdapter<ThemeItem> {
 
-    public ThemeItemAdapter(Context context, List<ThemeItem> countryList) {
-        super(context, 0, countryList);
+    /**
+     * Der Konstruktor übergibt den Kontext und die Liste der Items an
+     * die Oberklasse ArrayAdapter.
+     *
+     * @param context       Kontext
+     * @param themeItemList Liste von ThemeItems
+     */
+    public ThemeItemAdapter(Context context, List<ThemeItem> themeItemList) {
+        super(context, R.layout.select_list_item, themeItemList);
     }
 
     @Override
@@ -38,14 +46,15 @@ public class ThemeItemAdapter extends ArrayAdapter<ThemeItem> {
     }
 
     private View initView(int position, View convertView, ViewGroup parent) {
+
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(
                     R.layout.select_list_item, parent, false
             );
         }
 
-        ImageView imageViewFlag = convertView.findViewById(R.id.image_view_flag);
-        TextView textViewName = convertView.findViewById(R.id.text_view_name);
+        ImageView imageViewFlag = convertView.findViewById(R.id.themeImageView);
+        TextView textViewName = convertView.findViewById(R.id.themeNameTextView);
 
         ThemeItem currentItem = getItem(position);
 

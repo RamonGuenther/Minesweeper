@@ -14,18 +14,25 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.GameSummary;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.Settings;
 
+/**
+ * Die abstrakte Klasse MineSweeperDatabase definiert die Datenbankkonfiguration und dient als
+ * Hauptzugriffspunkt auf die persistenten Daten.
+ *
+ * @author Ramon Günther
+ */
 @Database(entities = {Settings.class, GameSummary.class, CustomGame.class}, version = 1, exportSchema = false)
 public abstract class MinesweeperDatabase extends RoomDatabase {
+
     private static final String DB_NAME = "MinesweeperDatabase";
 
     public static MinesweeperDatabase createDatabase(Context context) {
-        Log.e("DB", "DB Instanz erstellt´lel");
+        Log.i(DB_NAME, "Datenbank Instanz erstellt");
 
         return Room.databaseBuilder(
                 context,
                 MinesweeperDatabase.class,
                 DB_NAME)
-                .allowMainThreadQueries() //Da unsere Datenbank klein ist und eine geringe Anzahl an einfachen Queries nur vorhanden sind ist es ok ihn auf dem UI Thread zu lassen?
+                .allowMainThreadQueries()
                 .build();
     }
 
@@ -34,7 +41,6 @@ public abstract class MinesweeperDatabase extends RoomDatabase {
     public abstract GameSummaryDao gameSummaryDao();
 
     public abstract CustomGameDao customGameDao();
-
 
 }
 

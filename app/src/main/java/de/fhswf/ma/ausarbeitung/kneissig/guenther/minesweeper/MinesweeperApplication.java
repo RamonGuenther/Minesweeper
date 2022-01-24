@@ -38,6 +38,7 @@ public class MinesweeperApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         db = MinesweeperDatabase.createDatabase(this);
 
         settings = db.settingsDao().getSettings();
@@ -47,18 +48,6 @@ public class MinesweeperApplication extends Application {
             settings = new Settings();
             db.settingsDao().insert(settings);
         }
-
-
-        //TODO: Laufzeittest machen für Ausarbeitung
-//        int i = 0;
-//        while (i < 2000) {
-//            createGameSummaryItem((int) Math.floor(Math.random() * (999 - 1 + 1) + 1), Level.BEGINNER, GameResult.WON, "10/10", "8 x 8");
-//            createGameSummaryItem((int) Math.floor(Math.random() * (999 - 1 + 1) + 1), Level.ADVANCED, GameResult.WON, "10/10", "8 x 8");
-//            createGameSummaryItem((int) Math.floor(Math.random() * (999 - 1 + 1) + 1), Level.PROFESSIONAL, GameResult.WON, "10/10", "8 x 8");
-//
-//            i++;
-//        }
-
 
         MinesweeperGame.getInstance().getGameSettings().setTheme(settings.getTheme());
         MinesweeperGame.getInstance().getGameSettings().setVibration(settings.isVibration());
@@ -156,12 +145,7 @@ public class MinesweeperApplication extends Application {
      * @return Liste aller gespielten Spiele in absteigender Sortierung
      */
     public List<GameSummary> getMatchHistory() {
-        long startTime = System.currentTimeMillis();
-        List<GameSummary> gameSummaryList = db.gameSummaryDao().getAllGameSummariesDesc();
-        long endTime = System.currentTimeMillis();
-        double result = (endTime - startTime)/1000.0;
-        Log.e("getMatchHistory", "Die Operation hat " + result + " Sekunden gedauert");
-        return gameSummaryList;
+        return db.gameSummaryDao().getAllGameSummariesDesc();
     }
 
     /**
@@ -173,12 +157,7 @@ public class MinesweeperApplication extends Application {
      * @return Liste aller gewonnenen Spiele mit angegebenen Schwierigekeitsgrad
      */
     public List<GameSummary> getHighScoreListByLevel(String level) {
-        long startTime = System.currentTimeMillis();
-        List<GameSummary> gameSummaryList = db.gameSummaryDao().getGameSummaryByGameResultAndLevel(GameResult.WON.label, level);
-        long endTime = System.currentTimeMillis();
-        double result = (endTime - startTime)/1000.0;
-        Log.e("getHighScoreListByLevel", "Die Operation hat " + result + " Sekunden gedauert");
-        return gameSummaryList;
+        return db.gameSummaryDao().getGameSummaryByGameResultAndLevel(GameResult.WON.label, level);
     }
 
     /**

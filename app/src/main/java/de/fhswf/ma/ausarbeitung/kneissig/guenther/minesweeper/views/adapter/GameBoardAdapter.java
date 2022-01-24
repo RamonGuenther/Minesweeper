@@ -48,9 +48,4 @@ public class GameBoardAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return 0;
     }
-
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
-    }
 }

@@ -12,21 +12,36 @@ import java.util.List;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 
+/**
+ * Die Klasse LevelHorizontalStringPicker erweitert die Klasse {@link HorizontalStringPicker}
+ * um die Eigenschaft sowohl mit deutscher und englischer Sprache zu funktionieren.
+ *
+ * @author Ramon Günther
+ */
 public class LevelHorizontalStringPicker extends HorizontalStringPicker {
 
-    private Context context;
+    private final Context context;
 
+    /**
+     * Der Konstruktor erstellt die Elemente des Level-Picker
+     *
+     * @param context Context
+     * @param attrs AttributeSet
+     */
     public LevelHorizontalStringPicker(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
 
         setItems(createLevelList());
-
     }
 
+    /**
+     * Erstellt die Elemente des Level-Pickers, je nach eingestellter Sprache (Deutsch, Englisch)
+     *
+     * @return Liste der Elemente des Level-Pickers
+     */
     private List<String> createLevelList() {
         List<String> items = new ArrayList<>();
-//        Arrays.asList(Level.values()).forEach(e -> items.add(e.label));
 
         for (int i = 0; i < Level.values().length; i++) {
             switch (Level.values()[i]) {

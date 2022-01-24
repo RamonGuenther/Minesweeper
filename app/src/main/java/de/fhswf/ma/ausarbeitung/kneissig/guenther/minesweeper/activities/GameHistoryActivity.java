@@ -36,17 +36,17 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.LevelHorizon
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.adapter.GameHistoryAdapter;
 
 /**
- * Swipen geht nur auf dem wirklichen Hintergrund
+ * Die Klasse GameHistoryActivity bildet die Aktivität für die Darstellung der Spielstatistiken
+ * der abgeschlossenen Spiele.
+ *
+ * @author Ramon Günther
  */
 public class GameHistoryActivity extends AppCompatActivity {
 
-    //Brücke Highscore und der Recyclerview
     private RecyclerView.Adapter<GameHistoryAdapter.GameHistoryViewHolder> adapter;
 
     private List<GameSummary> gameSummaryItemList;
-    private MinesweeperDatabase db;
     private TextView noGameDataTextview;
-    private TextView titleHighscoreTextView;
     private MinesweeperApplication application;
 
 
@@ -74,9 +74,7 @@ public class GameHistoryActivity extends AppCompatActivity {
 
         ImageButton imageButton = findViewById(R.id.button2);
 
-        imageButton.setOnClickListener(e -> {
-            finish();
-        });
+        imageButton.setOnClickListener(e -> finish());
 
 
         LevelHorizontalStringPicker horizontalStringPicker = findViewById(R.id.horizontalStringPicker2);
@@ -106,18 +104,19 @@ public class GameHistoryActivity extends AppCompatActivity {
         gameSummaryItemList = application.getHighScoreListByLevel(Level.BEGINNER.label);
         noGameDataTextview.setVisibility(gameSummaryItemList.isEmpty() ? View.VISIBLE : View.GONE);
 
-        //Highscore_item
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        recyclerView.setHasFixedSize(true); //wenn die Größe sich nicht ändern steigert performance aber nochmal googeln
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+
         adapter = new GameHistoryAdapter(gameSummaryItemList);
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
 
-        titleHighscoreTextView = findViewById(R.id.titleHighscore);
+        TextView titleHighScoreTextView = findViewById(R.id.titleHighscore);
 
         ImageView logo = findViewById(R.id.gameLogoGameHistory);
 
@@ -132,18 +131,21 @@ public class GameHistoryActivity extends AppCompatActivity {
                     }
                     horizontalStringPicker.setVisibility(View.VISIBLE);
                     refreshData(horizontalStringPicker.getValue());
-                    titleHighscoreTextView.setText(getString(R.string.highscores));
+                    titleHighScoreTextView.setText(getString(R.string.highscores));
 
                 } else if (tabLayout.getSelectedTabPosition() == 1) {
                     if (logo != null) {
                         logo.setVisibility(View.VISIBLE);
                     }
-                    titleHighscoreTextView.setText(getString(R.string.spielverlauf));
+                    titleHighScoreTextView.setText(getString(R.string.spielverlauf));
                     horizontalStringPicker.setVisibility(View.GONE);
+
                     List<GameSummary> newGameSummaryItemList = application.getMatchHistory();
                     noGameDataTextview.setVisibility(newGameSummaryItemList.isEmpty() ? View.VISIBLE : View.GONE);
+
                     gameSummaryItemList.clear();
                     gameSummaryItemList.addAll(newGameSummaryItemList);
+
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -158,11 +160,22 @@ public class GameHistoryActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, R.anim.slide_out_left);
+    }
 
+    /**
+     * Beim Ändern des gesetzten Items des Level-Pickers, verändert diese Methode
+     * die angezeigten Daten.
+     *
+     * @param item String des aktuellen Items
+     */
     @SuppressLint("NotifyDataSetChanged")
-    private void refreshData(String value) {
+    private void refreshData(String item) {
         String level = null;
-        switch (value) {
+        switch (item) {
             case "Anfänger":
             case "Beginner":
                 level = Level.BEGINNER.label;
@@ -181,11 +194,5 @@ public class GameHistoryActivity extends AppCompatActivity {
         gameSummaryItemList.clear();
         gameSummaryItemList.addAll(newGameSummaryItemList);
         adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

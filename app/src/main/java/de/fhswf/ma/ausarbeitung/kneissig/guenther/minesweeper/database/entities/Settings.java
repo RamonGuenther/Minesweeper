@@ -7,6 +7,11 @@ import androidx.room.PrimaryKey;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Theme;
 
+/**
+ * Die Klasse Settings, speichert die gesetzten Einstellungen der Applikation.
+ *
+ * @author Ramon Günther
+ */
 @Entity
 public class Settings {
     @PrimaryKey

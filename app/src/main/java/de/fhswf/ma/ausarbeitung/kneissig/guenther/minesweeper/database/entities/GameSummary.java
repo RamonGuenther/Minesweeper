@@ -7,6 +7,11 @@ import androidx.room.PrimaryKey;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameResult;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.Level;
 
+/**
+ * Die Klasse GameSummary speichert das Spielergebnis eines Spiel.
+ *
+ * @author Ramon Günther
+ */
 @Entity
 public class GameSummary {
 

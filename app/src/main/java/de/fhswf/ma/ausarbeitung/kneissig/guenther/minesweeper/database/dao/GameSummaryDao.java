@@ -4,14 +4,19 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import java.util.List;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.GameSummary;
 
+/**
+ * Die Klasse GameSummaryDao definiert die Datenbankoperatonen für die Klasse {@link GameSummary}.
+ *
+ * @author Ramon Günther
+ */
 @Dao
 public interface GameSummaryDao {
+
     @Query("select * from GameSummary order by id desc")
     List<GameSummary> getAllGameSummariesDesc();
 

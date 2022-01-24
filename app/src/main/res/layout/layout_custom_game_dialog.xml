@@ -9,10 +9,10 @@
 
     <TextView
         android:id="@+id/minesPercentTextView"
-        android:layout_width="52dp"
+        android:layout_width="60dp"
         android:layout_height="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="239dp"
+        android:layout_marginEnd="231dp"
         android:gravity="center_vertical"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"

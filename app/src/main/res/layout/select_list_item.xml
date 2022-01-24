@@ -6,7 +6,7 @@
     android:layout_height="50dp">
 
     <ImageView
-        android:id="@+id/image_view_flag"
+        android:id="@+id/themeImageView"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="26dp"
@@ -18,21 +18,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text_view_name"
+        android:id="@+id/themeNameTextView"
         android:layout_width="100dp"
         android:layout_height="30dp"
-        android:layout_alignBottom="@+id/image_view_flag"
+        android:layout_alignBottom="@+id/themeImageView"
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_toEndOf="@+id/image_view_flag"
+        android:layout_toEndOf="@+id/themeImageView"
         android:gravity="center_vertical"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
-        android:text="Blau"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/image_view_flag"
+        app:layout_constraintStart_toEndOf="@+id/themeImageView"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

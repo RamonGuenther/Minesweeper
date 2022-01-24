@@ -31,6 +31,11 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.adapter.Them
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.adapter.ThemeItem;
 
 
+/**
+ * Die Klasse SettingsActivity bildet die Aktivität für die Einstellungen der Applikation.
+ *
+ * @author Ramon Günther
+ */
 public class SettingsActivity extends AppCompatActivity {
 
     private List<ThemeItem> themeItemList;
@@ -53,6 +58,21 @@ public class SettingsActivity extends AppCompatActivity {
                 .position(SlidrPosition.LEFT)
                 .build());
 
+
+        Spinner spinner = findViewById(R.id.spinner);
+        initThemeList();
+        ThemeItemAdapter adapter = new ThemeItemAdapter(this, themeItemList);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ThemeItem theme = (ThemeItem) parent.getItemAtPosition(position);
+                settings.setTheme(theme.getThemeName());
+                MinesweeperGame.getInstance().getGameSettings().setTheme(theme.getThemeName());
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         SwitchMaterial vibrationSwitch = findViewById(R.id.vibrationSwitch);
         vibrationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -102,21 +122,6 @@ public class SettingsActivity extends AppCompatActivity {
             settings.setShowHints(isChecked);
         });
 
-        Spinner spinner = findViewById(R.id.spinner);
-        initThemeList();
-        ThemeItemAdapter adapter = new ThemeItemAdapter(this, themeItemList);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ThemeItem theme = (ThemeItem) parent.getItemAtPosition(position);
-                settings.setTheme(theme.getThemeName());
-                MinesweeperGame.getInstance().getGameSettings().setTheme(theme.getThemeName());
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
 
         ImageButton button = findViewById(R.id.backButton);
         button.setOnClickListener(e -> finish());
@@ -163,6 +168,32 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, R.anim.slide_out_right);
+        if(!settings.isUseFlags()){
+            MinesweeperGame.getInstance().removeFlagsAndQuestionMarks();
+        }
+    }
+
+    /**
+     * Die Methode onDestroy wurde überschrieben, damit die Einstellungen nur einmalig gespeichert
+     * werden und nicht bei jeder Änderung der Einstellungen.
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        application.updateSettings(settings);
+    }
+
+
+    /**
+     * Sucht das gesuchte Theme und gibt den Index aus der themeItemList zurück.
+     *
+     * @param theme gesuchtes Theme
+     * @return Index des gesuchten Themes in der themeItemList
+     */
     private int getThemeIndex(String theme) {
         for (int i = 0; i < themeItemList.size(); i++) {
             if (themeItemList.get(i).getThemeName().contains(theme)) {
@@ -172,24 +203,9 @@ public class SettingsActivity extends AppCompatActivity {
         return 0;
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.slide_down, R.anim.slide_out_right);
-        if(!settings.isUseFlags()){
-            MinesweeperGame.getInstance().removeFlagsAndQuestionMarks();
-        }
-    }
-
     /**
-     * Damit die Einstellungen gespeichert sind beim Navigieren zu einer anderen App & beim zerstören der Activity
+     * Initialisiert eine Liste bestehend aus ThemeItem Objekten für den Spinner.
      */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        application.updateSettings(settings);
-    }
-
     public void initThemeList() {
         themeItemList = new ArrayList<>();
         themeItemList.add(new ThemeItem(getString(R.string.bordeaux), R.drawable.theme_bordeaux_empty));

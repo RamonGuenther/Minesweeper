@@ -4,6 +4,12 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Die Klasse CustomGame speichert die Einstellungen zu einem Benutzerdefinierten
+ * Spiel.
+ *
+ * @author Ramon Günther
+ */
 @Entity
 public class CustomGame {
 

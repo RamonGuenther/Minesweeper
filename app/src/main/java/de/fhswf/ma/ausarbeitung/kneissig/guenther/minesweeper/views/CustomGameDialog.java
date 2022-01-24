@@ -1,5 +1,6 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -27,32 +29,53 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.database.entities.
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 
 
+/**
+ * Die Klasse CustomGameDialog erzeugt einen Dialog der für das Erstellen
+ * eines Benutzerdefinierten Spiels angezeigt wird.
+ *
+ * @author Ramon Günther
+ */
 public class CustomGameDialog extends AppCompatDialogFragment {
+
     private EditText numberOfMinesInput;
     private EditText widthTextInput;
     private EditText heightTextInput;
-    private int fields;
-    private int maxMines;
+
     private TextView minesPercentTextView;
     private TextInputLayout widthTextInputLayout;
     private TextInputLayout heightTextInputLayout;
     private TextInputLayout mineQuantityTextInputLayout;
 
+    private CustomGame customGame;
+    private LevelHorizontalStringPicker horizontalStringPicker;
+
     private boolean checkWidth;
     private boolean checkHeight;
     private boolean checkNumberOfMines;
-    private CustomGame customGame;
-    private HorizontalStringPicker horizontalStringPicker;
+
+    private int fields;
+    private int maxMines;
 
 
+    /**
+     * Der Konstruktor wird beim ersten öffnen des Dialogs ausgelöst.
+     *
+     * @param horizontalStringPicker Level-Picker aus dem Hauptmenü
+     */
+    public CustomGameDialog(LevelHorizontalStringPicker horizontalStringPicker) {
+        this.horizontalStringPicker = horizontalStringPicker;
+    }
+
+
+    /**
+     * Der Default Konstruktor dient wird nur aufgerufen, wenn der Bildschirm beim geöffneten
+     * Dialog gedreht wird.
+     */
     public CustomGameDialog() {
 
     }
 
-    public CustomGameDialog(HorizontalStringPicker horizontalStringPicker) {
-        this.horizontalStringPicker = horizontalStringPicker;
-    }
-
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -61,11 +84,12 @@ public class CustomGameDialog extends AppCompatDialogFragment {
         View view = inflater.inflate(R.layout.layout_custom_game_dialog, null);
 
         widthTextInput = view.findViewById(R.id.widthTextInput);
-        heightTextInput = view.findViewById(R.id.heightTextInput);
-        numberOfMinesInput = view.findViewById(R.id.mineQuantityTextInput);
-
         widthTextInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        heightTextInput = view.findViewById(R.id.heightTextInput);
         heightTextInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        numberOfMinesInput = view.findViewById(R.id.mineQuantityTextInput);
         numberOfMinesInput.setInputType(InputType.TYPE_CLASS_NUMBER);
 
         widthTextInputLayout = view.findViewById(R.id.widthTextInputLayout);
@@ -80,17 +104,62 @@ public class CustomGameDialog extends AppCompatDialogFragment {
         minesPercentTextView = view.findViewById(R.id.minesPercentTextView);
         minesPercentTextView.setText("0%");
 
-
         numberOfMinesInput.setEnabled(false);
         mineQuantityTextInputLayout.setHelperText(getString(R.string.mine_helper_text_1));
 
+        //Listener für die Breite
+        widthTextInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) { //TODO Wahrscheinlich kann man widt und height auslagern in Funktion oder so
+                if (widthTextInput.getText().toString().isEmpty() || heightTextInput.getText().toString().isEmpty()) {
+                    numberOfMinesInput.setEnabled(false);
+                    numberOfMinesInput.setText("");
+                    mineQuantityTextInputLayout.setHelperText(getString(R.string.mine_helper_text_1));
+                }
+
+                if (widthTextInput.getText().toString().isEmpty()) {
+                    widthTextInputLayout.setEndIconVisible(false);
+                    checkWidth = false;
+                    return;
+                }
+
+                int widthValue = Integer.parseInt(widthTextInput.getText().toString());
+
+                if (widthValue < 4 || widthValue > 16) {
+                    widthTextInputLayout.setError(getString(R.string.width_error_text));
+                    checkWidth = false;
+
+                    numberOfMinesInput.setEnabled(false);
+                    numberOfMinesInput.setText("");
+                    mineQuantityTextInputLayout.setHelperText(getString(R.string.mine_helper_text_1));
+                    return;
+                } else {
+                    checkWidth = true;
+                    widthTextInputLayout.setError(null);
+                    widthTextInputLayout.setEndIconVisible(true);
+                }
+
+                activateNumberOfMinesEditText();
+            }
+        });
+
+        //Listener für die Höhe
         heightTextInput.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -107,9 +176,14 @@ public class CustomGameDialog extends AppCompatDialogFragment {
                 }
 
                 int heightValue = Integer.parseInt(heightTextInput.getText().toString());
+
                 if (heightValue < 4 || heightValue > 100) {
                     heightTextInputLayout.setError(getString(R.string.height_error_text));
                     checkHeight = false;
+
+                    numberOfMinesInput.setEnabled(false);
+                    numberOfMinesInput.setText("");
+                    mineQuantityTextInputLayout.setHelperText(getString(R.string.mine_helper_text_1));
                     return;
                 } else {
                     checkHeight = true;
@@ -117,55 +191,11 @@ public class CustomGameDialog extends AppCompatDialogFragment {
                     heightTextInputLayout.setEndIconVisible(true);
                 }
 
-                activateNumberOfMinesInput();
+                activateNumberOfMinesEditText();
             }
         });
 
-
-        widthTextInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                activateNumberOfMinesInput();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (widthTextInput.getText().toString().isEmpty() || heightTextInput.getText().toString().isEmpty()) {
-                    numberOfMinesInput.setEnabled(false);
-                    numberOfMinesInput.setText("");
-                    mineQuantityTextInputLayout.setHelperText(getString(R.string.mine_helper_text_1));
-                }
-
-                if (widthTextInput.getText().toString().isEmpty()) {
-                    checkWidth = false;
-                    widthTextInputLayout.setEndIconVisible(false);
-                    return;
-                }
-
-                int widthValue = Integer.parseInt(widthTextInput.getText().toString());
-
-                if (widthValue < 4 || widthValue > 16) {
-                    widthTextInputLayout.setError(getString(R.string.width_error_text));
-                    checkWidth = false;
-                    return;
-                } else {
-                    checkWidth = true;
-                    widthTextInputLayout.setError(null);
-                    widthTextInputLayout.setEndIconVisible(true);
-                }
-
-
-                if (checkHeight && checkWidth) {
-                    numberOfMinesInput.setEnabled(true);
-                    activateNumberOfMinesInput();
-                }
-            }
-        });
-
+        //Listener für die Minenanzahl
         numberOfMinesInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -173,9 +203,9 @@ public class CustomGameDialog extends AppCompatDialogFragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable editable) {
                 if (numberOfMinesInput.getText().toString().isEmpty()) {
@@ -196,18 +226,17 @@ public class CustomGameDialog extends AppCompatDialogFragment {
                 mineQuantityTextInputLayout.setEndIconVisible(true);
                 mineQuantityTextInputLayout.setError(null);
 
-                int width = Integer.parseInt(widthTextInput.getText().toString());
-                int height = Integer.parseInt(heightTextInput.getText().toString());
-                fields = width * height;
+                int currentMineCount = Integer.parseInt(numberOfMinesInput.getText().toString());
 
-                int mines = Integer.parseInt(numberOfMinesInput.getText().toString());
-                double minesPercent = (double) mines / fields * 100;
+                Double minesPercent = new BigDecimal((double) currentMineCount / fields * 100)
+                        .setScale(2, RoundingMode.HALF_UP)
+                        .doubleValue();
 
-                Double rounded = new BigDecimal(minesPercent).setScale(2, RoundingMode.HALF_UP).doubleValue(); //TODO Nochmal überarbeiten vllt
-                minesPercentTextView.setText(rounded + "%");
+                minesPercentTextView.setText(minesPercent + "%");
             }
         });
 
+        //Hier werden die letzten gespeicherten Einstellungen eines Benutzerdefinierten Spiels gesetzt
         MinesweeperApplication application = (MinesweeperApplication) requireActivity().getApplication();
         customGame = application.getCustomGame();
 
@@ -215,8 +244,9 @@ public class CustomGameDialog extends AppCompatDialogFragment {
         heightTextInput.setText(customGame.getHeight());
         numberOfMinesInput.setText(customGame.getMines());
 
-        Button startCustomGameButton = view.findViewById(R.id.startCustomGame);
 
+        //Spiel starten Button
+        Button startCustomGameButton = view.findViewById(R.id.startCustomGame);
         startCustomGameButton.setOnClickListener(e -> {
             if (checkHeight && checkWidth && checkNumberOfMines) {
 
@@ -224,9 +254,10 @@ public class CustomGameDialog extends AppCompatDialogFragment {
                 customGame.setWidth(widthTextInput.getText().toString());
                 customGame.setMines(numberOfMinesInput.getText().toString());
 
+                //Speichern der Einstellungen des Benutzerdefinierten Spiels
                 application.updateCustomGame(customGame);
 
-                //dadurch wird das Level auch in der Datenbank gespeichert, da der Listener greift
+                //Dadurch wird das Level auch in der Datenbank gespeichert, da der Listener greift
                 horizontalStringPicker.setValue(getString(R.string.level_benutzedefiniert));
 
                 MinesweeperGame.getInstance().getGameSettings().setCustomBoardValues(
@@ -251,18 +282,21 @@ public class CustomGameDialog extends AppCompatDialogFragment {
         return builder.create();
     }
 
-    private void activateNumberOfMinesInput() {
-        if(checkHeight && checkWidth) {
+    /**
+     * Die Methode aktiviert das Eingabefeld für die Minenanzahl, wenn in den Eingabefeldern
+     * für die Höhe und Breite, die Werte im vorgegebenen Bereich liegen.
+     */
+    private void activateNumberOfMinesEditText() {
+        if (checkHeight && checkWidth) {
             numberOfMinesInput.setEnabled(true);
             numberOfMinesInput.setText("");
             int width = Integer.parseInt(widthTextInput.getText().toString());
             int height = Integer.parseInt(heightTextInput.getText().toString());
             fields = width * height;
             maxMines = (int) (fields * 0.6);
-            mineQuantityTextInputLayout.setHelperText(getString(R.string.mine_helper_text_2) + " " + maxMines); //mit jedem machen
+            mineQuantityTextInputLayout.setHelperText(getString(R.string.mine_helper_text_2) + " " + maxMines);
         }
     }
-
 
 }
 
