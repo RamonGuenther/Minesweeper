@@ -91,9 +91,12 @@ public class MinesweeperGame {
 
     /**
      * Die Methode createBoardWithMines verteilt die Anzahl der gegebenen Minen auf dem
-     * Spielfeld und berechnet für jedes Feld die Anzahl der benachbarten Minen.
+     * Spielfeld und berechnet für jedes Feld die Anzahl der benachbarten Minen. Dabei wird keine
+     * Mine auf dem Feld platziert, dass der Spieler als erstes angeklickt hat.
      *
      * @param context               Aktueller Zustand der Applikation
+     * @param startX                X-Position des ersten vom Spieler angeklickten Feldes
+     * @param startY                Y-Position des ersten vom Spieler angeklickten Feldes
      */
     public void createBoardWithMines(Context context, int startX, int startY){
 
@@ -133,7 +136,7 @@ public class MinesweeperGame {
      */
     public Field getFieldAt(int position) {
         int x = position % getColumnsX();
-        int y = position / getColumnsX(); //??? warum nicht Rows?
+        int y = position / getColumnsX();
 
         return minesweeperBoard[x][y];
     }
@@ -161,7 +164,7 @@ public class MinesweeperGame {
      * @param xPos              Spalte des Feldes, dass der Spieler aufdeckt
      * @param yPos              Zeile des Feldes, dass der Spieler aufdeckt
      */
-    public void discoverField(int xPos, int yPos ){
+    public void discoverField(int xPos, int yPos){
 
         if(xPos >= 0 && yPos >= 0 && xPos < getColumnsX() && yPos < getRowsY() && !getFieldAt(xPos,yPos).isTouched()){
             getFieldAt(xPos,yPos).setTouched();
@@ -185,7 +188,7 @@ public class MinesweeperGame {
             }
             if(getFieldAt(xPos,yPos).isMine()){
                 if(MinesweeperGame.getInstance().getGameSettings().isVibration()){
-                    gameVibrationsCallback.bombExlposionVibration();
+                    gameVibrationsCallback.bombExplosionVibration();
                 }
                 gameLost();
             }
@@ -286,7 +289,6 @@ public class MinesweeperGame {
 
             minesweeperCallback.updateTimer(0);
 
-            //Ramonnilein
             MinesweeperApplication application = (MinesweeperApplication) context.getApplicationContext();
 
             application.createGameSummaryItem(
@@ -295,7 +297,6 @@ public class MinesweeperGame {
                     GameResult.WON,
                     gameSettings.getNumberOfMines() + "/" + gameSettings.getNumberOfMines(),
                     gameSettings.getColumnsX() + " x " + gameSettings.getRowsY()
-            //Ende :3
             );
         }
     }
@@ -311,7 +312,6 @@ public class MinesweeperGame {
         GameEndDialog.show(context, context.getString(R.string.message_spiel_verloren), GAME_LOST);
         timer.stopTimer();
 
-        //Ramonnilein
         MinesweeperApplication application = (MinesweeperApplication) context.getApplicationContext();
 
         application.createGameSummaryItem(
@@ -321,7 +321,6 @@ public class MinesweeperGame {
                 gameSettings.getNumberOfMines() - mineCounter.getMineCount() + "/" + gameSettings.getNumberOfMines(),
                 gameSettings.getColumnsX() + " x " + gameSettings.getRowsY()
         );
-        //Ende :3
 
         for (int x = 0; x < getColumnsX(); x++ ) {
             for (int y = 0; y < getRowsY(); y++) {
@@ -393,6 +392,10 @@ public class MinesweeperGame {
         }
     }
 
+    /**
+     * Die Methode removeFlagsAndQuestionMarks entfernt alle Flaggen und Fragezeichen, wenn der
+     * Spieler in den Einstellungen die Funktion Flaggen setzen zu können ausgeschaltet hat.
+     */
     public void removeFlagsAndQuestionMarks(){
         if(!getGameSettings().isFlagsPossible()){
             for(int x = 0; x < getColumnsX(); x++ ){

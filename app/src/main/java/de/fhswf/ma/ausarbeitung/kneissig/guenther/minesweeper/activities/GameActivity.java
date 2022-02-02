@@ -22,7 +22,6 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.callback.GameVibrationsCallback;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
-import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.Field;
 
 
 /**
@@ -213,7 +212,7 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
      * explodieren.
      */
     @Override
-    public void bombExlposionVibration() {
+    public void bombExplosionVibration() {
 
         long[] vibrationPattern = new long[]{50, 300, 100, 100, 200, 300, 200, 500};
         int[] vibrationAmplitudes = new int[]{255, 100, 255, 100, 255, 100, 255, 100};

@@ -212,7 +212,6 @@ public class SettingsActivity extends AppCompatActivity {
         themeItemList.add(new ThemeItem(getString(R.string.blau), R.drawable.theme_blau_empty));
         themeItemList.add(new ThemeItem(getString(R.string.gruen), R.drawable.theme_gruen_empty));
         themeItemList.add(new ThemeItem(getString(R.string.grau), R.drawable.theme_grau_empty));
-        themeItemList.add(new ThemeItem(getString(R.string.classic), R.drawable.theme_classic_empty));
     }
 
 }

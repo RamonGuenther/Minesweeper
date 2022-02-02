@@ -158,10 +158,6 @@ public class GameSettings {
             case "Grey":
                 this.theme = Theme.GREY;
                 break;
-            case "Klassisch":
-            case "Classic":
-                this.theme = Theme.CLASSIC;
-                break;
         }
     }
 
@@ -222,7 +218,6 @@ public class GameSettings {
     }
 
     public void setFlagsPossible(boolean flagsPossible) {
-//        gameModeVisible = flagsPossible;
         this.flagsPossible = flagsPossible;
     }
 }

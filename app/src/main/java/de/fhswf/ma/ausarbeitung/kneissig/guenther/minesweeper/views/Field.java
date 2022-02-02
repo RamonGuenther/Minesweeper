@@ -370,6 +370,22 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
         }
     }
 
+    /**
+     * Die Methode getThemeName gibt den Namen des Themes so formatiert zurück, dass er in den
+     * Methoden zum Zeichnen der Felder verwendet werden kann um die passenden Dateinamen zum
+     * Laden der Images zusammensetzen kann.
+     *
+     * @return      Themenname in klein, ohne Umlaute zum Zusammensetzen von Dateinamen
+     */
+    private String getThemeName(){
+        if(MinesweeperGame.getInstance().getGameSettings().getTheme().label.equals("Grün")){
+            return "gruen";
+        }
+        else{
+            return MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT);
+        }
+    }
+
     /*----------------------------------------------------------------------------------------------
                                            GETTER & SETTER
     ----------------------------------------------------------------------------------------------*/
@@ -449,7 +465,6 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
     public void setPosition(int x, int y) {
         this.xPos = x;
         this.yPos = y;
-//        int position = y * MinesweeperGame.getInstance().getColumnsX() + x;
         invalidate();
     }
 
@@ -459,14 +474,5 @@ public class Field extends View implements View.OnClickListener , View.OnLongCli
 
     public void setFlagFalse(boolean flagFalse) {
         isFlagFalse = flagFalse;
-    }
-
-    private String getThemeName(){
-        if(MinesweeperGame.getInstance().getGameSettings().getTheme().label.equals("Grün")){
-            return "gruen";
-        }
-        else{
-            return MinesweeperGame.getInstance().getGameSettings().getTheme().label.toLowerCase(Locale.ROOT);
-        }
     }
 }

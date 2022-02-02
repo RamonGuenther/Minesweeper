@@ -48,7 +48,7 @@ public class GameEndDialog extends AlertDialog {
     public static void show(Context context, String message, int lostOrWon){
         AlertDialog gameEndDialog = new AlertDialog.Builder(context).create();
         LayoutInflater inflater = gameEndDialog.getLayoutInflater();
-        View alertLayout = inflater.inflate(R.layout.dialog_layout, null);
+        View alertLayout = inflater.inflate(R.layout.game_end_dialog, null);
 
         gameEndDialog.setView(alertLayout);
         gameEndDialog.setCancelable(false);
