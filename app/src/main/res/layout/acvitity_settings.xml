@@ -270,7 +270,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="30dp"
-        android:background="@drawable/layout_select_difficulty"
+        android:background="@drawable/layout_delete_button"
         android:backgroundTint="@color/salmonRed"
         android:src="@drawable/ic_baseline_delete_24"
         app:layout_constraintEnd_toEndOf="parent"
