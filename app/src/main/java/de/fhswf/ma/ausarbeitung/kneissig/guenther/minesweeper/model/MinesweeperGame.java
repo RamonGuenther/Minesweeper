@@ -206,7 +206,7 @@ public class MinesweeperGame {
      */
     public void placeFlag(int xPos , int yPos ){
 
-        if(mineCounter.getMineCount() == 0){
+        if(mineCounter.getMineCount() == 0 && !getFieldAt(xPos, yPos).isFlagged()){
             if(gameSettings.isHints()){
                 Toast.makeText(context,context.getString(R.string.maximale_minen_makiert), Toast.LENGTH_SHORT).show();
             }
