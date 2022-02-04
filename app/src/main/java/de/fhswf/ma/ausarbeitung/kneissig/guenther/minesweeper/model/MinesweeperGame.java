@@ -376,7 +376,6 @@ public class MinesweeperGame {
         for(int x = 0; x < getColumnsX(); x++ ){
             for(int y = 0; y < getRowsY(); y++ ){
                 minesweeperBoard[x][y] = null;
-                minesweeperBoard[x][y].invalidate();
             }
         }
     }

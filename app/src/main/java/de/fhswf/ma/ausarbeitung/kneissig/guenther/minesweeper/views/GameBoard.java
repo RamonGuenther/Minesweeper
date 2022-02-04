@@ -42,6 +42,4 @@ public class GameBoard extends GridView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
-
-
 }
