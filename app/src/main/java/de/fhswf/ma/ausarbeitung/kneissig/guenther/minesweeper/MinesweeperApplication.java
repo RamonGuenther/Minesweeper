@@ -49,6 +49,10 @@ public class MinesweeperApplication extends Application {
             db.settingsDao().insert(settings);
         }
 
+//        createGameSummaryItem((int) Math.floor(Math.random() * (999 - 1 + 1) + 1), Level.BEGINNER, GameResult.WON, "10/10", "8 x 8");
+//        createGameSummaryItem((int) Math.floor(Math.random() * (999 - 1 + 1) + 1), Level.ADVANCED, GameResult.WON, "10/10", "8 x 8");
+//        createGameSummaryItem((int) Math.floor(Math.random() * (999 - 1 + 1) + 1), Level.PROFESSIONAL, GameResult.WON, "10/10", "8 x 8");
+
         MinesweeperGame.getInstance().getGameSettings().setTheme(settings.getTheme());
         MinesweeperGame.getInstance().getGameSettings().setVibration(settings.isVibration());
         MinesweeperGame.getInstance().getGameSettings().setTimerVisible(settings.isShowTimer());
@@ -71,7 +75,6 @@ public class MinesweeperApplication extends Application {
             customGame = new CustomGame();
             db.customGameDao().insert(customGame);
         }
-
     }
 
 

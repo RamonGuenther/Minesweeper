@@ -22,6 +22,7 @@ import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.callback.GameVibrationsCallback;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.MinesweeperGame;
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.model.enums.GameMode;
+import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.views.Field;
 
 
 /**
@@ -67,8 +68,10 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
         ImageButton resetButton = findViewById(R.id.gameView_resetGame);
         resetButton.setOnClickListener(e -> {
             MinesweeperGame.getInstance().resetGame();
-            resetButton.animate().rotation(resetButton.getRotation() + 360).start();
-            onResetGameVibration();
+            if(MinesweeperGame.getInstance().getGameSettings().isVibration()){
+                resetButton.animate().rotation(resetButton.getRotation() + 360).start();
+                onResetGameVibration();
+            }
         });
 
         //Minen-Zähler

@@ -20,7 +20,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- android:theme="@style/CustomTheme" -->
+        </activity>
         <activity
             android:name=".activities.SettingsActivity"
             android:theme="@style/Theme.Minesweeper.SlidrActivityTheme" />
