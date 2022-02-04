@@ -8,6 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.R;
 
+/**
+ * Die Klasse GameInstruction bildet die Aktivität für die Spielanleitung.
+ *
+ * @author Ivonne Kneißig
+ */
 public class GameInstructionActivity extends AppCompatActivity {
 
     @Override
