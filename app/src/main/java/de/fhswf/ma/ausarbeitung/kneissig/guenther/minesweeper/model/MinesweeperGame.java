@@ -406,6 +406,8 @@ public class MinesweeperGame {
                 }
             }
         }
+        MinesweeperGame.getInstance().getMineCounter().setMineCount(gameSettings.getNumberOfMines());
+        minesweeperCallback.updateMineCounter(gameSettings.getNumberOfMines());
     }
 
     /*----------------------------------------------------------------------------------------------
