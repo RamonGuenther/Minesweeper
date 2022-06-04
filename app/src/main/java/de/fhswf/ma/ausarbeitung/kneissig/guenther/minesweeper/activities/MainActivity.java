@@ -75,10 +75,13 @@ public class MainActivity extends AppCompatActivity {
                 long[] vibrationPattern = new long[]{200, 50, 200};
                 int[] vibrationAmplitudes = new int[]{255, 0, 255};
 
-                if (vibrator.hasAmplitudeControl()) {
+//                if (vibrator.hasAmplitudeControl()) {
                     VibrationEffect effect = VibrationEffect.createWaveform(vibrationPattern, vibrationAmplitudes, -1);
                     vibrator.vibrate(effect);
-                }
+//                }
+//                else{
+//
+//                }
             }
             if (MinesweeperGame.getInstance().isFirstClick()) {
                 MinesweeperGame.getInstance().newGame();

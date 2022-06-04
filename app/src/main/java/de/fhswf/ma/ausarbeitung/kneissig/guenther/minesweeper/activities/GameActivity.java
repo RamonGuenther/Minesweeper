@@ -1,11 +1,13 @@
 package de.fhswf.ma.ausarbeitung.kneissig.guenther.minesweeper.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -219,10 +221,10 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
         int[] vibrationAmplitudes = new int[]{255, 100, 255, 100, 255, 100, 255, 100};
 
         // repeat: -1 führt das Pattern genau einmal aus
-        if (vibrator.hasAmplitudeControl()) {
+//        if (vibrator.hasAmplitudeControl()) {
             VibrationEffect effect = VibrationEffect.createWaveform(vibrationPattern, vibrationAmplitudes, -1);
             vibrator.vibrate(effect);
-        }
+//        }
     }
 
     /**
@@ -230,14 +232,15 @@ public class GameActivity extends AppCompatActivity implements MinesweeperCallba
      * Feld zum Platzieren einer Flagge ein haptisches Feedback zu geben. Dadurch soll besser
      * erkennbar sein, ob man lange genug geklickt hat, um die Flagge zu platzieren.
      */
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void onLongClickVibration() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-            vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK));
-        }
-        else{
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+//            vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK));
+//        }
+//        else{
             vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
-        }
+//        }
     }
 
     /**
